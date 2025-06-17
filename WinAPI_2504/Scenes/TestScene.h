@@ -15,7 +15,7 @@ public:
 	void UpdateWorld();
 	void Render() override;
 
-	void SetTileMap();
+	void SetTileMaps();
 	void SetTilePos(int y, int x);
 
 	Vector2 GetTilePos(int y, int x) const

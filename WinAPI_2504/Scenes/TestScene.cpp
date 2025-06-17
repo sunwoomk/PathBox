@@ -3,7 +3,8 @@
 
 TestScene::TestScene()
 {
-    SetTileMap();
+    TileManager::Get();
+    SetTileMaps();
 
 	int centerX = MAP_COLS * 0.5f;
 	int centerY = MAP_ROWS * 0.5f;
@@ -17,14 +18,6 @@ TestScene::TestScene()
 
 TestScene::~TestScene()
 {
-    for (auto& row : bgTiles)
-    {
-        for (auto tile : row)
-        {
-            if (tile != nullptr)
-                delete tile;
-        }
-    }
 }
 
 void TestScene::Update()
@@ -49,14 +42,7 @@ void TestScene::UpdateWorld()
 
 void TestScene::Render()
 {
-	for (const auto& row : bgTiles)
-	{
-		for (const auto& tile : row)
-		{
-			if (tile != nullptr)
-				tile->Render();
-		}
-	}
+	TileManager::Get()->Render();
 	player->Render();
 }
 
@@ -71,7 +57,7 @@ void TestScene::SetPlayerPos(int y, int x)
 	player->UpdateWorld();
 }
 
-void TestScene::SetTileMap()
+void TestScene::SetTileMaps()
 {
     bgTiles.resize(MAP_ROWS);
     for (int y = 0; y < MAP_ROWS; ++y)

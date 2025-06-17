@@ -6,6 +6,7 @@ public:
 	Player();
 	~Player();
 
+	void Update() { Move(); }
 	void Render();
 	void UpdateWorld();
 	void Move();
