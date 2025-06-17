@@ -36,7 +36,10 @@ public:
 	void Render();
 
 	void SetBgTiles(BgType bgType);
-	void SetObjectTiles(ObjectType objectType);
+	void SetObjectTiles(int y, int x);
+
+	void CreateBgTiles();
+	void CreateObjectTiles(ObjectType objectType, int y, int x);
 
 	void SetBgTileMap();
 	void SetObjectTileMap();

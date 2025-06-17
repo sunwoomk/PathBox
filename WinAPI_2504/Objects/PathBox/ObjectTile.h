@@ -2,9 +2,10 @@
 
 class ObjectTile : public Tile
 {
-private:
+public:
 	enum class ObjectTileType
 	{
+		None = 0,
 		Box = 1,
 		Wall = 2,
 		Portal = 3,
@@ -21,4 +22,5 @@ public:
 
 private:
 	Quad* image;
+	ObjectTileType objectTileType;
 };
