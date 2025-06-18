@@ -194,6 +194,7 @@
     <ClInclude Include="Objects\PathBox\Player.h" />
     <ClInclude Include="Objects\PathBox\Tile.h" />
     <ClInclude Include="Objects\PathBox\TileManager.h" />
+    <ClInclude Include="Objects\PathBox\TileType.h" />
     <ClInclude Include="Objects\Shooting\Bullet.h" />
     <ClInclude Include="Objects\Shooting\Plane.h" />
     <ClInclude Include="Objects\TileGame\EditTile.h" />

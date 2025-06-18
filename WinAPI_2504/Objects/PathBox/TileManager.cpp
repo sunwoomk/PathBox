@@ -4,7 +4,7 @@ TileManager::TileManager()
 {
 	SetBgTileMap();
 	SetObjectTileMap();
-	player = new Player();
+	//player = new Player();
 }
 
 TileManager::~TileManager()
@@ -29,12 +29,12 @@ TileManager::~TileManager()
 	}
 	objectTiles.clear();
 
-	delete player;
+	//delete player;
 }
 
 void TileManager::Update()
 {
-	player->Update();
+	//player->Update();
 }
 
 void TileManager::Render()
@@ -48,14 +48,7 @@ void TileManager::Render()
 		}
 	}
 
-	if (Input::Get()->IsKeyDown(VK_F1))
-	{
-		swap(objectTiles[4][4], objectTiles[4][5]);
-		objectTiles[4][4]->SetTile(ObjectTile::ObjectTileType::None);
-		objectTiles[4][5]->SetTile(ObjectTile::ObjectTileType::Box);
-		SetObjectTiles(4, 4);
-		SetObjectTiles(4, 5);
-	}
+	PlayerMove();
 
 	for (const auto& row : objectTiles)
 	{
@@ -65,7 +58,7 @@ void TileManager::Render()
 				tile->Render();
 		}
 	}
-	player->Render();
+	//player->Render();
 }
 
 void TileManager::SetBgTiles(BgType bgType)
@@ -102,27 +95,7 @@ void TileManager::CreateBgTiles()
 
 void TileManager::CreateObjectTiles(ObjectType objectType, int y, int x)
 {
-	switch (objectType)
-	{
-	case ObjectType::None:
-		objectTiles[y][x] = new ObjectTile(ObjectTile::ObjectTileType::None);
-		break;
-	case ObjectType::Box:
-		objectTiles[y][x] = new ObjectTile(ObjectTile::ObjectTileType::Box);
-		break;
-	case ObjectType::Wall:
-		image = new Quad(L"Resources/Textures/Tiles/tileCastle.png");
-		break;
-	case ObjectType::Portal:
-		// Set tile to Portal
-		break;
-	case ObjectType::Water:
-		// Set tile to Water
-		break;
-	case ObjectType::IcyRoad:
-		// Set tile to IcyRoad
-		break;
-	}
+	objectTiles[y][x] = new ObjectTile(objectType);
 
 	SetObjectTiles(y, x);
 }
@@ -131,6 +104,7 @@ void TileManager::SetObjectTiles(int y, int x)
 {
 	objectTiles[y][x]->SetTilePos(x, y);
 	objectTiles[y][x]->SetLocalPosition(200 + x * TILE_SIZE_X, 185 + (MAP_ROWS - 1 - y) * TILE_SIZE_Y);
+	//objectTiles[y][x]->SetLocalPosition(200 + x * TILE_SIZE_X, 185 + y * TILE_SIZE_Y);
 	objectTiles[y][x]->SetLocalScale(0.5f, 0.5f);
 	objectTiles[y][x]->UpdateWorld();
 }
@@ -143,7 +117,16 @@ void TileManager::SetObjectTileMap()
 		objectTiles[y].resize(MAP_COLS);
 		for (int x = 0; x < MAP_COLS; ++x)
 		{
-			if (x == 4 && y == 4)
+			if (x == 4 && y == 5)
+			{
+				CreateObjectTiles(ObjectType::Player, y, x);
+				playerPos = { x, y };
+			}
+			else if (x == 5 && y == 4)
+			{
+				CreateObjectTiles(ObjectType::Box, y, x);
+			}
+			else if (x == 5 && y == 5)
 			{
 				CreateObjectTiles(ObjectType::Box, y, x);
 			}
@@ -151,6 +134,69 @@ void TileManager::SetObjectTileMap()
 				CreateObjectTiles(ObjectType::None, y, x);
 		}
 	}
+}
+
+void TileManager::PlayerMove()
+{
+	int dx = 0;
+	int dy = 0;
+	if (Input::Get()->IsKeyDown('W')) dy = -1;
+	else if (Input::Get()->IsKeyDown('A')) dx = -1;
+	else if (Input::Get()->IsKeyDown('S')) dy = 1;
+	else if (Input::Get()->IsKeyDown('D')) dx = 1;
+
+	int curX = playerPos.x;
+	int curY = playerPos.y;
+	int newX = curX + dx;
+	int newY = curY + dy;
+
+	if (newX < 0 || newX >= MAP_COLS || newY < 0 || newY >= MAP_ROWS) 
+		return;
+
+	ObjectTile* targetTile = objectTiles[newY][newX];
+
+	if (targetTile->GetType() == ObjectType::None)
+		SwapAndMove(curY, curX, newY, newX);
+
+	else if (targetTile->GetType() == ObjectType::Box) 
+	{
+		int boxNewX = newX + dx;
+		int boxNewY = newY + dy;
+
+		if (boxNewX < 0 || boxNewX >= MAP_COLS || boxNewY < 0 || boxNewY >= MAP_ROWS)
+			return;
+
+		ObjectTile* beyondTile = objectTiles[boxNewY][boxNewX];
+
+		if (beyondTile->GetType() == ObjectType::None)
+		{
+			beyondTile->SetTile(ObjectType::Box);
+			targetTile->SetTile(ObjectType::None);
+			SetObjectTiles(boxNewY, boxNewX);
+			SetObjectTiles(newY, newX);
+
+			SwapAndMove(curY, curX, newY, newX);
+		}
+	}
+	//int x = playerPos.x;
+	//int y = playerPos.y;
+	//swap(objectTiles[y][x], objectTiles[y + dy][x + dx]);
+	//objectTiles[y][x]->SetTile(ObjectType::None);
+	//objectTiles[y + dy][x + dx]->SetTile(ObjectType::Player);
+	//SetObjectTiles(y, x);
+	//SetObjectTiles(y + dy, x + dx);
+	//playerPos.x = x + dx;
+	//playerPos.y = y + dy;
+}
+
+void TileManager::SwapAndMove(int fromY, int fromX, int toY, int toX)
+{
+	swap(objectTiles[fromY][fromX], objectTiles[toY][toX]);
+	objectTiles[fromY][fromX]->SetTile(ObjectType::None);
+	objectTiles[toY][toX]->SetTile(ObjectType::Player);
+	SetObjectTiles(fromY, fromX);
+	SetObjectTiles(toY, toX);
+	playerPos = { toX, toY };
 }
 
 void TileManager::SetBgTileMap()
@@ -163,11 +209,12 @@ void TileManager::SetBgTileMap()
 		{
 			// 예시: 맵의 테두리는 Stone, 내부는 Grass로 구성
 			if (y == 0 || y == MAP_ROWS - 1 || x == 0 || x == MAP_COLS - 1) 
-				bgTiles[y][x] = new BgTile(BgTile::BgTileType::Stone);
+				bgTiles[y][x] = new BgTile(BgType::Stone);
 			else
-				bgTiles[y][x] = new BgTile(BgTile::BgTileType::Grass);
+				bgTiles[y][x] = new BgTile(BgType::Grass);
 			bgTiles[y][x]->SetTilePos(x, y);
 			bgTiles[y][x]->SetLocalPosition(200 + x * TILE_SIZE_X, 200 + (MAP_ROWS - 1 - y) * TILE_SIZE_Y);
+			//bgTiles[y][x]->SetLocalPosition(200 + x * TILE_SIZE_X, 185 + y * TILE_SIZE_Y);
 			bgTiles[y][x]->SetLocalScale(0.5f, 0.5f);
 			bgTiles[y][x]->UpdateWorld();
 		}

@@ -1,8 +1,8 @@
 #include "Framework.h"
 
-BgTile::BgTile(BgTileType bgTileType)
+BgTile::BgTile(BgType bgType)
 {
-	SetTile(bgTileType);
+	SetTile(bgType);
 	image->SetParent(this);
 	image->SetLocalPosition(Vector2(0, 50));
 }
@@ -27,26 +27,26 @@ void BgTile::UpdateWorld()
 	image->UpdateWorld();
 }
 
-void BgTile::SetTile(BgTileType bgTileType)
+void BgTile::SetTile(BgType bgType)
 {
-	switch (bgTileType)
+	switch (bgType)
 	{
-	case BgTileType::Grass:
+	case BgType::Grass:
 		image = new Quad(L"Resources/Textures/Tiles/tileGrass.png");
 		break;
-	case BgTileType::Water:
+	case BgType::Water:
 		image = new Quad(L"Resources/Textures/Tiles/tileWater_1.png");
 		break;
-	case BgTileType::Sand:
+	case BgType::Sand:
 		image = new Quad(L"Resources/Textures/Tiles/tileSand.png");
 		break;
-	case BgTileType::Stone:
+	case BgType::Stone:
 		image = new Quad(L"Resources/Textures/Tiles/tileStone.png");
 		break;
-	case BgTileType::Wood:
+	case BgType::Wood:
 		image = new Quad(L"Resources/Textures/Tiles/tileWood.png");
 		break;
-	case BgTileType::IcyRoad:
+	case BgType::IcyRoad:
 		image = new Quad(L"Resources/Textures/Tiles/tileSnow.png");
 		break;
 	}

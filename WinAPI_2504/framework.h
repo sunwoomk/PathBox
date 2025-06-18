@@ -135,6 +135,7 @@ typedef function<void()> Event;
 #include "Objects/TileGame/TileMap.h"
 #include "Objects/TileGame/Tank.h"
 
+#include "Objects/PathBox/TileType.h"
 #include "Objects/PathBox/Tile.h"
 #include "Objects/PathBox/BgTile.h"
 #include "Objects/PathBox/ObjectTile.h"

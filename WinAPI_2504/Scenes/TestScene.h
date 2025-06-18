@@ -15,18 +15,7 @@ public:
 	void UpdateWorld();
 	void Render() override;
 
-	void SetTileMaps();
-	void SetTilePos(int y, int x);
-
-	Vector2 GetTilePos(int y, int x) const
-	{
-		return Vector2(200 + x * TILE_SIZE_X, 200 + (MAP_ROWS - 1 - y) * TILE_SIZE_Y);
-	}
-
-	void SetPlayerPos(int y, int x);
-
 private:
-	vector<vector<BgTile*>> bgTiles;
-	Player* player;
+
 };
 

@@ -1,10 +1,10 @@
 #include "Framework.h"
 
-ObjectTile::ObjectTile(ObjectTileType objectTileType)
+ObjectTile::ObjectTile(ObjectType objectType)
 {
-	SetTile(objectTileType);
-	this->objectTileType = objectTileType;
-	if (objectTileType != ObjectTileType::None) 
+	SetTile(objectType);
+	this->objectType = objectType;
+	if (objectType != ObjectType::None && objectType != ObjectType::Water && objectType != ObjectType::IcyRoad)
 	{
 		image->SetParent(this);
 		image->SetLocalPosition(Vector2(0, 50));
@@ -33,33 +33,45 @@ void ObjectTile::UpdateWorld()
         image->UpdateWorld();
 }
 
-void ObjectTile::SetTile(ObjectTileType objectTileType)
+void ObjectTile::SetTile(ObjectType objectType)
 {
     // 기존 image 안전하게 해제
-    if (image != nullptr) {
+    if (image != nullptr) 
+    {
         delete image;
         image = nullptr;
     }
 
-    this->objectTileType = objectTileType;
+    this->objectType = objectType;
 
-    switch (objectTileType)
+    switch (objectType)
     {
-    case ObjectTileType::None:
+    case ObjectType::None:
         image = nullptr;
         break;
-    case ObjectTileType::Box:
+    case ObjectType::Box:
         image = new Quad(L"Resources/Textures/Tiles/tileBuilding_sand.png");
         break;
-    case ObjectTileType::Wall:
+    case ObjectType::Wall:
         image = new Quad(L"Resources/Textures/Tiles/tileStone.png");
         break;
-    case ObjectTileType::Portal:
+    case ObjectType::Portal:
         // image = new Quad(...);
         break;
+    case ObjectType::Water:
+        //길막기 로직
+        break;
+    case ObjectType::IcyRoad:
+        //미끄러지기 로직
+        break;
+    case ObjectType::Player:
+        image = new Quad(L"Resources/Textures/Tiles/cart_top.png");
+        break;
     }
+
     // image가 새로 만들어졌다면 부모/위치 세팅
-    if (image != nullptr) {
+    if (image != nullptr) 
+    {
         image->SetParent(this);
         image->SetLocalPosition(Vector2(0, 50));
     }
