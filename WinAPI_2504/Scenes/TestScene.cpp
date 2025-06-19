@@ -12,6 +12,7 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
+	TileManager::Get()->Update();
 }
 
 void TestScene::UpdateWorld()

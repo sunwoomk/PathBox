@@ -20,6 +20,30 @@ ObjectTile::~ObjectTile()
 	}
 }
 
+void ObjectTile::Update()
+{
+    if (isMoving) 
+    {
+        Vector2 dir = targetPos - GetLocalPosition();
+        float distance = dir.Magnitude();
+
+        float moveStep = moveSpeed * DELTA;
+
+        if (moveStep >= distance) 
+        {
+            SetLocalPosition(targetPos);
+            isMoving = false;
+        }
+        else 
+        {
+            dir.Normalize();
+            Vector2 newPos = GetLocalPosition() + dir * moveStep;
+            SetLocalPosition(newPos);
+        }
+        UpdateWorld();
+    }
+}
+
 void ObjectTile::Render()
 {
     if (image != nullptr)
@@ -35,7 +59,6 @@ void ObjectTile::UpdateWorld()
 
 void ObjectTile::SetTile(ObjectType objectType)
 {
-    // 기존 image 안전하게 해제
     if (image != nullptr) 
     {
         delete image;
@@ -69,10 +92,15 @@ void ObjectTile::SetTile(ObjectType objectType)
         break;
     }
 
-    // image가 새로 만들어졌다면 부모/위치 세팅
     if (image != nullptr) 
     {
         image->SetParent(this);
         image->SetLocalPosition(Vector2(0, 50));
     }
+}
+
+void ObjectTile::StartMove(int toX, int toY)
+{
+    targetPos = Vector2(200 + toX * 64, 185 + (9 - toY) * 44);
+    isMoving = true;
 }
