@@ -85,6 +85,7 @@ void ObjectTile::SetTile(ObjectType objectType)
         //길막기 로직
         break;
     case ObjectType::IcyRoad:
+        image = nullptr;
         //미끄러지기 로직
         break;
     case ObjectType::Player:

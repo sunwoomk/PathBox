@@ -59,36 +59,11 @@ void TileManager::Render()
 	}
 }
 
-void TileManager::SetBgTiles(BgType bgType)
+void TileManager::CreateBgTiles(BgType bgType, int y, int x)
 {
-	switch (bgType)
-	{
-	case BgType::None:
-		// No image for None type
-		break;
-	case BgType::Grass:
-		image = new Quad(L"Resources/Textures/Tiles/tileGrass.png");
-		break;
-	case BgType::Water:
-		image = new Quad(L"Resources/Textures/Tiles/tileWater_1.png");
-		break;
-	case BgType::Sand:
-		image = new Quad(L"Resources/Textures/Tiles/tileSand.png");
-		break;
-	case BgType::Stone:
-		image = new Quad(L"Resources/Textures/Tiles/tileStone.png");
-		break;
-	case BgType::Wood:
-		image = new Quad(L"Resources/Textures/Tiles/tileWood.png");
-		break;
-	case BgType::IcyRoad:
-		image = new Quad(L"Resources/Textures/Tiles/tileSnow.png");
-		break;
-	}
-}
+	bgTiles[y][x] = new BgTile(bgType);
 
-void TileManager::CreateBgTiles()
-{
+	SetBgTilePos(y, x);
 }
 
 void TileManager::CreateObjectTiles(ObjectType objectType, int y, int x)
@@ -96,6 +71,14 @@ void TileManager::CreateObjectTiles(ObjectType objectType, int y, int x)
 	objectTiles[y][x] = new ObjectTile(objectType);
 
 	SetObjectTilePos(y, x);
+}
+
+void TileManager::SetBgTilePos(int y, int x)
+{
+	bgTiles[y][x]->SetTilePos(x, y);
+	bgTiles[y][x]->SetLocalPosition(200 + x * TILE_SIZE_X, 200 + (MAP_ROWS - 1 - y) * TILE_SIZE_Y);
+	bgTiles[y][x]->SetLocalScale(0.5f, 0.5f);
+	bgTiles[y][x]->UpdateWorld();
 }
 
 void TileManager::SetObjectTilePos(int y, int x)
@@ -112,35 +95,11 @@ void TileManager::MoveObjectTile(int fromY, int fromX, int toY, int toX)
 	objectTiles[fromY][fromX]->StartMove(toX, toY);
 }
 
-void TileManager::SetObjectTileMap()
-{
-	objectTiles.resize(MAP_ROWS);
-	for (int y = 0; y < MAP_ROWS; ++y)
-	{
-		objectTiles[y].resize(MAP_COLS);
-		for (int x = 0; x < MAP_COLS; ++x)
-		{
-			if (x == 4 && y == 5)
-			{
-				CreateObjectTiles(ObjectType::Player, y, x);
-				playerPos = { x, y };
-			}
-			else if (x == 5 && y == 4)
-			{
-				CreateObjectTiles(ObjectType::Box, y, x);
-			}
-			else if (x == 5 && y == 5)
-			{
-				CreateObjectTiles(ObjectType::Box, y, x);
-			}
-			else
-				CreateObjectTiles(ObjectType::None, y, x);
-		}
-	}
-}
-
 void TileManager::PlayerMove()
 {
+	if (objectTiles[playerPos.y][playerPos.x]->IsMoving())
+		return;
+
 	int dx = 0;
 	int dy = 0;
 	if (Input::Get()->IsKeyDown('W')) dy = -1;
@@ -177,6 +136,38 @@ void TileManager::PlayerMove()
 			SwapAndMove(curY, curX, newY, newX);
 		}
 	}
+
+	else if (targetTile->GetType() == ObjectType::IcyRoad) 
+	{
+		int slideX = newX;
+		int slideY = newY;
+		while (true)
+		{
+			int nextX = slideX + dx;
+			int nextY = slideY + dy;
+
+			if (nextX < 0 || nextX >= MAP_COLS || nextY < 0 || nextY >= MAP_ROWS)
+				break;
+
+			ObjectTile* nextTile = objectTiles[nextY][nextX];
+
+			if (nextTile->GetType() == ObjectType::IcyRoad)
+			{
+				slideX = nextX;
+				slideY = nextY;
+				continue;
+			}
+			else if (nextTile->GetType() == ObjectType::None)
+			{
+				slideX = nextX;
+				slideY = nextY;
+			}
+			break;
+		}
+
+		if (slideX != curX || slideY != curY)
+			SwapAndMove(curY, curX, slideY, slideX);
+	}
 }
 
 void TileManager::SwapAndMove(int fromY, int fromX, int toY, int toX)
@@ -196,14 +187,45 @@ void TileManager::SetBgTileMap()
 		bgTiles[y].resize(MAP_COLS);
 		for (int x = 0; x < MAP_COLS; ++x)
 		{
-			if (y == 0 || y == MAP_ROWS - 1 || x == 0 || x == MAP_COLS - 1) 
-				bgTiles[y][x] = new BgTile(BgType::Stone);
+			if (y == 0 || y == MAP_ROWS - 1 || x == 0 || x == MAP_COLS - 1)
+				CreateBgTiles(BgType::Stone, y, x);
+			else if ((x == 3 || x == 4 || x == 5) && (y == 4 || y == 5))
+			{
+				CreateBgTiles(BgType::IcyRoad, y, x);
+			}
 			else
-				bgTiles[y][x] = new BgTile(BgType::Grass);
-			bgTiles[y][x]->SetTilePos(x, y);
-			bgTiles[y][x]->SetLocalPosition(200 + x * TILE_SIZE_X, 200 + (MAP_ROWS - 1 - y) * TILE_SIZE_Y);
-			bgTiles[y][x]->SetLocalScale(0.5f, 0.5f);
-			bgTiles[y][x]->UpdateWorld();
+				CreateBgTiles(BgType::Grass, y, x);
+		}
+	}
+}
+
+void TileManager::SetObjectTileMap()
+{
+	objectTiles.resize(MAP_ROWS);
+	for (int y = 0; y < MAP_ROWS; ++y)
+	{
+		objectTiles[y].resize(MAP_COLS);
+		for (int x = 0; x < MAP_COLS; ++x)
+		{
+			if (x == 4 && y == 5)
+			{
+				CreateObjectTiles(ObjectType::Player, y, x);
+				playerPos = { x, y };
+			}
+			else if (x == 7 && y == 5)
+			{
+				CreateObjectTiles(ObjectType::Box, y, x);
+			}
+			else if (x == 7 && y == 6)
+			{
+				CreateObjectTiles(ObjectType::Box, y, x);
+			}
+			else if ((x == 3 || x == 4 || x == 5) && (y == 3 || y == 4))
+			{
+				CreateObjectTiles(ObjectType::IcyRoad, y, x);
+			}
+			else
+				CreateObjectTiles(ObjectType::None, y, x);
 		}
 	}
 }

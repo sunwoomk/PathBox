@@ -13,11 +13,11 @@ public:
 	void Update();
 	void Render();
 
-	void SetBgTiles(BgType bgType);
+	void SetBgTilePos(int y, int x);
 	void SetObjectTilePos(int y, int x);
 	void MoveObjectTile(int fromY, int fromX, int toY, int toX);
 
-	void CreateBgTiles();
+	void CreateBgTiles(BgType bgType, int y, int x);
 	void CreateObjectTiles(ObjectType objectType, int y, int x);
 
 	void SetBgTileMap();
