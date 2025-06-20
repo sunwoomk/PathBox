@@ -79,7 +79,7 @@ void ObjectTile::SetTile(ObjectType objectType)
         image = new Quad(L"Resources/Textures/Tiles/tileStone.png");
         break;
     case ObjectType::Portal:
-        // image = new Quad(...);
+        image = new Quad(L"Resources/Textures/Tiles/door_open.png");
         break;
     case ObjectType::Water:
         //길막기 로직

@@ -34,6 +34,11 @@ void TileManager::Update()
 	for (auto& row : objectTiles)
 		for (auto tile : row)
 			if (tile) tile->Update();
+	if (isTeleporting && !objectTiles[teleportStartY][teleportStartX]->IsMoving())
+	{
+		Teleport(teleportStartY, teleportStartX, teleportDestY, teleportDestX);
+		isTeleporting = false;
+	}
 }
 
 void TileManager::Render()
@@ -168,6 +173,16 @@ void TileManager::PlayerMove()
 		if (slideX != curX || slideY != curY)
 			SwapAndMove(curY, curX, slideY, slideX);
 	}
+
+	else if (targetTile->GetType() == ObjectType::Portal) 
+	{
+		isTeleporting = true;
+		teleportStartX = curX;
+		teleportStartY = curY;
+		teleportDestX = 7;
+		teleportDestY = 1;
+		objectTiles[curY][curX]->StartMove(newX, newY);
+	}
 }
 
 void TileManager::SwapAndMove(int fromY, int fromX, int toY, int toX)
@@ -177,6 +192,15 @@ void TileManager::SwapAndMove(int fromY, int fromX, int toY, int toX)
 	swap(objectTiles[fromY][fromX], objectTiles[toY][toX]);
 	if (objectTiles[toY][toX]->GetType() == ObjectType::Player)
 		playerPos = { toX, toY };
+}
+
+void TileManager::Teleport(int curY, int curX, int destY, int destX)
+{
+	objectTiles[curY][curX]->SetTilePos(destX, destY);
+	objectTiles[curY][curX]->SetLocalPosition(200 + destX * TILE_SIZE_X, 185 + (MAP_ROWS - 1 - destY) * TILE_SIZE_Y);
+	objectTiles[curY][curX]->UpdateWorld();
+	swap(objectTiles[curY][curX], objectTiles[destY][destX]);
+	playerPos = { destX, destY };
 }
 
 void TileManager::SetBgTileMap()
@@ -223,6 +247,10 @@ void TileManager::SetObjectTileMap()
 			else if ((x == 3 || x == 4 || x == 5) && (y == 3 || y == 4))
 			{
 				CreateObjectTiles(ObjectType::IcyRoad, y, x);
+			}
+			else if (x == 2 && y == 7)
+			{
+				CreateObjectTiles(ObjectType::Portal, y, x);
 			}
 			else
 				CreateObjectTiles(ObjectType::None, y, x);
