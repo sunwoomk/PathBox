@@ -10,6 +10,7 @@ public:
 	void UpdateWorld();
 
 	void SetTile(ObjectType objectType);
+	void DefaultTexture();
 
 	RectCollider* GetCollider() { return rectCollider; }
 	Quad* GetImage() { return image; }

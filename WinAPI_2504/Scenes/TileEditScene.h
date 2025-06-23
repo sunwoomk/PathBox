@@ -27,6 +27,7 @@ private:
 
 	void EditBgTiles();
 	void EditObjectTiles();
+	void CreateObjectTile(Vector2 pos);
 
 	void Save(string file);
 	void Load(string file);

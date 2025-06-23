@@ -65,3 +65,11 @@ void EditObjectTile::SetTile(ObjectType objectType)
         break;
     }
 }
+
+void EditObjectTile::DefaultTexture()
+{
+    SetTile(ObjectType::Box);
+    image->SetParent(this);
+    image->SetLocalPosition(Vector2(0, 50));
+    image->SetLocalScale(64, 44);
+}

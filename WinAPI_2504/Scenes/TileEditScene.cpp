@@ -117,19 +117,6 @@ void TileEditScene::CreateEditTiles()
 			editBgTiles.push_back(bgTile);
 		}
 	}
-
-	for (int y = 0; y < mapRows; y++)
-	{
-		for (int x = 0; x < mapCols; x++)
-		{
-			EditObjectTile* objectTile = new EditObjectTile();
-			objectTile->SetTilePos(x, y);
-			objectTile->SetLocalPosition(200 + x * TILE_SIZE_X, 185 + (mapRows - 1 - y) * TILE_SIZE_Y);
-			objectTile->SetLocalScale(0.5f, 0.5f);
-			objectTile->UpdateWorld();
-			editObjectTiles.push_back(objectTile);
-		}
-	}
 }
 
 void TileEditScene::DeleteEditTiles()
@@ -161,32 +148,45 @@ void TileEditScene::EditBgTiles()
 
 void TileEditScene::EditObjectTiles()
 {
-	for (EditObjectTile* objectTile : editObjectTiles)
-	{
-		if (objectTile->GetCollider()->IsPointCollision(mousePos))
-		{
-			if (Input::Get()->IsKeyDown(VK_LBUTTON))
-			{
-				if (objectTile->GetImage() == nullptr)
-				{
-					objectTile->SetTile(ObjectType::Box);
-					objectTile->GetImage()->SetParent(objectTile);
-					objectTile->GetImage()->SetLocalPosition(Vector2(0, 140));
-					objectTile->UpdateWorld();
-				}
-				objectTile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);
-			}
+	if (!Input::Get()->IsKeyDown(VK_LBUTTON)) return;
 
-			if (Input::Get()->IsKeyDown(VK_RBUTTON)) 
+	for (EditBgTile* bgTile : editBgTiles)
+	{
+		if (bgTile->GetCollider()->IsPointCollision(mousePos))
+		{
+			Vector2 pos = bgTile->GetLocalPosition();
+			CreateObjectTile(pos);
+		}
+	}
+
+	if (Input::Get()->IsKeyDown(VK_RBUTTON))
+	{
+		for (auto it = editObjectTiles.begin(); it != editObjectTiles.end(); )
+		{
+			if ((*it)->GetCollider()->IsPointCollision(mousePos))
 			{
-				if (objectTile->GetImage() != nullptr)
-				{
-					objectTile->SetTile(ObjectType::None);
-					objectTile->UpdateWorld();
-				}
+				delete* it;
+				it = editObjectTiles.erase(it);
+			}
+			else
+			{
+				++it;
 			}
 		}
 	}
+}
+
+void TileEditScene::CreateObjectTile(Vector2 pos)
+{
+	EditObjectTile* objectTile = new EditObjectTile();
+	objectTile->SetLocalPosition(pos);
+	objectTile->SetLocalScale(0.5f, 0.5f);
+	objectTile->SetTile(ObjectType::Box);
+	objectTile->GetImage()->SetParent(objectTile);
+	objectTile->GetImage()->SetLocalPosition(Vector2(0, 110));
+	objectTile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);
+	objectTile->UpdateWorld();
+	editObjectTiles.push_back(objectTile);
 }
 
 void TileEditScene::Save(string file)
@@ -196,17 +196,18 @@ void TileEditScene::Save(string file)
 	writer->Int(mapCols);
 	writer->Int(mapRows);
 
-	for (EditBgTile* bgTile : editBgTiles) 
+	for (EditBgTile* bgTile : editBgTiles)
 	{
 		writer->WString(bgTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
 	}
+
 	writer->Int(editObjectTiles.size());
 	for (EditObjectTile* objectTile : editObjectTiles)
 	{
 		writer->Vector(objectTile->GetLocalPosition());
-		if (objectTile->GetImage() != nullptr)
-			writer->WString(objectTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
+		writer->WString(objectTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
 	}
+
 	delete writer;
 }
 
@@ -214,7 +215,7 @@ void TileEditScene::Load(string file)
 {
 	BinaryReader* reader = new BinaryReader(file);
 
-	if (reader->IsFailed()) 
+	if (reader->IsFailed())
 	{
 		delete reader;
 		return;
@@ -225,20 +226,18 @@ void TileEditScene::Load(string file)
 
 	CreateEditTiles();
 
-	for (EditBgTile* bgTile : editBgTiles) 
+	for (EditBgTile* bgTile : editBgTiles)
 	{
 		wstring file = reader->WString();
 		bgTile->GetImage()->GetMaterial()->SetBaseMap(file);
 	}
 
 	int objectTileCount = reader->Int();
-
 	for (int i = 0; i < objectTileCount; i++)
 	{
 		Vector2 pos = reader->Vector();
 		wstring file = reader->WString();
-		if(editObjectTiles[i]->GetImage() != nullptr)
-			editObjectTiles[i]->GetImage()->GetMaterial()->SetBaseMap(file);
+		CreateObjectTile(pos);
 	}
 
 	delete reader;
