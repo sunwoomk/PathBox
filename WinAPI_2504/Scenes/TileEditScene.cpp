@@ -3,292 +3,361 @@
 
 TileEditScene::TileEditScene()
 {
-	LoadTextures();
+    LoadTextures();
 }
 
 TileEditScene::~TileEditScene()
 {
-	DeleteEditTiles();
+    DeleteEditTiles();
 }
 
 void TileEditScene::Update()
 {
-	switch (editType) 
-	{
-	case TileEditScene::Bg:
-		EditBgTiles();
-		break;
-	case TileEditScene::Object:
-		EditObjectTiles();
-		break;
-	}
+    if (ImGui::GetIO().WantCaptureMouse) return;
+
+    switch (editType)
+    {
+    case TileEditScene::Bg:
+        EditBgTiles();
+        break;
+    case TileEditScene::Object:
+        EditObjectTiles();
+        break;
+    }
 }
 
 void TileEditScene::Render()
 {
-	for (EditBgTile* bgTile : editBgTiles)
-		bgTile->Render();
+    for (EditBgTile* bgTile : editBgTiles)
+        bgTile->Render();
 
-	for (EditObjectTile* objectTile : editObjectTiles)
-		objectTile->Render();
-
+    for (EditObjectTile* objectTile : editObjectTiles)
+        objectTile->Render();
 }
 
 void TileEditScene::GUIRender()
 {
-	ImGui::Text("Map Editor");
+    ImGui::Text("Map Editor");
 
-	SaveDialog();
-	ImGui::SameLine();
-	LoadDialog();
+    SaveDialog();
+    ImGui::SameLine();
+    LoadDialog();
 
-	ImGui::DragInt("Cols", &mapCols, 1, 1, 20);
-	ImGui::DragInt("Rows", &mapRows, 1, 1, 20);
+    ImGui::DragInt("Cols", &mapCols, 1, 1, 20);
+    ImGui::DragInt("Rows", &mapRows, 1, 1, 20);
 
-	const char* editTypeNames[] = { "Bg", "Object" };
+    const char* editTypeNames[] = { "Bg", "Object" };
+    ImGui::ListBox("Edit Type", (int*)&editType, editTypeNames, 2);
 
-	ImGui::ListBox("Edit Type", (int*)&editType, editTypeNames, 2);
+    if (ImGui::Button("Create Tiles"))
+        CreateEditTiles();
 
-	if (ImGui::Button("Create Tiles"))
-		CreateEditTiles();
-
-	RenderSampleButtons();
+    RenderSampleBgButtons();
+    RenderSampleObjectButtons();
 }
 
 void TileEditScene::LoadTextures()
 {
-	WIN32_FIND_DATA findData;
+    WIN32_FIND_DATA findData;
+    HANDLE handle = FindFirstFile(L"Resources/Tiles/*.png", &findData);
 
-	HANDLE handle = FindFirstFile(L"Resources/Textures/Tiles/*.png", &findData);
+    bool result = true;
+    wstring path = L"Resources/Tiles/";
 
-	bool result = true;
-	wstring path = L"Resources/Textures/Tiles/";
+    while (result)
+    {
+        wstring fileName = findData.cFileName;
+        Texture* texture = Texture::Add(path + fileName);
 
-	while (result) 
-	{
-		Texture* texture = Texture::Add(path + findData.cFileName);
-		sampleTextures.push_back(texture);
+        if (fileName.find(L"BgTile_") == 0)
+            sampleBgTextures.push_back(texture);
+        else if (fileName.find(L"ObjectTile_") == 0)
+            sampleObjectTextures.push_back(texture);
 
-		result = FindNextFile(handle, &findData);
-	}
+        result = FindNextFile(handle, &findData);
+    }
 }
 
-void TileEditScene::RenderSampleButtons()
+void TileEditScene::RenderSampleBgButtons()
 {
-	ImGui::DragInt("Col", &sampleButtonCols);
+    ImGui::Text("BG Sample Buttons");
+    int count = 0;
+    for (Texture* texture : sampleBgTextures)
+    {
+        string key = Utility::ToString(texture->GetFile());
+        ImTextureID imguiTextureID = (ImTextureID)texture->GetSRV();
 
-	if (ImGui::TreeNode("Sample Buttons")) 
-	{
-		int count = 0;
+        if (ImGui::ImageButton(key.c_str(), imguiTextureID, ImVec2(50, 50)))
+        {
+            selectBgTexture = texture;
+        }
+        count++;
+        if (count % sampleButtonCols) ImGui::SameLine();
+    }
+}
 
-		for (Texture* texture : sampleTextures) 
-		{
-			string key = Utility::ToString(texture->GetFile());
-			ImTextureID imguiTextureID = (ImTextureID)texture->GetSRV();
+void TileEditScene::RenderSampleObjectButtons()
+{
+    ImGui::Text("Object Sample Buttons");
+    int count = 0;
+    for (Texture* texture : sampleObjectTextures)
+    {
+        string key = Utility::ToString(texture->GetFile());
+        ImTextureID imguiTextureID = (ImTextureID)texture->GetSRV();
 
-			if (ImGui::ImageButton(key.c_str(), imguiTextureID, ImVec2(50, 50))) 
-			{
-				selectTexture = texture;
-			}
-
-			count++;
-
-			if (count % sampleButtonCols)
-				ImGui::SameLine();
-		}
-
-		ImGui::TreePop();
-	}
+        if (ImGui::ImageButton(key.c_str(), imguiTextureID, ImVec2(50, 50)))
+        {
+            selectObjectTexture = texture;
+            selectedObjectType = GetObjectTypeFromFileName(texture->GetFile());
+        }
+        count++;
+        if (count % sampleButtonCols) ImGui::SameLine();
+    }
 }
 
 void TileEditScene::CreateEditTiles()
 {
-	DeleteEditTiles();
+    DeleteEditTiles();
 
-	for (int y = 0; y < mapRows; y++) 
-	{
-		for (int x = 0; x < mapCols; x++) 
-		{
-			EditBgTile* bgTile = new EditBgTile();
-			bgTile->SetTilePos(x, y);
-			bgTile->SetLocalPosition(200 + x * TILE_SIZE_X, 200 + (mapRows - 1 - y) * TILE_SIZE_Y);
-			bgTile->SetLocalScale(0.5f, 0.5f);
-			bgTile->UpdateWorld();
-			editBgTiles.push_back(bgTile);
-		}
-	}
+    for (int y = 0; y < mapRows; y++)
+    {
+        for (int x = 0; x < mapCols; x++)
+        {
+            EditBgTile* bgTile = new EditBgTile();
+            bgTile->SetTilePos(x, y);
+            bgTile->SetLocalPosition(200 + x * TILE_SIZE_X, 200 + (mapRows - 1 - y) * TILE_SIZE_Y);
+            bgTile->SetLocalScale(0.5f, 0.5f);
+            bgTile->UpdateWorld();
+            editBgTiles.push_back(bgTile);
+        }
+    }
 }
 
 void TileEditScene::DeleteEditTiles()
 {
-	for (EditBgTile* bgTile : editBgTiles)
-		delete bgTile;
+    for (EditBgTile* bgTile : editBgTiles)
+        delete bgTile;
 
-	editBgTiles.clear();
+    editBgTiles.clear();
 
-	for (EditObjectTile* objecTile : editObjectTiles)
-		delete objecTile;
+    for (EditObjectTile* objecTile : editObjectTiles)
+        delete objecTile;
 
-	editObjectTiles.clear();
+    editObjectTiles.clear();
 }
 
 void TileEditScene::EditBgTiles()
 {
-	for (EditBgTile* bgTile : editBgTiles)
-	{
-		if (bgTile->GetCollider()->IsPointCollision(mousePos))
-		{
-			if (Input::Get()->IsKeyPress(VK_LBUTTON))
-			{
-				bgTile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);
-			}
-		}
-	}
+    for (EditBgTile* bgTile : editBgTiles)
+    {
+        if (bgTile->GetCollider()->IsPointCollision(mousePos))
+        {
+            if (Input::Get()->IsKeyPress(VK_LBUTTON) && selectBgTexture)
+            {
+                bgTile->GetImage()->GetMaterial()->SetBaseMap(selectBgTexture);
+            }
+        }
+    }
 }
 
 void TileEditScene::EditObjectTiles()
 {
-	if (!Input::Get()->IsKeyDown(VK_LBUTTON)) return;
+    if (Input::Get()->IsKeyDown(VK_RBUTTON))
+    {
+        for (auto it = editObjectTiles.begin(); it != editObjectTiles.end(); )
+        {
+            if ((*it)->GetCollider()->IsPointCollision(mousePos))
+            {
+                delete* it;
+                it = editObjectTiles.erase(it);
+            }
+            else
+            {
+                ++it;
+            }
+        }
+    }
 
-	for (EditBgTile* bgTile : editBgTiles)
-	{
-		if (bgTile->GetCollider()->IsPointCollision(mousePos))
-		{
-			Vector2 pos = bgTile->GetLocalPosition();
-			CreateObjectTile(pos);
-		}
-	}
+    if (!Input::Get()->IsKeyDown(VK_LBUTTON)) return;
 
-	if (Input::Get()->IsKeyDown(VK_RBUTTON))
-	{
-		for (auto it = editObjectTiles.begin(); it != editObjectTiles.end(); )
-		{
-			if ((*it)->GetCollider()->IsPointCollision(mousePos))
-			{
-				delete* it;
-				it = editObjectTiles.erase(it);
-			}
-			else
-			{
-				++it;
-			}
-		}
-	}
+    for (EditBgTile* bgTile : editBgTiles)
+    {
+        if (bgTile->GetCollider()->IsPointCollision(mousePos))
+        {
+            Vector2 pos = bgTile->GetLocalPosition();
+            EditObjectTile* target = nullptr;
+
+            for (EditObjectTile* objectTile : editObjectTiles)
+            {
+                if (objectTile->GetLocalPosition() == pos)
+                {
+                    target = objectTile;
+                    break;
+                }
+            }
+
+            if (target)
+            {
+                target->SetType(selectedObjectType);
+                if (selectObjectTexture)
+                    target->GetImage()->GetMaterial()->SetBaseMap(selectObjectTexture);
+                target->UpdateWorld();
+            }
+            else
+            {
+                CreateObjectTile(pos, selectedObjectType);
+            }
+        }
+    }
+
+    sort(editObjectTiles.begin(), editObjectTiles.end(), EditObjectTile::IsCompare);
 }
 
-void TileEditScene::CreateObjectTile(Vector2 pos)
+void TileEditScene::CreateObjectTile(Vector2 pos, ObjectType type)
 {
-	EditObjectTile* objectTile = new EditObjectTile();
-	objectTile->SetLocalPosition(pos);
-	objectTile->SetLocalScale(0.5f, 0.5f);
-	objectTile->SetTile(ObjectType::Box);
-	objectTile->GetImage()->SetParent(objectTile);
-	objectTile->GetImage()->SetLocalPosition(Vector2(0, 110));
-	objectTile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);
-	objectTile->UpdateWorld();
-	editObjectTiles.push_back(objectTile);
+    if (type == ObjectType::None) return;
+
+    EditObjectTile* objectTile = new EditObjectTile();
+    objectTile->SetLocalPosition(pos);
+    objectTile->SetLocalScale(0.5f, 0.5f);
+    objectTile->SetTile(type);
+    objectTile->GetImage()->SetParent(objectTile);
+    objectTile->GetImage()->SetLocalPosition(Vector2(0, 110));
+    if (selectObjectTexture)
+        objectTile->GetImage()->GetMaterial()->SetBaseMap(selectObjectTexture);
+    objectTile->UpdateWorld();
+    editObjectTiles.push_back(objectTile);
+}
+
+ObjectType TileEditScene::GetObjectTypeFromFileName(const wstring& fileName)
+{
+    if (fileName.find(L"ObjectTile_Box") != wstring::npos)
+        return ObjectType::Box;
+    if (fileName.find(L"ObjectTile_Wall") != wstring::npos)
+        return ObjectType::Wall;
+    if (fileName.find(L"ObjectTile_Portal") != wstring::npos)
+        return ObjectType::Portal;
+    if (fileName.find(L"ObjectTile_Water") != wstring::npos)
+        return ObjectType::Water;
+    if (fileName.find(L"ObjectTile_IcyRoad") != wstring::npos)
+        return ObjectType::IcyRoad;
+    if (fileName.find(L"ObjectTile_Player") != wstring::npos)
+        return ObjectType::Player;
+    if (fileName.find(L"ObjectTile_End") != wstring::npos)
+        return ObjectType::End;
+    return ObjectType::None;
 }
 
 void TileEditScene::Save(string file)
 {
-	BinaryWriter* writer = new BinaryWriter(file);
+    BinaryWriter* writer = new BinaryWriter(file);
 
-	writer->Int(mapCols);
-	writer->Int(mapRows);
+    writer->Int(mapCols);
+    writer->Int(mapRows);
 
-	for (EditBgTile* bgTile : editBgTiles)
-	{
-		writer->WString(bgTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
-	}
+    for (EditBgTile* bgTile : editBgTiles)
+    {
+        writer->WString(bgTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
+    }
 
-	writer->Int(editObjectTiles.size());
-	for (EditObjectTile* objectTile : editObjectTiles)
-	{
-		writer->Vector(objectTile->GetLocalPosition());
-		writer->WString(objectTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
-	}
+    writer->Int(editObjectTiles.size());
+    for (EditObjectTile* objectTile : editObjectTiles)
+    {
+        writer->Vector(objectTile->GetLocalPosition());
+        writer->Int((int)objectTile->GetType());
+        writer->WString(objectTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
+    }
 
-	delete writer;
+    delete writer;
 }
 
 void TileEditScene::Load(string file)
 {
-	BinaryReader* reader = new BinaryReader(file);
+    BinaryReader* reader = new BinaryReader(file);
 
-	if (reader->IsFailed())
-	{
-		delete reader;
-		return;
-	}
+    if (reader->IsFailed())
+    {
+        delete reader;
+        return;
+    }
 
-	mapCols = reader->Int();
-	mapRows = reader->Int();
+    mapCols = reader->Int();
+    mapRows = reader->Int();
 
-	CreateEditTiles();
+    CreateEditTiles();
 
-	for (EditBgTile* bgTile : editBgTiles)
-	{
-		wstring file = reader->WString();
-		bgTile->GetImage()->GetMaterial()->SetBaseMap(file);
-	}
+    for (EditBgTile* bgTile : editBgTiles)
+    {
+        wstring file = reader->WString();
+        bgTile->GetImage()->GetMaterial()->SetBaseMap(file);
+    }
 
-	int objectTileCount = reader->Int();
-	for (int i = 0; i < objectTileCount; i++)
-	{
-		Vector2 pos = reader->Vector();
-		wstring file = reader->WString();
-		CreateObjectTile(pos);
-	}
+    int objectTileCount = reader->Int();
+    for (int i = 0; i < objectTileCount; i++)
+    {
+        Vector2 pos = reader->Vector();
+        int type = reader->Int();
+        wstring file = reader->WString();
+        EditObjectTile* objectTile = new EditObjectTile();
+        objectTile->SetLocalPosition(pos);
+        objectTile->SetLocalScale(0.5f, 0.5f);
+        objectTile->SetTile((ObjectType)type);
+        objectTile->GetImage()->SetParent(objectTile);
+        objectTile->GetImage()->SetLocalPosition(Vector2(0, 110));
+        objectTile->GetImage()->GetMaterial()->SetBaseMap(file);
+        objectTile->UpdateWorld();
+        editObjectTiles.push_back(objectTile);
+    }
 
-	delete reader;
+    delete reader;
 }
 
 void TileEditScene::SaveDialog()
 {
-	string key = "Save";
+    string key = "Save";
 
-	if (ImGui::Button(key.c_str())) 
-	{
-		DIALOG->OpenDialog(key, key, ".map");
-	}
+    if (ImGui::Button(key.c_str()))
+    {
+        DIALOG->OpenDialog(key, key, ".map");
+    }
 
-	if (DIALOG->Display(key)) 
-	{
-		if (DIALOG->IsOk()) 
-		{
-			char temp[256] = {};
-			GetCurrentDirectoryA(256, temp);
-			string path = temp;
-			string file = DIALOG->GetFilePathName();
-			file = file.substr(path.size() + 1);
-			Save(file);
-		}
+    if (DIALOG->Display(key))
+    {
+        if (DIALOG->IsOk())
+        {
+            char temp[256] = {};
+            GetCurrentDirectoryA(256, temp);
+            string path = temp;
+            string file = DIALOG->GetFilePathName();
+            file = file.substr(path.size() + 1);
+            Save(file);
+        }
 
-		DIALOG->Close();
-	}
+        DIALOG->Close();
+    }
 }
 
 void TileEditScene::LoadDialog()
 {
-	string key = "Load";
+    string key = "Load";
 
-	if (ImGui::Button(key.c_str()))
-	{
-		DIALOG->OpenDialog(key, key, ".map");
-	}
+    if (ImGui::Button(key.c_str()))
+    {
+        DIALOG->OpenDialog(key, key, ".map");
+    }
 
-	if (DIALOG->Display(key))
-	{
-		if (DIALOG->IsOk())
-		{
-			char temp[256] = {};
-			GetCurrentDirectoryA(256, temp);
-			string path = temp;
-			string file = DIALOG->GetFilePathName();
-			file = file.substr(path.size() + 1);
-			Load(file);
-		}
+    if (DIALOG->Display(key))
+    {
+        if (DIALOG->IsOk())
+        {
+            char temp[256] = {};
+            GetCurrentDirectoryA(256, temp);
+            string path = temp;
+            string file = DIALOG->GetFilePathName();
+            file = file.substr(path.size() + 1);
+            Load(file);
+        }
 
-		DIALOG->Close();
-	}
+        DIALOG->Close();
+    }
 }

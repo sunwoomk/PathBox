@@ -21,13 +21,16 @@ public:
 
 private:
 	void LoadTextures();
-	void RenderSampleButtons();
+	void RenderSampleBgButtons();
+	void RenderSampleObjectButtons();
 	void CreateEditTiles();
 	void DeleteEditTiles();
 
 	void EditBgTiles();
 	void EditObjectTiles();
-	void CreateObjectTile(Vector2 pos);
+	void CreateObjectTile(Vector2 pos, ObjectType type);
+
+	ObjectType GetObjectTypeFromFileName(const wstring& fileName);
 
 	void Save(string file);
 	void Load(string file);
@@ -36,15 +39,20 @@ private:
 	void LoadDialog();
 
 private:
-	int sampleButtonCols = 5;
+	int sampleButtonCols = 6;
 	int mapCols = 10;
 	int mapRows = 10;
 
 	EditType editType = Bg;
 
-	vector<Texture*> sampleTextures;
+	vector<Texture*> sampleBgTextures;
+	vector<Texture*> sampleObjectTextures;
+
+	Texture* selectBgTexture = nullptr;
+	Texture* selectObjectTexture = nullptr;
+
 	vector<EditBgTile*> editBgTiles;
 	vector<EditObjectTile*> editObjectTiles;
 
-	Texture* selectTexture;
+	ObjectType selectedObjectType = ObjectType::None;
 };

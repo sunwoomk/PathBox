@@ -14,7 +14,11 @@ public:
 	RectCollider* GetCollider() { return rectCollider; }
 	Quad* GetImage() { return image; }
 
+	BgType GetType() { return bgType; }
+	void SetType(BgType bgType) { this->bgType = bgType; }
+
 private:
 	Quad* image = nullptr;
 	RectCollider* rectCollider = nullptr;
+	BgType bgType;
 };

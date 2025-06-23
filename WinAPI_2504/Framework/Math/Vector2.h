@@ -55,6 +55,12 @@ struct Vector2 : public Float2
 		y *= scala;
 	}
 
+	bool operator==(const Vector2& other) const
+	{
+		const float EPSILON = 1e-5f;
+		return fabs(x - other.x) < EPSILON && fabs(y - other.y) < EPSILON;
+	}
+
 	Vector2 operator*(const Matrix& mat) const
 	{
 		Vector4 coord = XMLoadFloat2(this);

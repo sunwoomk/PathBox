@@ -32,22 +32,22 @@ void BgTile::SetTile(BgType bgType)
 	switch (bgType)
 	{
 	case BgType::Grass:
-		image = new Quad(L"Resources/Textures/Tiles/tileGrass.png");
+		image = new Quad(L"Resources/Tiles/tileGrass.png");
 		break;
 	case BgType::Water:
-		image = new Quad(L"Resources/Textures/Tiles/tileWater_1.png");
+		image = new Quad(L"Resources/Tiles/tileWater_1.png");
 		break;
 	case BgType::Sand:
-		image = new Quad(L"Resources/Textures/Tiles/tileSand.png");
+		image = new Quad(L"Resources/Tiles/tileSand.png");
 		break;
 	case BgType::Stone:
-		image = new Quad(L"Resources/Textures/Tiles/tileStone.png");
+		image = new Quad(L"Resources/Tiles/tileStone.png");
 		break;
 	case BgType::Wood:
-		image = new Quad(L"Resources/Textures/Tiles/tileWood.png");
+		image = new Quad(L"Resources/Tiles/tileWood.png");
 		break;
 	case BgType::IcyRoad:
-		image = new Quad(L"Resources/Textures/Tiles/tileSnow.png");
+		image = new Quad(L"Resources/Tiles/tileSnow.png");
 		break;
 	}
 }

@@ -39,6 +39,7 @@ void EditObjectTile::UpdateWorld()
 
 void EditObjectTile::SetTile(ObjectType objectType)
 {
+    SetType(objectType);
     switch (objectType)
     {
     case ObjectType::None:
@@ -64,12 +65,4 @@ void EditObjectTile::SetTile(ObjectType objectType)
         image = new Quad(L"Resources/Textures/Tiles/cart_top.png");
         break;
     }
-}
-
-void EditObjectTile::DefaultTexture()
-{
-    SetTile(ObjectType::Box);
-    image->SetParent(this);
-    image->SetLocalPosition(Vector2(0, 50));
-    image->SetLocalScale(64, 44);
 }

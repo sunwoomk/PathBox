@@ -72,13 +72,13 @@ void ObjectTile::SetTile(ObjectType objectType)
         image = nullptr;
         break;
     case ObjectType::Box:
-        image = new Quad(L"Resources/Textures/Tiles/tileBuilding_sand.png");
+        image = new Quad(L"Resources/Tiles/tileBuilding_sand.png");
         break;
     case ObjectType::Wall:
-        image = new Quad(L"Resources/Textures/Tiles/tileStone.png");
+        image = new Quad(L"Resources/Tiles/tileCastle.png");
         break;
     case ObjectType::Portal:
-        image = new Quad(L"Resources/Textures/Tiles/door_open.png");
+        image = new Quad(L"Resources/Tiles/door_open.png");
         break;
     case ObjectType::Water:
         //길막기 로직
@@ -88,7 +88,7 @@ void ObjectTile::SetTile(ObjectType objectType)
         //미끄러지기 로직
         break;
     case ObjectType::Player:
-        image = new Quad(L"Resources/Textures/Tiles/cart_top.png");
+        image = new Quad(L"Resources/Tiles/cart_top.png");
         break;
     }
 
