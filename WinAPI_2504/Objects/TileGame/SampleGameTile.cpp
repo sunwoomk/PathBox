@@ -1,6 +1,6 @@
 #include "Framework.h"
 
-GameTile::GameTile(wstring textureFile, Vector2 size)
+SampleGameTile::SampleGameTile(wstring textureFile, Vector2 size)
 	: RectCollider(size)	
 {
 	image = new Quad(textureFile);
@@ -8,18 +8,18 @@ GameTile::GameTile(wstring textureFile, Vector2 size)
 	image->SetLocalPosition(Vector2(0, 50));
 }
 
-GameTile::~GameTile()
+SampleGameTile::~SampleGameTile()
 {
 	delete image;
 }
 
-void GameTile::Render()
+void SampleGameTile::Render()
 {
 	image->Render();
 	RectCollider::Render();
 }
 
-void GameTile::UpdateWorld()
+void SampleGameTile::UpdateWorld()
 {
 	RectCollider::UpdateWorld();
 	image->UpdateWorld();

@@ -11,12 +11,12 @@ public:
 	void UpdateWorld();
 
 	void SetTile(ObjectType objectType);
-	void SetObjectType(ObjectType objectType) { this->objectType = objectType; }
 
 	void StartMove(int toX, int toY);
 	bool IsMoving() const { return isMoving; }
 
 	ObjectType GetType() { return objectType; }
+	void SetType(ObjectType objectType) { this->objectType = objectType; }
 
 private:
 	Quad* image;

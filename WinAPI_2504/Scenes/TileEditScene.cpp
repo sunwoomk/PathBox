@@ -13,51 +13,40 @@ TileEditScene::~TileEditScene()
 
 void TileEditScene::Update()
 {
-	if (ImGui::GetIO().WantCaptureMouse) return;
-
-	switch (editType)
+	switch (editType) 
 	{
-	case TileEditScene::BG:
-		EditBGTiles();
+	case TileEditScene::Bg:
+		EditBgTiles();
 		break;
-	case TileEditScene::OBJ:
-		EditObjTiles();
-		break;	
-	}	
+	case TileEditScene::Object:
+		EditObjectTiles();
+		break;
+	}
 }
 
 void TileEditScene::Render()
 {
-	for (EditTile* tile : bgEditTiles)
-	{
-		tile->Render();
-	}
+	for (EditBgTile* bgTile : editBgTiles)
+		bgTile->Render();
 
-	for (EditTile* tile : objEditTiles)
-	{
-		tile->Render();
-	}
+	for (EditObjectTile* objectTile : editObjectTiles)
+		objectTile->Render();
+
 }
 
 void TileEditScene::GUIRender()
 {
 	ImGui::Text("Map Editor");
-	SaveDialog();	
-	ImGui::SameLine();
-	LoadDialog();
-
 	ImGui::DragInt("Cols", &mapCols, 1, 1, 20);
 	ImGui::DragInt("Rows", &mapRows, 1, 1, 20);
 
-	const char* editTypeNames[] = { "BG", "OBJ" };
+	const char* editTypeNames[] = { "Bg", "Object" };
 
 	ImGui::ListBox("Edit Type", (int*)&editType, editTypeNames, 2);
 
 	if (ImGui::Button("Create Tiles"))
-	{
 		CreateEditTiles();
-	}
-	
+
 	RenderSampleButtons();
 }
 
@@ -70,8 +59,8 @@ void TileEditScene::LoadTextures()
 	bool result = true;
 	wstring path = L"Resources/Textures/Tiles/";
 
-	while (result)
-	{		
+	while (result) 
+	{
 		Texture* texture = Texture::Add(path + findData.cFileName);
 		sampleTextures.push_back(texture);
 
@@ -83,26 +72,24 @@ void TileEditScene::RenderSampleButtons()
 {
 	ImGui::DragInt("Col", &sampleButtonCols);
 
-	if (ImGui::TreeNode("Sample Buttons"))
+	if (ImGui::TreeNode("Sample Buttons")) 
 	{
 		int count = 0;
 
-		for (Texture* texture : sampleTextures)
+		for (Texture* texture : sampleTextures) 
 		{
 			string key = Utility::ToString(texture->GetFile());
 			ImTextureID imguiTextureID = (ImTextureID)texture->GetSRV();
 
-			if (ImGui::ImageButton(key.c_str(), imguiTextureID, ImVec2(50, 50)))
+			if (ImGui::ImageButton(key.c_str(), imguiTextureID, ImVec2(50, 50))) 
 			{
 				selectTexture = texture;
 			}
 
 			count++;
 
-			if(count % sampleButtonCols)
-			{
+			if (count % sampleButtonCols)
 				ImGui::SameLine();
-			}
 		}
 
 		ImGui::TreePop();
@@ -113,186 +100,77 @@ void TileEditScene::CreateEditTiles()
 {
 	DeleteEditTiles();
 
-	Vector2 size = sampleTextures[0]->GetSize();
-	Vector2 startPos = Vector2(size.x * 0.5f, SCREEN_HEIGHT - size.y * 0.5f);
-
-	imageSize = size;
+	for (int y = 0; y < mapRows; y++) 
+	{
+		for (int x = 0; x < mapCols; x++) 
+		{
+			EditBgTile* bgTile = new EditBgTile();
+			bgTile->SetTilePos(x, y);
+			bgTile->SetLocalPosition(200 + x * TILE_SIZE_X, 200 + (mapRows - 1 - y) * TILE_SIZE_Y);
+			bgTile->SetLocalScale(0.5f, 0.5f);
+			bgTile->UpdateWorld();
+			editBgTiles.push_back(bgTile);
+		}
+	}
 
 	for (int y = 0; y < mapRows; y++)
 	{
 		for (int x = 0; x < mapCols; x++)
 		{
-			EditTile* tile = new EditTile();
-			Vector2 pos = startPos + Vector2(x * tile->Size().x, -y * tile->Size().y);
-			tile->SetLocalPosition(pos);
-			tile->UpdateWorld();
-
-			bgEditTiles.push_back(tile);
+			EditObjectTile* objectTile = new EditObjectTile();
+			objectTile->SetTilePos(x, y);
+			objectTile->SetLocalPosition(200 + x * TILE_SIZE_X, 185 + (mapRows - 1 - y) * TILE_SIZE_Y);
+			objectTile->SetLocalScale(0.5f, 0.5f);
+			objectTile->UpdateWorld();
+			editObjectTiles.push_back(objectTile);
 		}
 	}
-
-	tileSize = bgEditTiles.front()->Size();
 }
 
 void TileEditScene::DeleteEditTiles()
 {
-	for (EditTile* tile : bgEditTiles)
-	{
-		delete tile;
-	}
+	for (EditBgTile* bgTile : editBgTiles)
+		delete bgTile;
 
-	bgEditTiles.clear();
+	editBgTiles.clear();
+
+	for (EditObjectTile* objecTile : editObjectTiles)
+		delete objecTile;
+
+	editObjectTiles.clear();
 }
 
-void TileEditScene::EditBGTiles()
+void TileEditScene::EditBgTiles()
 {
-	if (Input::Get()->IsKeyPress(VK_LBUTTON) == false)
-		return;
-
-	for (EditTile* tile : bgEditTiles)
+	for (EditBgTile* bgTile : editBgTiles)
 	{
-		if (tile->IsPointCollision(mousePos))
-		{			
-			tile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);			
-		}
-	}
-}
-
-void TileEditScene::EditObjTiles()
-{
-	if (Input::Get()->IsKeyDown(VK_LBUTTON) == false)
-		return;
-
-	for (EditTile* tile : bgEditTiles)
-	{
-		if (tile->IsPointCollision(mousePos))
+		if (bgTile->GetCollider()->IsPointCollision(mousePos))
 		{
-			Vector2 pos = tile->GetLocalPosition();
-
-			EditTile* objTile = new EditTile();
-			objTile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);
-			objTile->SetLocalPosition(pos);
-			objTile->UpdateWorld();
-
-			objEditTiles.push_back(objTile);
-
-			sort(objEditTiles.begin(), objEditTiles.end(), EditTile::IsCompare);
+			if (Input::Get()->IsKeyPress(VK_LBUTTON))
+			{
+				bgTile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);
+			}
 		}
 	}
 }
 
-void TileEditScene::Save(string file)
+void TileEditScene::EditObjectTiles()
 {
-	BinaryWriter* writer = new BinaryWriter(file);
-
-	writer->Int(mapCols);
-	writer->Int(mapRows);
-
-	writer->Vector(tileSize);
-	writer->Vector(imageSize);
-
-	for (EditTile* tile : bgEditTiles)
+	for (EditObjectTile* objectTile : editObjectTiles)
 	{
-		writer->WString(tile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
-	}
-
-	writer->Int(objEditTiles.size());
-	for (EditTile* tile : objEditTiles)
-	{
-		writer->Vector(tile->GetLocalPosition());
-		writer->WString(tile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
-	}
-
-	delete writer;
-}
-
-void TileEditScene::Load(string file)
-{
-	BinaryReader* reader = new BinaryReader(file);
-
-	if (reader->IsFailed())
-	{
-		delete reader;
-		return;
-	}
-
-	mapCols = reader->Int();
-	mapRows = reader->Int();
-
-	tileSize = reader->Vector();
-	imageSize = reader->Vector();
-
-	CreateEditTiles();
-
-	for (EditTile* tile : bgEditTiles)
-	{
-		wstring file = reader->WString();
-		tile->GetImage()->GetMaterial()->SetBaseMap(file);
-	}
-
-	int objTileCount = reader->Int();
-
-	for (int i = 0; i < objTileCount; i++)
-	{
-		Vector2 pos = reader->Vector();
-		wstring file = reader->WString();
-		EditTile* objTile = new EditTile();
-		objTile->GetImage()->GetMaterial()->SetBaseMap(file);
-		objTile->SetLocalPosition(pos);
-		objTile->UpdateWorld();
-
-		objEditTiles.push_back(objTile);
-	}
-
-	delete reader;
-}
-
-void TileEditScene::SaveDialog()
-{
-	string key = "Save";
-
-	if (ImGui::Button(key.c_str()))
-	{
-		DIALOG->OpenDialog(key, key, ".map");
-	}
-
-	if (DIALOG->Display(key))
-	{
-		if (DIALOG->IsOk())
+		if (objectTile->GetCollider()->IsPointCollision(mousePos))
 		{
-			char temp[256] = {};
-			GetCurrentDirectoryA(256, temp);
-			string path = temp;
-			string file = DIALOG->GetFilePathName();
-			file = file.substr(path.size() + 1);
-			Save(file);
+			if (Input::Get()->IsKeyPress(VK_LBUTTON))
+			{
+				if (objectTile->GetImage() == nullptr) 
+				{
+					objectTile->SetTile(ObjectType::Box);
+					objectTile->GetImage()->SetParent(objectTile);
+					objectTile->GetImage()->SetLocalPosition(Vector2(0, 150));
+					objectTile->UpdateWorld();
+				}
+				objectTile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);
+			}
 		}
-		
-		DIALOG->Close();
-	}
-}
-
-void TileEditScene::LoadDialog()
-{
-	string key = "Load";
-
-	if (ImGui::Button(key.c_str()))
-	{
-		DIALOG->OpenDialog(key, key, ".map");
-	}
-
-	if (DIALOG->Display(key))
-	{
-		if (DIALOG->IsOk())
-		{
-			char temp[256] = {};
-			GetCurrentDirectoryA(256, temp);
-			string path = temp;
-			string file = DIALOG->GetFilePathName();
-			file = file.substr(path.size() + 1);
-			Load(file);
-		}
-
-		DIALOG->Close();
 	}
 }

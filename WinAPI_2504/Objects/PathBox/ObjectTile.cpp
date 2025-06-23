@@ -3,7 +3,6 @@
 ObjectTile::ObjectTile(ObjectType objectType)
 {
 	SetTile(objectType);
-	this->objectType = objectType;
 	if (objectType != ObjectType::None && objectType != ObjectType::Water && objectType != ObjectType::IcyRoad)
 	{
 		image->SetParent(this);
@@ -65,7 +64,7 @@ void ObjectTile::SetTile(ObjectType objectType)
         image = nullptr;
     }
 
-    this->objectType = objectType;
+    SetType(objectType);
 
     switch (objectType)
     {

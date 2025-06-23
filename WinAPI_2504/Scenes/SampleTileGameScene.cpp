@@ -1,7 +1,7 @@
 #include "Framework.h"
-#include "TileGameScene.h"
+#include "SampleTileGameScene.h"
 
-TileGameScene::TileGameScene()
+SampleTileGameScene::SampleTileGameScene()
 {
 	tileMap = new TileMap("Resources/TextData/Stage1.map");
 	tileMap->SetLocalPosition(0, SCREEN_HEIGHT);	
@@ -15,14 +15,14 @@ TileGameScene::TileGameScene()
 	aStar = new AStar(tileMap);
 }
 
-TileGameScene::~TileGameScene()
+SampleTileGameScene::~SampleTileGameScene()
 {
 	delete tileMap;
 	delete tank;
 	delete aStar;
 }
 
-void TileGameScene::Update()
+void SampleTileGameScene::Update()
 {
 	//tileMap->UpdateWorld();
 	if (Input::Get()->IsKeyDown(VK_LBUTTON))
@@ -36,14 +36,14 @@ void TileGameScene::Update()
 	tank->Update();
 }
 
-void TileGameScene::Render()
+void SampleTileGameScene::Render()
 {
 	tileMap->Render();
 	tank->Render();
 	aStar->Render();
 }
 
-void TileGameScene::GUIRender()
+void SampleTileGameScene::GUIRender()
 {
 	tileMap->Edit();
 }

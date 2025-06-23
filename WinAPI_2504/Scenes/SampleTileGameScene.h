@@ -1,10 +1,10 @@
 #pragma once
 
-class TileGameScene : public Scene
+class SampleTileGameScene : public Scene
 {
 public:
-	TileGameScene();
-	~TileGameScene();	
+	SampleTileGameScene();
+	~SampleTileGameScene();	
 
 	void Update() override;
 	void Render() override;

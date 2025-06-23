@@ -162,10 +162,10 @@
     <ClInclude Include="Framework\Render\RenderTarget.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\TileEditScene.h">
+    <ClInclude Include="Scenes\SampleTileEditScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\TileGame\EditTile.h">
+    <ClInclude Include="Objects\TileGame\SampleEditTile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Utilities\BinaryWriter.h">
@@ -183,13 +183,13 @@
     <ClInclude Include="Libraries\ImGui\dirent\dirent.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\TileGameScene.h">
+    <ClInclude Include="Scenes\SampleTileGameScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\TileGame\TileMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\TileGame\GameTile.h">
+    <ClInclude Include="Objects\TileGame\SampleGameTile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\TileGame\Tank.h">
@@ -247,6 +247,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Objects\PathBox\TileType.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TileEditScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\PathBox\EditBgTile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\PathBox\EditObjectTile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -377,10 +386,10 @@
     <ClCompile Include="Framework\Render\RenderTarget.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\TileEditScene.cpp">
+    <ClCompile Include="Scenes\SampleTileEditScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\TileGame\EditTile.cpp">
+    <ClCompile Include="Objects\TileGame\SampleEditTile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Utilities\BinaryReader.cpp">
@@ -392,13 +401,13 @@
     <ClCompile Include="Libraries\ImGui\ImGuiFileDialog.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\TileGameScene.cpp">
+    <ClCompile Include="Scenes\SampleTileGameScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\TileGame\TileMap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\TileGame\GameTile.cpp">
+    <ClCompile Include="Objects\TileGame\SampleGameTile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\TileGame\Tank.cpp">
@@ -453,6 +462,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\PathBox\TileManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TileEditScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\PathBox\EditBgTile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\PathBox\EditObjectTile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

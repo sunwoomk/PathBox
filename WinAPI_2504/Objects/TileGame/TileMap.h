@@ -28,5 +28,5 @@ private:
 	Vector2 imageSize;
 
 	vector<Quad*> bgTiles;
-	vector<GameTile*> objTiles;
+	vector<SampleGameTile*> objTiles;
 };

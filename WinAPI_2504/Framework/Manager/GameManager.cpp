@@ -6,13 +6,14 @@
 #include "Scenes/TextureScene.h"
 #include "Scenes/AnimationScene.h"
 #include "Scenes/PixelShaderScene.h"
-#include "Scenes/TileEditScene.h"
-#include "Scenes/TileGameScene.h"
+#include "Scenes/SampleTileEditScene.h"
+#include "Scenes/SampleTileGameScene.h"
 #include "Scenes/DijkstraScene.h"
 #include "Scenes/AStarScene.h"
 #include "Scenes/InstancingScene.h"
 #include "Scenes/InstancingMapEditorScene.h"
 #include "Scenes/TestScene.h"
+#include "Scenes/TileEditScene.h"
 
 GameManager::GameManager()
 {
@@ -24,13 +25,14 @@ GameManager::GameManager()
 	//SCENE->AddScene("Game", new TextureScene());
 	//SCENE->AddScene("Game", new AnimationScene());
 	//SCENE->AddScene("Game", new PixelShaderScene());
-	//SCENE->AddScene("Game", new TileEditScene());
-	//SCENE->AddScene("Game", new TileGameScene());
+	//SCENE->AddScene("Game", new SampleTileEditScene());
+	//SCENE->AddScene("Game", new SampleTileGameScene());
 	//SCENE->AddScene("Game", new DijkstraScene());
 	//SCENE->AddScene("Game", new AStarScene());
 	//SCENE->AddScene("Game", new InstancingScene());
 	//SCENE->AddScene("Game", new InstancingMapEditorScene());
-	SCENE->AddScene("Game", new TestScene());
+	//SCENE->AddScene("Game", new TestScene());
+	SCENE->AddScene("Game", new TileEditScene());
 
 	SCENE->ChangeScene("Game");
 }

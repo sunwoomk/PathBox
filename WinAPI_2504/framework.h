@@ -130,8 +130,8 @@ typedef function<void()> Event;
 
 #include "Objects/Character/Cookie.h"
 
-#include "Objects/TileGame/EditTile.h"
-#include "Objects/TileGame/GameTile.h"
+#include "Objects/TileGame/SampleEditTile.h"
+#include "Objects/TileGame/SampleGameTile.h"
 #include "Objects/TileGame/TileMap.h"
 #include "Objects/TileGame/Tank.h"
 
@@ -139,6 +139,8 @@ typedef function<void()> Event;
 #include "Objects/PathBox/Tile.h"
 #include "Objects/PathBox/BgTile.h"
 #include "Objects/PathBox/ObjectTile.h"
+#include "Objects/PathBox/EditBgTile.h"
+#include "Objects/PathBox/EditObjectTile.h"
 #include "Objects/PathBox/Player.h"
 #include "Objects/PathBox/TileManager.h"
 

@@ -1,23 +1,23 @@
 #include "Framework.h"
 
-EditTile::EditTile() : RectCollider(Vector2(128, 90))
+SampleEditTile::SampleEditTile() : RectCollider(Vector2(128, 90))
 {
 	image = new Quad(L"Resources/Textures/Tiles/tileDirt.png");
 	image->SetParent(this);
 	image->SetLocalPosition(Vector2(0, 50));
 }
 
-EditTile::~EditTile()
+SampleEditTile::~SampleEditTile()
 {
 }
 
-void EditTile::UpdateWorld()
+void SampleEditTile::UpdateWorld()
 {
 	RectCollider::UpdateWorld();
 	image->UpdateWorld();	
 }
 
-void EditTile::Render()
+void SampleEditTile::Render()
 {
 	image->Render();
 	RectCollider::Render();

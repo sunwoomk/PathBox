@@ -21,7 +21,7 @@ void TileMap::Render()
 		tile->Render();
 	}
 
-	for (GameTile* tile : objTiles)
+	for (SampleGameTile* tile : objTiles)
 	{
 		tile->Render();
 	}
@@ -36,7 +36,7 @@ void TileMap::UpdateWorld()
 		tile->UpdateWorld();
 	}
 
-	for (GameTile* tile : objTiles)
+	for (SampleGameTile* tile : objTiles)
 	{
 		tile->UpdateWorld();
 	}
@@ -48,7 +48,7 @@ void TileMap::PushCollision(RectCollider* tank)
 
 	Vector2 pos = tank->GetGlobalPosition();
 
-	for (GameTile* tile : objTiles)
+	for (SampleGameTile* tile : objTiles)
 	{		
 		if (tile->IsRectCollision(tank, &overlap))
 		{			
@@ -78,7 +78,7 @@ void TileMap::MakeNodes(vector<Node*>& nodes)
 		Vector2 tilePos = tile->GetGlobalPosition();
 		Node* node = new Node(tilePos, nodes.size());
 
-		for (GameTile* obj : objTiles)
+		for (SampleGameTile* obj : objTiles)
 		{
 			if (obj->IsPointCollision(tilePos))
 			{
@@ -121,7 +121,7 @@ void TileMap::LoadTiles(string file)
 	{
 		Vector2 pos = reader->Vector();
 		wstring file = reader->WString();
-		GameTile* objTile = new GameTile(file, tileSize);		
+		SampleGameTile* objTile = new SampleGameTile(file, tileSize);		
 		objTile->SetLocalPosition(pos - startPos);
 		objTile->UpdateWorld();
 		objTile->SetParent(this);

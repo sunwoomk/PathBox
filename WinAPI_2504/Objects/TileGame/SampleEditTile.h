@@ -1,17 +1,17 @@
 #pragma once
 
-class EditTile : public RectCollider
+class SampleEditTile : public RectCollider
 {
 public:
-	EditTile();
-	~EditTile();
+	SampleEditTile();
+	~SampleEditTile();
 
 	void UpdateWorld();
 	void Render();
 	
 	Quad* GetImage() { return image; }
 
-	static bool IsCompare(EditTile* a, EditTile* b)
+	static bool IsCompare(SampleEditTile* a, SampleEditTile* b)
 	{
 		return a->GetLocalPosition().y > b->GetLocalPosition().y;
 	}

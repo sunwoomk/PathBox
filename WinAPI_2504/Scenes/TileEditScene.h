@@ -1,50 +1,43 @@
 #pragma once
 
-class TileEditScene : public Scene
+class TileEditScene : public Scene 
 {
 private:
 	enum EditType
 	{
-		BG = 0,
-		OBJ = 1
+		Bg,
+		Object
 	};
-
+private:
+	static const int TILE_SIZE_X = 64;
+	static const int TILE_SIZE_Y = 44;
 public:
 	TileEditScene();
-	~TileEditScene();	
+	~TileEditScene();
 
 	void Update() override;
 	void Render() override;
-	void GUIRender() override;
+	void GUIRender() override; 
 
 private:
 	void LoadTextures();
-
 	void RenderSampleButtons();
 	void CreateEditTiles();
-	void DeleteEditTiles();	
+	void DeleteEditTiles();
 
-	void EditBGTiles();
-	void EditObjTiles();
-
-	void Save(string file);
-	void Load(string file);
-
-	void SaveDialog();
-	void LoadDialog();
+	void EditBgTiles();
+	void EditObjectTiles();
 
 private:
 	int sampleButtonCols = 5;
-	int mapCols = 5;
-	int mapRows = 5;
-	Vector2 tileSize;
-	Vector2 imageSize;
+	int mapCols = 10;
+	int mapRows = 10;
 
-	EditType editType = BG;
+	EditType editType = Bg;
 
 	vector<Texture*> sampleTextures;
-	vector<EditTile*> bgEditTiles;
-	vector<EditTile*> objEditTiles;
+	vector<EditBgTile*> editBgTiles;
+	vector<EditObjectTile*> editObjectTiles;
 
 	Texture* selectTexture;
 };
