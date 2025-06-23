@@ -37,6 +37,11 @@ void TileEditScene::Render()
 void TileEditScene::GUIRender()
 {
 	ImGui::Text("Map Editor");
+
+	SaveDialog();
+	ImGui::SameLine();
+	LoadDialog();
+
 	ImGui::DragInt("Cols", &mapCols, 1, 1, 20);
 	ImGui::DragInt("Rows", &mapRows, 1, 1, 20);
 
@@ -160,17 +165,131 @@ void TileEditScene::EditObjectTiles()
 	{
 		if (objectTile->GetCollider()->IsPointCollision(mousePos))
 		{
-			if (Input::Get()->IsKeyPress(VK_LBUTTON))
+			if (Input::Get()->IsKeyDown(VK_LBUTTON))
 			{
-				if (objectTile->GetImage() == nullptr) 
+				if (objectTile->GetImage() == nullptr)
 				{
 					objectTile->SetTile(ObjectType::Box);
 					objectTile->GetImage()->SetParent(objectTile);
-					objectTile->GetImage()->SetLocalPosition(Vector2(0, 150));
+					objectTile->GetImage()->SetLocalPosition(Vector2(0, 140));
 					objectTile->UpdateWorld();
 				}
 				objectTile->GetImage()->GetMaterial()->SetBaseMap(selectTexture);
 			}
+
+			if (Input::Get()->IsKeyDown(VK_RBUTTON)) 
+			{
+				if (objectTile->GetImage() != nullptr)
+				{
+					objectTile->SetTile(ObjectType::None);
+					objectTile->UpdateWorld();
+				}
+			}
 		}
+	}
+}
+
+void TileEditScene::Save(string file)
+{
+	BinaryWriter* writer = new BinaryWriter(file);
+
+	writer->Int(mapCols);
+	writer->Int(mapRows);
+
+	for (EditBgTile* bgTile : editBgTiles) 
+	{
+		writer->WString(bgTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
+	}
+	writer->Int(editObjectTiles.size());
+	for (EditObjectTile* objectTile : editObjectTiles)
+	{
+		writer->Vector(objectTile->GetLocalPosition());
+		if (objectTile->GetImage() != nullptr)
+			writer->WString(objectTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
+	}
+	delete writer;
+}
+
+void TileEditScene::Load(string file)
+{
+	BinaryReader* reader = new BinaryReader(file);
+
+	if (reader->IsFailed()) 
+	{
+		delete reader;
+		return;
+	}
+
+	mapCols = reader->Int();
+	mapRows = reader->Int();
+
+	CreateEditTiles();
+
+	for (EditBgTile* bgTile : editBgTiles) 
+	{
+		wstring file = reader->WString();
+		bgTile->GetImage()->GetMaterial()->SetBaseMap(file);
+	}
+
+	int objectTileCount = reader->Int();
+
+	for (int i = 0; i < objectTileCount; i++)
+	{
+		Vector2 pos = reader->Vector();
+		wstring file = reader->WString();
+		if(editObjectTiles[i]->GetImage() != nullptr)
+			editObjectTiles[i]->GetImage()->GetMaterial()->SetBaseMap(file);
+	}
+
+	delete reader;
+}
+
+void TileEditScene::SaveDialog()
+{
+	string key = "Save";
+
+	if (ImGui::Button(key.c_str())) 
+	{
+		DIALOG->OpenDialog(key, key, ".map");
+	}
+
+	if (DIALOG->Display(key)) 
+	{
+		if (DIALOG->IsOk()) 
+		{
+			char temp[256] = {};
+			GetCurrentDirectoryA(256, temp);
+			string path = temp;
+			string file = DIALOG->GetFilePathName();
+			file = file.substr(path.size() + 1);
+			Save(file);
+		}
+
+		DIALOG->Close();
+	}
+}
+
+void TileEditScene::LoadDialog()
+{
+	string key = "Load";
+
+	if (ImGui::Button(key.c_str()))
+	{
+		DIALOG->OpenDialog(key, key, ".map");
+	}
+
+	if (DIALOG->Display(key))
+	{
+		if (DIALOG->IsOk())
+		{
+			char temp[256] = {};
+			GetCurrentDirectoryA(256, temp);
+			string path = temp;
+			string file = DIALOG->GetFilePathName();
+			file = file.substr(path.size() + 1);
+			Load(file);
+		}
+
+		DIALOG->Close();
 	}
 }

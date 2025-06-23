@@ -28,6 +28,12 @@ private:
 	void EditBgTiles();
 	void EditObjectTiles();
 
+	void Save(string file);
+	void Load(string file);
+
+	void SaveDialog();
+	void LoadDialog();
+
 private:
 	int sampleButtonCols = 5;
 	int mapCols = 10;
