@@ -17,8 +17,8 @@ public:
 	void UpdateWorld();
 
 	void PlayerMove();
-	void SwapAndMove(int fromY, int fromX, int toY, int toX);
-	void Teleport(int curY, int curX, int destY, int destX);
+	//void SwapAndMove(int fromY, int fromX, int toY, int toX);
+	//void Teleport(int curY, int curX, int destY, int destX);
 
 private:
 	void LoadFiles(string file);
@@ -26,6 +26,7 @@ private:
 	void CreateObjectTiles(BinaryReader* reader);
 
 private:
+	vector<int> tests;
 	vector<BgTile*> bgTiles;
 	vector<ObjectTile*> objectTiles;
 	POINT playerPos;
