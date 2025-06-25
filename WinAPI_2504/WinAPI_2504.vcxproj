@@ -195,6 +195,7 @@
     <ClInclude Include="Objects\PathBox\Player.h" />
     <ClInclude Include="Objects\PathBox\Tile.h" />
     <ClInclude Include="Objects\PathBox\TileManager.h" />
+    <ClInclude Include="Objects\PathBox\TileMaps.h" />
     <ClInclude Include="Objects\PathBox\TileType.h" />
     <ClInclude Include="Objects\PathBox\EditObjectTile.h" />
     <ClInclude Include="Objects\Shooting\Bullet.h" />
@@ -279,6 +280,7 @@
     <ClCompile Include="Objects\PathBox\Player.cpp" />
     <ClCompile Include="Objects\PathBox\Tile.cpp" />
     <ClCompile Include="Objects\PathBox\TileManager.cpp" />
+    <ClCompile Include="Objects\PathBox\TileMaps.cpp" />
     <ClCompile Include="Objects\Shooting\Bullet.cpp" />
     <ClCompile Include="Objects\Shooting\Plane.cpp" />
     <ClCompile Include="Objects\TileGame\SampleEditTile.cpp" />

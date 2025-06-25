@@ -3,12 +3,14 @@
 class ObjectTile : public Tile
 {
 public:
-	ObjectTile(ObjectType objectType);
+	ObjectTile(ObjectType objectType = ObjectType::None);
 	~ObjectTile();
 
 	void Update();
 	void Render();
 	void UpdateWorld();
+
+	Quad* GetImage() { return image; }
 
 	void SetTile(ObjectType objectType);
 

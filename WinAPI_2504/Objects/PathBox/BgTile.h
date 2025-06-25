@@ -3,11 +3,13 @@
 class BgTile : public Tile 
 {
 public:
-	BgTile(BgType bgType);
+	BgTile(BgType bgType = BgType::Grass);
 	~BgTile();
 
 	void Render();
 	void UpdateWorld();
+
+	Quad* GetImage() { return image; }
 
 	void SetTile(BgType bgType);
 

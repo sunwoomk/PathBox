@@ -3,24 +3,29 @@
 
 TestScene::TestScene()
 {
-    TileManager::Get();
+    //TileManager::Get();
+	tileMaps = new TileMaps("Resources/StageData/Test.map");
 }
 
 TestScene::~TestScene()
 {
+	delete tileMaps;
 }
 
 void TestScene::Update()
 {
-	TileManager::Get()->Update();
+	//TileManager::Get()->Update();
+	tileMaps->Update();
 }
 
 void TestScene::UpdateWorld()
 {
+	tileMaps->UpdateWorld();
 }
 
 void TestScene::Render()
 {
-	TileManager::Get()->Render();
+	//TileManager::Get()->Render();
+	tileMaps->Render();
 }
 

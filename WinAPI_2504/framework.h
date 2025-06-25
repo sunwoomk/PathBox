@@ -142,6 +142,7 @@ typedef function<void()> Event;
 #include "Objects/PathBox/EditBgTile.h"
 #include "Objects/PathBox/EditObjectTile.h"
 #include "Objects/PathBox/Player.h"
+#include "Objects/PathBox/TileMaps.h"
 #include "Objects/PathBox/TileManager.h"
 
 #include "Scenes/Scene.h"
