@@ -140,17 +140,43 @@ void TileMaps::PlayerMove()
     }
 
     case ObjectType::IcyRoad: {
-        int slideX = newX, slideY = newY;
-        while (true) {
-            int nextX = slideX + dx, nextY = slideY + dy;
-            if (nextX < 0 || nextX >= mapCols || nextY < 0 || nextY >= mapRows) break;
+        int destX = newX;
+        int destY = newY;
+        int nextX = newX + dx;
+        int nextY = newY + dy;
+        while (true) 
+        {
+            if (nextX < 0 || nextX >= mapCols || nextY < 0 || nextY >= mapRows)
+                break;
             ObjectTile* next = FindObjectTile(nextX, nextY);
-            if (!next || next->GetType() != ObjectType::None) break;
-            slideX = nextX; slideY = nextY;
+            if (next->GetType() == ObjectType::None)
+            {
+                destX = nextX;
+                destY = nextY;
+                break;
+            }
+            else if (next->GetType() == ObjectType::IcyRoad)
+            {
+                nextX = nextX + dx;
+                nextY = nextY + dy;
+            }
+            else
+                break;
         }
-        SwapAndMove(playerPos.y, playerPos.x, slideY, slideX);
-        playerPos = { slideX, slideY };
+        SwapAndMove(playerPos.y, playerPos.x, destY, destX);
+        playerPos = { destX, destY };
         break;
+        //int slideX = newX, slideY = newY;
+        //while (true) {
+        //    int nextX = slideX + dx, nextY = slideY + dy;
+        //    if (nextX < 0 || nextX >= mapCols || nextY < 0 || nextY >= mapRows) break;
+        //    ObjectTile* next = FindObjectTile(nextX, nextY);
+        //    if (!next || next->GetType() != ObjectType::None) break;
+        //    slideX = nextX; slideY = nextY;
+        //}
+        //SwapAndMove(playerPos.y, playerPos.x, slideY, slideX);
+        //playerPos = { slideX, slideY };
+        //break;
     }
 
     case ObjectType::Portal:
@@ -217,10 +243,10 @@ void TileMaps::LoadFiles(string file)
 
     for (BgTile* bgTile : bgTiles)
     {
+        int bgType = reader->Int();
+        bgTile->SetType((BgType)bgType);
         wstring file = reader->WString();
-        //int type = reader->Int();
         bgTile->GetImage()->GetMaterial()->SetBaseMap(file);
-        //bgTile->SetType((BgType)type);
     }
 
     CreateObjectTiles(reader);
@@ -268,8 +294,9 @@ void TileMaps::CreateObjectTiles(BinaryReader* reader)
 
             if (!bgTile || !objectTile) continue;
 
+            BgType bgType = bgTile->GetType();
             // 배경 타입에 따른 오브젝트 타입 매핑
-            switch (bgTile->GetType()) 
+            switch (bgType) 
             {
             case BgType::IcyRoad:
                 objectTile->SetType(ObjectType::IcyRoad);

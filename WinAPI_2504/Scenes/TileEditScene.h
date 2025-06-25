@@ -30,6 +30,7 @@ private:
 	void EditObjectTiles();
 	void CreateObjectTile(Vector2 pos, ObjectType type);
 
+	BgType GetBgTypeFromFileName(const wstring& fileName);
 	ObjectType GetObjectTypeFromFileName(const wstring& fileName);
 
 	void Save(string file);
@@ -54,5 +55,6 @@ private:
 	vector<EditBgTile*> editBgTiles;
 	vector<EditObjectTile*> editObjectTiles;
 
+	BgType selectedBgType = BgType::None;
 	ObjectType selectedObjectType = ObjectType::None;
 };

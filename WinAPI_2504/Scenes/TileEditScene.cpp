@@ -90,6 +90,7 @@ void TileEditScene::RenderSampleBgButtons()
         if (ImGui::ImageButton(key.c_str(), imguiTextureID, ImVec2(50, 50)))
         {
             selectBgTexture = texture;
+            selectedBgType = GetBgTypeFromFileName(texture->GetFile());
         }
         count++;
         if (count % sampleButtonCols) ImGui::SameLine();
@@ -155,6 +156,7 @@ void TileEditScene::EditBgTiles()
             if (Input::Get()->IsKeyPress(VK_LBUTTON) && selectBgTexture)
             {
                 bgTile->GetImage()->GetMaterial()->SetBaseMap(selectBgTexture);
+                bgTile->SetType(selectedBgType);
             }
         }
     }
@@ -229,6 +231,17 @@ void TileEditScene::CreateObjectTile(Vector2 pos, ObjectType type)
     editObjectTiles.push_back(objectTile);
 }
 
+BgType TileEditScene::GetBgTypeFromFileName(const wstring& fileName)
+{
+    if (fileName.find(L"BgTile_Grass") != wstring::npos)
+        return BgType::Grass;
+    if (fileName.find(L"BgTile_IcyRoad") != wstring::npos)
+        return BgType::IcyRoad;
+    if (fileName.find(L"BgTile_Water") != wstring::npos)
+        return BgType::Water;
+    return BgType::None;
+}
+
 ObjectType TileEditScene::GetObjectTypeFromFileName(const wstring& fileName)
 {
     if (fileName.find(L"ObjectTile_Box") != wstring::npos)
@@ -257,6 +270,8 @@ void TileEditScene::Save(string file)
 
     for (EditBgTile* bgTile : editBgTiles)
     {
+        int bgType = (int)bgTile->GetType();
+        writer->Int(bgType);
         writer->WString(bgTile->GetImage()->GetMaterial()->GetBaseMap()->GetFile());
     }
 
@@ -288,6 +303,8 @@ void TileEditScene::Load(string file)
 
     for (EditBgTile* bgTile : editBgTiles)
     {
+        int bgType = reader->Int();
+        bgTile->SetType((BgType)bgType);
         wstring file = reader->WString();
         bgTile->GetImage()->GetMaterial()->SetBaseMap(file);
     }
