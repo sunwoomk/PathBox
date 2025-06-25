@@ -29,6 +29,7 @@ void BgTile::UpdateWorld()
 
 void BgTile::SetTile(BgType bgType)
 {
+	SetType(bgType);
 	switch (bgType)
 	{
 	case BgType::Grass:

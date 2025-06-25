@@ -11,8 +11,12 @@ public:
 
 	Quad* GetImage() { return image; }
 
+	BgType GetType() { return bgType; }
+	void SetType(BgType bgType) { this->bgType = bgType; }
+
 	void SetTile(BgType bgType);
 
 private:
+	BgType bgType;
 	Quad* image;
 };

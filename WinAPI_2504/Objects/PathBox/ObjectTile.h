@@ -20,6 +20,11 @@ public:
 	ObjectType GetType() { return objectType; }
 	void SetType(ObjectType objectType) { this->objectType = objectType; }
 
+	static bool IsCompare(ObjectTile* a, ObjectTile* b)
+	{
+		return a->GetLocalPosition().y > b->GetLocalPosition().y;
+	}
+
 private:
 	Quad* image;
 	ObjectType objectType;

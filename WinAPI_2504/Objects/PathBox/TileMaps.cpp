@@ -117,7 +117,7 @@ void TileMaps::PlayerMove()
         return;
 
     ObjectTile* target = FindObjectTile(newX, newY);
-    if (!target) return;
+    if (!target || target->GetType() == ObjectType::Player) return;
 
     switch (target->GetType()) {
     case ObjectType::None:
@@ -161,7 +161,11 @@ void TileMaps::PlayerMove()
         teleportDestY = 1; // 예시
         player->StartMove(newX, newY);
         break;
+    default:
+        break;
     }
+
+    sort(objectTiles.begin(), objectTiles.end(), ObjectTile::IsCompare);
 }
 
 void TileMaps::SwapAndMove(int fromY, int fromX, int toY, int toX)
@@ -214,7 +218,9 @@ void TileMaps::LoadFiles(string file)
     for (BgTile* bgTile : bgTiles)
     {
         wstring file = reader->WString();
+        //int type = reader->Int();
         bgTile->GetImage()->GetMaterial()->SetBaseMap(file);
+        //bgTile->SetType((BgType)type);
     }
 
     CreateObjectTiles(reader);
@@ -240,20 +246,65 @@ void TileMaps::CreateBgTiles()
 
 void TileMaps::CreateObjectTiles(BinaryReader* reader)
 {
+    for (int y = 0; y < mapRows; y++) 
+    {
+        for (int x = 0; x < mapCols; x++) 
+        {
+            ObjectTile* objectTile = new ObjectTile();
+            objectTile->SetTilePos(x, y);
+            objectTile->SetLocalPosition(200 + x * TILE_SIZE_X, 185 + (mapRows - 1 - y) * TILE_SIZE_Y);
+            objectTile->SetLocalScale(0.5f, 0.5f);
+            objectTile->UpdateWorld();
+            objectTiles.push_back(objectTile);
+        }
+    }
+
+    for (int y = 0; y < mapRows; y++)
+    {
+        for (int x = 0; x < mapCols; x++)
+        {
+            BgTile* bgTile = FindBgTile(x, y);
+            ObjectTile* objectTile = FindObjectTile(x, y);
+
+            if (!bgTile || !objectTile) continue;
+
+            // 배경 타입에 따른 오브젝트 타입 매핑
+            switch (bgTile->GetType()) 
+            {
+            case BgType::IcyRoad:
+                objectTile->SetType(ObjectType::IcyRoad);
+                //objectTile->UpdateWorld();
+                break;
+            case BgType::Water:
+                objectTile->SetType(ObjectType::Water);
+                //objectTile->UpdateWorld();
+                break;
+                // 다른 배경 타입에 대한 매핑 추가 가능
+            default:
+                // 기본값 유지
+                break;
+            }
+        }
+    }
+
     int objectTileCount = reader->Int();
-    for (int i = 0; i < objectTileCount; i++)
+    for (int i = 0; i < objectTileCount; i++) 
     {
         Vector2 pos = reader->Vector();
         int type = reader->Int();
         wstring file = reader->WString();
-        ObjectTile* objectTile = new ObjectTile();
-        objectTile->SetLocalPosition(pos);
-        objectTile->SetLocalScale(0.5f, 0.5f);
-        objectTile->SetTile((ObjectType)type);
-        objectTile->GetImage()->SetParent(objectTile);
-        objectTile->GetImage()->SetLocalPosition(Vector2(0, 110));
-        objectTile->GetImage()->GetMaterial()->SetBaseMap(file);
-        objectTile->UpdateWorld();
-        objectTiles.push_back(objectTile);
+
+        int x = static_cast<int>((pos.x - 200) / TILE_SIZE_X);
+        int y = mapRows - 1 - static_cast<int>((pos.y - 200) / TILE_SIZE_Y);
+
+        ObjectTile* objectTile = FindObjectTile(x, y);
+        if (objectTile) 
+        {
+            objectTile->SetTile((ObjectType)type);
+            objectTile->GetImage()->SetParent(objectTile);
+            objectTile->GetImage()->SetLocalPosition(Vector2(0, 140));
+            objectTile->UpdateWorld();
+        }
     }
+    sort(objectTiles.begin(), objectTiles.end(), ObjectTile::IsCompare);
 }
