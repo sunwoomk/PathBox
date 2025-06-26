@@ -136,8 +136,12 @@ void TileMaps::PlayerMove()
                     nextY = nextY + dy;
                     continue;
                 }
-                else if (nextBg->GetType() == BgType::Water)
+                else if (nextBg->GetType() == BgType::Water) 
+                {
+                    destX = nextX - dx;
+                    destY = nextY - dy;
                     break;
+                }
                 else
                 {
                     if (nextObject != nullptr) 
@@ -163,6 +167,9 @@ void TileMaps::PlayerMove()
             playerPos = { destX, destY };
             return;
         }
+
+        if (targetBg->GetType() == BgType::Water)
+            return;
 
         player->StartMove(newX, newY);
         player->SetTilePos(newX, newY);
