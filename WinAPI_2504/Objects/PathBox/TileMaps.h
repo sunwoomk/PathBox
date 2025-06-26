@@ -5,6 +5,8 @@ class TileMaps : public Transform
 private:
 	static const int TILE_SIZE_X = 64;
 	static const int TILE_SIZE_Y = 44;
+	static const int START_POS_X = 200;
+	static const int START_POS_Y = SCREEN_HEIGHT - 200;
 public:
 	TileMaps(string file);
 	~TileMaps();

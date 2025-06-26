@@ -4,7 +4,7 @@
 TestScene::TestScene()
 {
     //TileManager::Get();
-	tileMaps = new TileMaps("Resources/StageData/Test.map");
+	tileMaps = new TileMaps("Resources/StageData/TestMap.map");
 }
 
 TestScene::~TestScene()

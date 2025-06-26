@@ -4,7 +4,7 @@ BgTile::BgTile(BgType bgType)
 {
 	SetTile(bgType);
 	image->SetParent(this);
-	image->SetLocalPosition(Vector2(0, 50));
+	image->SetLocalPosition(Vector2(0, 0));
 }
 
 BgTile::~BgTile()

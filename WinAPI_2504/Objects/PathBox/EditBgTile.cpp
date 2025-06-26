@@ -4,10 +4,10 @@ EditBgTile::EditBgTile(BgType bgType)
 {
 	SetTile(bgType);
 	image->SetParent(this);
-	image->SetLocalPosition(Vector2(0, 50));
+	image->SetLocalPosition(Vector2(0, 0));
 
 	rectCollider = new RectCollider(Vector2(128, 100));
-	rectCollider->SetLocalPosition(0, 50);
+	rectCollider->SetLocalPosition(0, 0);
 	rectCollider->SetParent(this);
 	rectCollider->UpdateWorld();
 }

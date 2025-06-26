@@ -3,12 +3,11 @@
 EditObjectTile::EditObjectTile(ObjectType objectType)
 {
 	SetTile(objectType);
-    if (image != nullptr) image->SetParent(this);
-    if (image != nullptr) image->SetLocalPosition(Vector2(0, 50));
-    if (image != nullptr) image->SetLocalScale(64, 44);
+    image->SetParent(this);
+    image->SetLocalPosition(Vector2(0, 60));
 
     rectCollider = new RectCollider(Vector2(128, 100));
-    rectCollider->SetLocalPosition(0, 80);
+    rectCollider->SetLocalPosition(0, 0);
     rectCollider->SetParent(this);
     rectCollider->UpdateWorld();
 }
@@ -42,24 +41,20 @@ void EditObjectTile::SetTile(ObjectType objectType)
     SetType(objectType);
     switch (objectType)
     {
-    case ObjectType::None:
-        image = nullptr;
-        break;
     case ObjectType::Box:
         image = new Quad(L"Resources/Tiles/ObjectTile_Box.png");
         break;
     case ObjectType::Wall:
         image = new Quad(L"Resources/Tiles/ObjectTile_Wall.png");
         break;
-    case ObjectType::Portal:
-        image = new Quad(L"Resources/Tiles/ObjectTile_Portal.png");
+    case ObjectType::Portal_Start:
+        image = new Quad(L"Resources/Tiles/ObjectTile_Portal_Start.png");
         break;
-    case ObjectType::Water:
-        //길막기 로직
+    case ObjectType::Portal_End:
+        image = new Quad(L"Resources/Tiles/ObjectTile_Portal_End.png");
         break;
-    case ObjectType::IcyRoad:
-        image = nullptr;
-        //미끄러지기 로직
+    case ObjectType::Goal:
+        image = new Quad(L"Resources/Tiles/ObjectTile_Goal.png");
         break;
     case ObjectType::Player:
         image = new Quad(L"Resources/Tiles/ObjectTile_Player.png");

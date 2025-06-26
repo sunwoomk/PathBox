@@ -122,10 +122,10 @@ void TileManager::PlayerMove()
 
 	ObjectTile* targetTile = objectTiles[newY][newX];
 
-	if (targetTile->GetType() == ObjectType::None)
-		SwapAndMove(curY, curX, newY, newX);
+	//if (targetTile->GetType() == ObjectType::None)
+	//	SwapAndMove(curY, curX, newY, newX);
 
-	else if (targetTile->GetType() == ObjectType::Box) 
+	if (targetTile->GetType() == ObjectType::Box) 
 	{
 		int boxNewX = newX + dx;
 		int boxNewY = newY + dy;

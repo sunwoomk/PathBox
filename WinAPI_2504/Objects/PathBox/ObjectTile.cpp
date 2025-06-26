@@ -3,11 +3,8 @@
 ObjectTile::ObjectTile(ObjectType objectType)
 {
 	SetTile(objectType);
-	if (objectType != ObjectType::None && objectType != ObjectType::Water && objectType != ObjectType::IcyRoad)
-	{
-		image->SetParent(this);
-		image->SetLocalPosition(Vector2(0, 50));
-	}
+    image->SetParent(this);
+    image->SetLocalPosition(Vector2(0, 60));
 }
 
 ObjectTile::~ObjectTile()
@@ -68,39 +65,29 @@ void ObjectTile::SetTile(ObjectType objectType)
 
     switch (objectType)
     {
-    case ObjectType::None:
-        image = nullptr;
-        break;
     case ObjectType::Box:
         image = new Quad(L"Resources/Tiles/ObjectTile_Box.png");
         break;
     case ObjectType::Wall:
         image = new Quad(L"Resources/Tiles/ObjectTile_Wall.png");
         break;
-    case ObjectType::Portal:
-        image = new Quad(L"Resources/Tiles/ObjectTile_Portal.png");
+    case ObjectType::Portal_Start:
+        image = new Quad(L"Resources/Tiles/ObjectTile_Portal_Start.png");
         break;
-    case ObjectType::Water:
-        //길막기 로직
+    case ObjectType::Portal_End:
+        image = new Quad(L"Resources/Tiles/ObjectTile_Portal_End.png");
         break;
-    case ObjectType::IcyRoad:
-        image = nullptr;
-        //미끄러지기 로직
+    case ObjectType::Goal:
+        image = new Quad(L"Resources/Tiles/ObjectTile_Goal.png");
         break;
     case ObjectType::Player:
         image = new Quad(L"Resources/Tiles/ObjectTile_Player.png");
         break;
     }
-
-    if (image != nullptr) 
-    {
-        image->SetParent(this);
-        image->SetLocalPosition(Vector2(0, 50));
-    }
 }
 
 void ObjectTile::StartMove(int toX, int toY)
 {
-    targetPos = Vector2(200 + toX * 64, 185 + (9 - toY) * 44);
+    targetPos = Vector2(START_POS_X + toX * TILE_SIZE_X, START_POS_Y - toY * TILE_SIZE_Y);
     isMoving = true;
 }

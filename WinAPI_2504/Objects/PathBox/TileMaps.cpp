@@ -246,7 +246,7 @@ void TileMaps::CreateBgTiles()
         {
             BgTile* bgTile = new BgTile();
             bgTile->SetTilePos(x, y);
-            bgTile->SetLocalPosition(200 + x * TILE_SIZE_X, 200 + (mapRows - 1 - y) * TILE_SIZE_Y);
+            bgTile->SetLocalPosition(START_POS_X + x * TILE_SIZE_X, START_POS_Y - y * TILE_SIZE_Y);
             bgTile->SetLocalScale(0.5f, 0.5f);
             bgTile->UpdateWorld();
             bgTiles.push_back(bgTile);
@@ -263,16 +263,13 @@ void TileMaps::CreateObjectTiles(BinaryReader* reader)
         int type = reader->Int();
         wstring file = reader->WString();
 
-        int x = static_cast<int>((pos.x - 200) / TILE_SIZE_X);
-        int y = mapRows - 1 - static_cast<int>((pos.y - 200) / TILE_SIZE_Y);
+        int x = static_cast<int>((pos.x - START_POS_X) / TILE_SIZE_X);
+        int y = static_cast<int>((START_POS_Y - pos.y) / TILE_SIZE_Y);
 
-        ObjectTile* objectTile = new ObjectTile();
+        ObjectTile* objectTile = new ObjectTile((ObjectType)type);
         objectTile->SetTilePos(x, y);
-        objectTile->SetLocalPosition(200 + x * TILE_SIZE_X, 185 + (mapRows - 1 - y) * TILE_SIZE_Y);
+        objectTile->SetLocalPosition(pos.x, pos.y);
         objectTile->SetLocalScale(0.5f, 0.5f);
-        objectTile->SetTile((ObjectType)type);
-        objectTile->GetImage()->SetParent(objectTile);
-        objectTile->GetImage()->SetLocalPosition(Vector2(0, 140));
         objectTile->UpdateWorld();
         objectTiles.push_back(objectTile);
         if (type == (int)ObjectType::Player)

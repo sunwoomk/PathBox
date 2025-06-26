@@ -14,12 +14,11 @@ enum class BgType
 
 enum class ObjectType 
 {
-    None = 0,
-    Box = 1,
-    Wall = 2,
-    Portal = 3,
-    Water = 4,
-    IcyRoad = 5,
-    Player = 6,
-    End = 7
+    Box = 0,
+    Wall = 1,
+    Portal_Start = 2,
+    Portal_End = 3,
+    Goal = 4,
+    Player = 5,
+    End = 6
 };

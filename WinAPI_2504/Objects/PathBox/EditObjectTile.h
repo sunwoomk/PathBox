@@ -3,7 +3,7 @@
 class EditObjectTile : public Tile 
 {
 public:
-	EditObjectTile(ObjectType objectType = ObjectType::None);
+	EditObjectTile(ObjectType objectType);
 	~EditObjectTile();
 
 	void Render();

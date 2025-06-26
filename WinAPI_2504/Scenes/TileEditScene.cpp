@@ -126,7 +126,8 @@ void TileEditScene::CreateEditTiles()
         {
             EditBgTile* bgTile = new EditBgTile();
             bgTile->SetTilePos(x, y);
-            bgTile->SetLocalPosition(200 + x * TILE_SIZE_X, 200 + (mapRows - 1 - y) * TILE_SIZE_Y);
+            //bgTile->SetLocalPosition(START_POS_X + x * TILE_SIZE_X, 200 + (mapRows - 1 - y) * TILE_SIZE_Y);
+            bgTile->SetLocalPosition(START_POS_X + x * TILE_SIZE_X, START_POS_Y - y * TILE_SIZE_Y);
             bgTile->SetLocalScale(0.5f, 0.5f);
             bgTile->UpdateWorld();
             editBgTiles.push_back(bgTile);
@@ -217,14 +218,9 @@ void TileEditScene::EditObjectTiles()
 
 void TileEditScene::CreateObjectTile(Vector2 pos, ObjectType type)
 {
-    if (type == ObjectType::None) return;
-
-    EditObjectTile* objectTile = new EditObjectTile();
+    EditObjectTile* objectTile = new EditObjectTile(type);
     objectTile->SetLocalPosition(pos);
     objectTile->SetLocalScale(0.5f, 0.5f);
-    objectTile->SetTile(type);
-    objectTile->GetImage()->SetParent(objectTile);
-    objectTile->GetImage()->SetLocalPosition(Vector2(0, 110));
     if (selectObjectTexture)
         objectTile->GetImage()->GetMaterial()->SetBaseMap(selectObjectTexture);
     objectTile->UpdateWorld();
@@ -248,17 +244,16 @@ ObjectType TileEditScene::GetObjectTypeFromFileName(const wstring& fileName)
         return ObjectType::Box;
     if (fileName.find(L"ObjectTile_Wall") != wstring::npos)
         return ObjectType::Wall;
-    if (fileName.find(L"ObjectTile_Portal") != wstring::npos)
-        return ObjectType::Portal;
-    if (fileName.find(L"ObjectTile_Water") != wstring::npos)
-        return ObjectType::Water;
-    if (fileName.find(L"ObjectTile_IcyRoad") != wstring::npos)
-        return ObjectType::IcyRoad;
+    if (fileName.find(L"ObjectTile_Portal_Start") != wstring::npos)
+        return ObjectType::Portal_Start;
+    if (fileName.find(L"ObjectTile_Portal_End") != wstring::npos)
+        return ObjectType::Portal_End;
+    if (fileName.find(L"ObjectTile_Goal") != wstring::npos)
+        return ObjectType::Goal;
     if (fileName.find(L"ObjectTile_Player") != wstring::npos)
         return ObjectType::Player;
     if (fileName.find(L"ObjectTile_End") != wstring::npos)
         return ObjectType::End;
-    return ObjectType::None;
 }
 
 void TileEditScene::Save(string file)
@@ -315,13 +310,9 @@ void TileEditScene::Load(string file)
         Vector2 pos = reader->Vector();
         int type = reader->Int();
         wstring file = reader->WString();
-        EditObjectTile* objectTile = new EditObjectTile();
+        EditObjectTile* objectTile = new EditObjectTile((ObjectType)type);
         objectTile->SetLocalPosition(pos);
         objectTile->SetLocalScale(0.5f, 0.5f);
-        objectTile->SetTile((ObjectType)type);
-        objectTile->GetImage()->SetParent(objectTile);
-        objectTile->GetImage()->SetLocalPosition(Vector2(0, 110));
-        objectTile->GetImage()->GetMaterial()->SetBaseMap(file);
         objectTile->UpdateWorld();
         editObjectTiles.push_back(objectTile);
     }
