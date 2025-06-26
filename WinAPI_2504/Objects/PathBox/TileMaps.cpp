@@ -3,15 +3,6 @@
 TileMaps::TileMaps(string file)
 {
     LoadFiles(file);
-
-    //for (ObjectTile* objectTile : objectTiles)
-    //{
-    //    if (objectTile->GetType() == ObjectType::Player)
-    //    {
-    //        playerPos = objectTile->GetTilePos();
-    //        break;
-    //    }
-    //}
 }
 
 TileMaps::~TileMaps()
@@ -101,6 +92,8 @@ void TileMaps::UpdateWorld()
 
 void TileMaps::PlayerMove()
 {
+    sort(objectTiles.begin(), objectTiles.end(), ObjectTile::IsCompare);
+
     ObjectTile* player = FindObjectTile(playerPos.x, playerPos.y);
     if (!player || player->IsMoving()) return;
 
@@ -147,13 +140,22 @@ void TileMaps::PlayerMove()
                     break;
                 else
                 {
-                    destX = nextX;
-                    destY = nextY;
-                    break;
+                    if (nextObject != nullptr) 
+                    {
+                        if (nextObject->GetType() == ObjectType::Box || nextObject->GetType() == ObjectType::Wall) 
+                        {
+                            destX = nextX - dx;
+                            destY = nextY - dy;
+                            break;
+                        }
+                    }
+                    else if(nextObject == nullptr)
+                    {
+                        destX = nextX;
+                        destY = nextY;
+                        break;
+                    }
                 }
-
-                if (nextObject->GetType() == ObjectType::Box || nextObject->GetType() == ObjectType::Wall)
-                    break;
             }
 
             player->StartMove(destX, destY);
@@ -174,8 +176,11 @@ void TileMaps::PlayerMove()
         int boxY = newY + dy;
         if (boxX < 0 || boxX >= mapCols || boxY < 0 || boxY >= mapRows)
             return;
-        ObjectTile* beyond = FindObjectTile(boxX, boxY);
-        if (beyond == nullptr) 
+        BgTile* beyondBg = FindBgTile(boxX, boxY);
+        if (beyondBg->GetType() == BgType::IcyRoad || beyondBg->GetType() == BgType::Water)
+            return;
+        ObjectTile* beyondObject = FindObjectTile(boxX, boxY);
+        if (beyondObject == nullptr)
         {
             box->StartMove(boxX, boxY);
             box->SetTilePos(boxX, boxY);
@@ -185,85 +190,7 @@ void TileMaps::PlayerMove()
             return;
         }
     }
-
-    //switch (target->GetType()) {
-    //case ObjectType::None:
-    //    SwapAndMove(playerPos.y, playerPos.x, newY, newX);
-    //    playerPos = { newX, newY };
-    //    break;
-
-    //case ObjectType::Box: {
-    //    int boxX = newX + dx;
-    //    int boxY = newY + dy;
-    //    if (boxX < 0 || boxX >= mapCols || boxY < 0 || boxY >= mapRows)
-    //        return;
-    //    ObjectTile* beyond = FindObjectTile(boxX, boxY);
-    //    if (beyond && beyond->GetType() == ObjectType::None) {
-    //        SwapAndMove(newY, newX, boxY, boxX);
-    //        SwapAndMove(playerPos.y, playerPos.x, newY, newX);
-    //        playerPos = { newX, newY };
-    //    }
-    //    break;
-    //}
-
-    //case ObjectType::IcyRoad: {
-    //    int destX = newX;
-    //    int destY = newY;
-    //    int nextX = newX + dx;
-    //    int nextY = newY + dy;
-    //    while (true) 
-    //    {
-    //        if (nextX < 0 || nextX >= mapCols || nextY < 0 || nextY >= mapRows)
-    //            break;
-    //        ObjectTile* next = FindObjectTile(nextX, nextY);
-    //        if (next->GetType() == ObjectType::None)
-    //        {
-    //            destX = nextX;
-    //            destY = nextY;
-    //            break;
-    //        }
-    //        else if (next->GetType() == ObjectType::IcyRoad)
-    //        {
-    //            nextX = nextX + dx;
-    //            nextY = nextY + dy;
-    //        }
-    //        else
-    //            break;
-    //    }
-    //    SwapAndMove(playerPos.y, playerPos.x, destY, destX);
-    //    playerPos = { destX, destY };
-    //    break;
-    //}
-
-    //case ObjectType::Portal:
-    //    isTeleporting = true;
-    //    teleportStartX = playerPos.x;
-    //    teleportStartY = playerPos.y;
-    //    teleportDestX = 7; // 예시
-    //    teleportDestY = 1; // 예시
-    //    player->StartMove(newX, newY);
-    //    break;
-    //default:
-    //    break;
-    //}
-
-    sort(objectTiles.begin(), objectTiles.end(), ObjectTile::IsCompare);
 }
-
-//void TileMaps::SwapAndMove(int fromY, int fromX, int toY, int toX)
-//{
-//    ObjectTile* from = FindObjectTile(fromX, fromY);
-//    ObjectTile* to = FindObjectTile(toX, toY);
-//
-//    if (!from || !to) return;
-//
-//    POINT tempPos = from->GetTilePos();
-//    from->SetTilePos(to->GetTilePos().x, to->GetTilePos().y);
-//    to->SetTilePos(tempPos.x, tempPos.y);
-//
-//    from->StartMove(toX, toY);
-//    to->StartMove(fromX, fromY);
-//}
 
 //void TileMaps::Teleport(int curY, int curX, int destY, int destX)
 //{
@@ -329,48 +256,6 @@ void TileMaps::CreateBgTiles()
 
 void TileMaps::CreateObjectTiles(BinaryReader* reader)
 {
-    //for (int y = 0; y < mapRows; y++) 
-    //{
-    //    for (int x = 0; x < mapCols; x++) 
-    //    {
-    //        ObjectTile* objectTile = new ObjectTile();
-    //        objectTile->SetTilePos(x, y);
-    //        objectTile->SetLocalPosition(200 + x * TILE_SIZE_X, 185 + (mapRows - 1 - y) * TILE_SIZE_Y);
-    //        objectTile->SetLocalScale(0.5f, 0.5f);
-    //        objectTile->UpdateWorld();
-    //        objectTiles.push_back(objectTile);
-    //    }
-    //}
-
-    //for (int y = 0; y < mapRows; y++)
-    //{
-    //    for (int x = 0; x < mapCols; x++)
-    //    {
-    //        BgTile* bgTile = FindBgTile(x, y);
-    //        ObjectTile* objectTile = FindObjectTile(x, y);
-
-    //        if (!bgTile || !objectTile) continue;
-
-    //        BgType bgType = bgTile->GetType();
-    //        // 배경 타입에 따른 오브젝트 타입 매핑
-    //        switch (bgType) 
-    //        {
-    //        case BgType::IcyRoad:
-    //            objectTile->SetType(ObjectType::IcyRoad);
-    //            //objectTile->UpdateWorld();
-    //            break;
-    //        case BgType::Water:
-    //            objectTile->SetType(ObjectType::Water);
-    //            //objectTile->UpdateWorld();
-    //            break;
-    //            // 다른 배경 타입에 대한 매핑 추가 가능
-    //        default:
-    //            // 기본값 유지
-    //            break;
-    //        }
-    //    }
-    //}
-
     int objectTileCount = reader->Int();
     for (int i = 0; i < objectTileCount; i++) 
     {
@@ -390,14 +275,6 @@ void TileMaps::CreateObjectTiles(BinaryReader* reader)
         objectTile->GetImage()->SetLocalPosition(Vector2(0, 140));
         objectTile->UpdateWorld();
         objectTiles.push_back(objectTile);
-        //ObjectTile* objectTile = FindObjectTile(x, y);
-        //if (objectTile) 
-        //{
-        //    objectTile->SetTile((ObjectType)type);
-        //    objectTile->GetImage()->SetParent(objectTile);
-        //    objectTile->GetImage()->SetLocalPosition(Vector2(0, 140));
-        //    objectTile->UpdateWorld();
-        //}
         if (type == (int)ObjectType::Player)
             playerPos = { x, y };
     }
