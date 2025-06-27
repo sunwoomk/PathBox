@@ -42,6 +42,17 @@ ObjectTile* TileMaps::FindObjectTile(int x, int y)
     return nullptr;
 }
 
+ObjectTile* TileMaps::FindObjectTile(ObjectType objectType)
+{
+    for (ObjectTile* objectTile : objectTiles)
+    {
+        ObjectType type = objectTile->GetType();
+        if (type == objectType)
+            return objectTile;
+    }
+    return nullptr;
+}
+
 void TileMaps::Update()
 {
     for (ObjectTile* objectTile : objectTiles)
@@ -49,15 +60,15 @@ void TileMaps::Update()
         objectTile->Update();
     }
 
-    //if (isTeleporting)
-    //{
-    //    ObjectTile* player = FindObjectTile(teleportStartX, teleportStartY);
-    //    if (player && !player->IsMoving())
-    //    {
-    //        Teleport(teleportStartY, teleportStartX, teleportDestY, teleportDestX);
-    //        isTeleporting = false;
-    //    }
-    //}
+    if (isTeleporting) 
+    {
+        ObjectTile* player = FindObjectTile(ObjectType::Player);
+        if (player && !player->IsMoving()) 
+        {
+            Teleport(player);
+            isTeleporting = false;
+        }
+    }
 
     PlayerMove();
 }
@@ -201,24 +212,30 @@ void TileMaps::PlayerMove()
             return;
         }
     }
+
+    if (targetObject->GetType() == ObjectType::Portal_Start) 
+    {
+        ObjectTile* endPortal = FindObjectTile(ObjectType::Portal_End);
+        if (endPortal == nullptr) return;
+        tpStartPosX = newX;
+        tpStartPosY = newY;
+        tpEndPosX = endPortal->GetTilePos().x;
+        tpEndPosY = endPortal->GetTilePos().y;
+        destPos = endPortal->GetLocalPosition();
+        player->StartMove(tpStartPosX, tpStartPosY);
+        isTeleporting = true;
+        return;
+    }
 }
 
-//void TileMaps::Teleport(int curY, int curX, int destY, int destX)
-//{
-//    ObjectTile* player = FindObjectTile(curX, curY);
-//    ObjectTile* dest = FindObjectTile(destX, destY);
-//
-//    if (!player || !dest) return;
-//
-//    POINT tempPos = player->GetTilePos();
-//    player->SetTilePos(dest->GetTilePos().x, dest->GetTilePos().y);
-//    dest->SetTilePos(tempPos.x, tempPos.y);
-//
-//    player->StartMove(destX, destY);
-//    dest->StartMove(curX, curY);
-//
-//    playerPos = { destX, destY };
-//}
+void TileMaps::Teleport(ObjectTile* player)
+{
+    player->SetTilePos(tpEndPosX, tpEndPosY + 1);
+    player->SetLocalPosition(destPos - Vector2(0, TILE_SIZE_Y));
+    player->UpdateWorld();
+    playerPos = { tpEndPosX, tpEndPosY + 1 };
+    isTeleporting = false;
+}
 
 void TileMaps::LoadFiles(string file)
 {

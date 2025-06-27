@@ -13,12 +13,14 @@ public:
 
 	BgTile* FindBgTile(int x, int y);
 	ObjectTile* FindObjectTile(int x, int y);
+	ObjectTile* FindObjectTile(ObjectType objectType);
 
 	void Update();
 	void Render();
 	void UpdateWorld();
 
 	void PlayerMove();
+	void Teleport(ObjectTile* player);
 
 private:
 	void LoadFiles(string file);
@@ -32,8 +34,9 @@ private:
 	POINT playerPos;
 
 	bool isTeleporting = false;
-	int teleportDestX, teleportDestY;
-	int teleportStartX, teleportStartY;
+	int tpStartPosX, tpStartPosY;
+	int tpEndPosX, tpEndPosY;
+	Vector2 destPos;
 	int mapCols = 0;
 	int mapRows = 0;
 };

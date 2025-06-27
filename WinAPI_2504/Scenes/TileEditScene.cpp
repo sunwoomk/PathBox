@@ -126,7 +126,6 @@ void TileEditScene::CreateEditTiles()
         {
             EditBgTile* bgTile = new EditBgTile();
             bgTile->SetTilePos(x, y);
-            //bgTile->SetLocalPosition(START_POS_X + x * TILE_SIZE_X, 200 + (mapRows - 1 - y) * TILE_SIZE_Y);
             bgTile->SetLocalPosition(START_POS_X + x * TILE_SIZE_X, START_POS_Y - y * TILE_SIZE_Y);
             bgTile->SetLocalScale(0.5f, 0.5f);
             bgTile->UpdateWorld();

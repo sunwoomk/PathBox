@@ -31,8 +31,8 @@ GameManager::GameManager()
 	//SCENE->AddScene("Game", new AStarScene());
 	//SCENE->AddScene("Game", new InstancingScene());
 	//SCENE->AddScene("Game", new InstancingMapEditorScene());
-	SCENE->AddScene("Game", new TestScene());
-	//SCENE->AddScene("Game", new TileEditScene());
+	//SCENE->AddScene("Game", new TestScene());
+	SCENE->AddScene("Game", new TileEditScene());
 
 	SCENE->ChangeScene("Game");
 }
