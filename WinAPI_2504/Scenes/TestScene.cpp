@@ -8,7 +8,9 @@ TestScene::TestScene()
 	//tileMaps = new TileMaps("Resources/StageData/Test.map");
 	//tileMaps = new TileMaps("Resources/StageData/Stage1.map");
 	//tileMaps = new TileMaps("Resources/StageData/Stage2.map");
-	tileMaps = new TileMaps("Resources/StageData/Stage3.map");
+	//tileMaps = new TileMaps("Resources/StageData/Stage3.map");
+	//tileMaps = new TileMaps("Resources/StageData/Stage4.map");
+	tileMaps = new TileMaps("Resources/StageData/Stage5.map");
 }
 
 TestScene::~TestScene()

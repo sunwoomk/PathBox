@@ -125,8 +125,12 @@ void TileMaps::PlayerMove()
 
             while (true)
             {
-                if (nextX < 0 || nextX >= mapCols || nextY < 0 || nextY >= mapRows)
+                if (nextX < 0 || nextX >= mapCols || nextY < 0 || nextY >= mapRows) 
+                {
+                    destX = nextX - dx;
+                    destY = nextY - dy;
                     break;
+                }
                 BgTile* nextBg = FindBgTile(nextX, nextY);
                 ObjectTile* nextObject = FindObjectTile(nextX, nextY);
 
@@ -134,7 +138,7 @@ void TileMaps::PlayerMove()
                 {
                     nextX = nextX + dx;
                     nextY = nextY + dy;
-                    continue;
+                    //continue;
                 }
                 else if (nextBg->GetType() == BgType::Water) 
                 {
@@ -146,7 +150,7 @@ void TileMaps::PlayerMove()
                 {
                     if (nextObject != nullptr) 
                     {
-                        if (nextObject->GetType() == ObjectType::Box || nextObject->GetType() == ObjectType::Wall) 
+                        if (nextObject->GetType() == ObjectType::Box || nextObject->GetType() == ObjectType::Wall || nextObject->GetType() == ObjectType::Goal)
                         {
                             destX = nextX - dx;
                             destY = nextY - dy;
