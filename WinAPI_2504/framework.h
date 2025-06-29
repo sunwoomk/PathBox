@@ -114,27 +114,6 @@ typedef function<void()> Event;
 #include "Objects/Collider/RectCollider.h"
 #include "Objects/Collider/LineCollider.h"
 
-#include "Objects/Manger/DataManager.h"
-#include "Objects/Manger/EventManager.h"
-
-#include "Objects/Algorithm/DNode.h"
-#include "Objects/Algorithm/Dijkstra.h"
-#include "Objects/Algorithm/Node.h"
-#include "Objects/Algorithm/Heap.h"
-#include "Objects/Algorithm/AStar.h"
-
-#include "Objects/Shooting/Plane.h"
-#include "Objects/Shooting/Bullet.h"
-
-#include "Objects/Flappy/Bird.h"
-
-#include "Objects/Character/Cookie.h"
-
-#include "Objects/TileGame/SampleEditTile.h"
-#include "Objects/TileGame/SampleGameTile.h"
-#include "Objects/TileGame/TileMap.h"
-#include "Objects/TileGame/Tank.h"
-
 #include "Objects/PathBox/TileType.h"
 #include "Objects/PathBox/Tile.h"
 #include "Objects/PathBox/BgTile.h"
@@ -143,7 +122,6 @@ typedef function<void()> Event;
 #include "Objects/PathBox/EditObjectTile.h"
 #include "Objects/PathBox/Player.h"
 #include "Objects/PathBox/TileMaps.h"
-//#include "Objects/PathBox/TileManager.h"
 
 #include "Scenes/Scene.h"
 #include "Framework/Manager/SceneManager.h"

@@ -174,21 +174,12 @@
     <ClInclude Include="Libraries\ImGui\dirent\dirent.h" />
     <ClInclude Include="Libraries\ImGui\ImGuiFileDialog.h" />
     <ClInclude Include="Libraries\ImGui\ImGuiFileDialogConfig.h" />
-    <ClInclude Include="Objects\Algorithm\AStar.h" />
-    <ClInclude Include="Objects\Algorithm\Dijkstra.h" />
-    <ClInclude Include="Objects\Algorithm\DNode.h" />
-    <ClInclude Include="Objects\Algorithm\Heap.h" />
-    <ClInclude Include="Objects\Algorithm\Node.h" />
     <ClInclude Include="Objects\Basic\GameObject.h" />
     <ClInclude Include="Objects\Basic\Quad.h" />
-    <ClInclude Include="Objects\Character\Cookie.h" />
     <ClInclude Include="Objects\Collider\CircleCollider.h" />
     <ClInclude Include="Objects\Collider\Collider.h" />
     <ClInclude Include="Objects\Collider\LineCollider.h" />
     <ClInclude Include="Objects\Collider\RectCollider.h" />
-    <ClInclude Include="Objects\Flappy\Bird.h" />
-    <ClInclude Include="Objects\Manger\DataManager.h" />
-    <ClInclude Include="Objects\Manger\EventManager.h" />
     <ClInclude Include="Objects\PathBox\BgTile.h" />
     <ClInclude Include="Objects\PathBox\EditBgTile.h" />
     <ClInclude Include="Objects\PathBox\ObjectTile.h" />
@@ -197,30 +188,10 @@
     <ClInclude Include="Objects\PathBox\TileMaps.h" />
     <ClInclude Include="Objects\PathBox\TileType.h" />
     <ClInclude Include="Objects\PathBox\EditObjectTile.h" />
-    <ClInclude Include="Objects\Shooting\Bullet.h" />
-    <ClInclude Include="Objects\Shooting\Plane.h" />
-    <ClInclude Include="Objects\TileGame\SampleEditTile.h" />
-    <ClInclude Include="Objects\TileGame\SampleGameTile.h" />
-    <ClInclude Include="Objects\TileGame\Tank.h" />
-    <ClInclude Include="Objects\TileGame\TileMap.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Scenes\AnimationScene.h" />
-    <ClInclude Include="Scenes\AStarScene.h" />
-    <ClInclude Include="Scenes\CollisionScene.h" />
-    <ClInclude Include="Scenes\DijkstraScene.h" />
-    <ClInclude Include="Scenes\InstancingMapEditorScene.h" />
-    <ClInclude Include="Scenes\InstancingScene.h" />
-    <ClInclude Include="Scenes\PixelShaderScene.h" />
     <ClInclude Include="Scenes\Scene.h" />
-    <ClInclude Include="Scenes\ShootingScene.h" />
     <ClInclude Include="Scenes\TestScene.h" />
-    <ClInclude Include="Scenes\TextureScene.h" />
-    <ClInclude Include="Scenes\SampleTileEditScene.h" />
-    <ClInclude Include="Scenes\SampleTileGameScene.h" />
     <ClInclude Include="Scenes\TileEditScene.h" />
-    <ClInclude Include="Scenes\TutorialScene.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WinAPI_2504.h" />
   </ItemGroup>
@@ -257,21 +228,12 @@
     <ClCompile Include="Libraries\ImGui\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Objects\Algorithm\AStar.cpp" />
-    <ClCompile Include="Objects\Algorithm\Dijkstra.cpp" />
-    <ClCompile Include="Objects\Algorithm\DNode.cpp" />
-    <ClCompile Include="Objects\Algorithm\Heap.cpp" />
-    <ClCompile Include="Objects\Algorithm\Node.cpp" />
     <ClCompile Include="Objects\Basic\GameObject.cpp" />
     <ClCompile Include="Objects\Basic\Quad.cpp" />
-    <ClCompile Include="Objects\Character\Cookie.cpp" />
     <ClCompile Include="Objects\Collider\CircleCollider.cpp" />
     <ClCompile Include="Objects\Collider\Collider.cpp" />
     <ClCompile Include="Objects\Collider\LineCollider.cpp" />
     <ClCompile Include="Objects\Collider\RectCollider.cpp" />
-    <ClCompile Include="Objects\Flappy\Bird.cpp" />
-    <ClCompile Include="Objects\Manger\DataManager.cpp" />
-    <ClCompile Include="Objects\Manger\EventManager.cpp" />
     <ClCompile Include="Objects\PathBox\BgTile.cpp" />
     <ClCompile Include="Objects\PathBox\EditBgTile.cpp" />
     <ClCompile Include="Objects\PathBox\EditObjectTile.cpp" />
@@ -279,28 +241,8 @@
     <ClCompile Include="Objects\PathBox\Player.cpp" />
     <ClCompile Include="Objects\PathBox\Tile.cpp" />
     <ClCompile Include="Objects\PathBox\TileMaps.cpp" />
-    <ClCompile Include="Objects\Shooting\Bullet.cpp" />
-    <ClCompile Include="Objects\Shooting\Plane.cpp" />
-    <ClCompile Include="Objects\TileGame\SampleEditTile.cpp" />
-    <ClCompile Include="Objects\TileGame\SampleGameTile.cpp" />
-    <ClCompile Include="Objects\TileGame\Tank.cpp" />
-    <ClCompile Include="Objects\TileGame\TileMap.cpp" />
-    <ClCompile Include="Scenes\AnimationScene.cpp" />
-    <ClCompile Include="Scenes\AStarScene.cpp" />
-    <ClCompile Include="Scenes\CollisionScene.cpp" />
-    <ClCompile Include="Scenes\DijkstraScene.cpp" />
-    <ClCompile Include="Scenes\InstancingMapEditorScene.cpp" />
-    <ClCompile Include="Scenes\InstancingScene.cpp" />
-    <ClCompile Include="Scenes\PixelShaderScene.cpp" />
-    <ClCompile Include="Scenes\ShootingScene.cpp" />
     <ClCompile Include="Scenes\TestScene.cpp" />
-    <ClCompile Include="Scenes\TextureScene.cpp" />
-    <ClCompile Include="Scenes\SampleTileEditScene.cpp" />
-    <ClCompile Include="Scenes\SampleTileGameScene.cpp" />
     <ClCompile Include="Scenes\TileEditScene.cpp" />
-    <ClCompile Include="Scenes\TutorialScene.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="WinAPI_2504.cpp" />
   </ItemGroup>
   <ItemGroup>
