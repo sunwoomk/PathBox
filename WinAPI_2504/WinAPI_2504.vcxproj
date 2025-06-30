@@ -183,7 +183,8 @@
     <ClInclude Include="Objects\PathBox\BgTile.h" />
     <ClInclude Include="Objects\PathBox\EditBgTile.h" />
     <ClInclude Include="Objects\PathBox\ObjectTile.h" />
-    <ClInclude Include="Objects\PathBox\Player.h" />
+    <ClInclude Include="Objects\UI\Button.h" />
+    <ClInclude Include="Objects\UI\Panel.h" />
     <ClInclude Include="Objects\PathBox\Tile.h" />
     <ClInclude Include="Objects\PathBox\TileMaps.h" />
     <ClInclude Include="Objects\PathBox\TileType.h" />
@@ -238,9 +239,10 @@
     <ClCompile Include="Objects\PathBox\EditBgTile.cpp" />
     <ClCompile Include="Objects\PathBox\EditObjectTile.cpp" />
     <ClCompile Include="Objects\PathBox\ObjectTile.cpp" />
-    <ClCompile Include="Objects\PathBox\Player.cpp" />
     <ClCompile Include="Objects\PathBox\Tile.cpp" />
     <ClCompile Include="Objects\PathBox\TileMaps.cpp" />
+    <ClCompile Include="Objects\UI\Button.cpp" />
+    <ClCompile Include="Objects\UI\Panel.cpp" />
     <ClCompile Include="Scenes\TestScene.cpp" />
     <ClCompile Include="Scenes\TileEditScene.cpp" />
     <ClCompile Include="WinAPI_2504.cpp" />
