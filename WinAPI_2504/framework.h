@@ -122,8 +122,14 @@ typedef function<void()> Event;
 #include "Objects/PathBox/EditObjectTile.h"
 #include "Objects/PathBox/TileMaps.h"
 
-#include "Objects/UI/Button.h"
-#include "Objects/UI/Panel.h"
+#include "Objects/UI/Buttons/Button.h"
+#include "Objects/UI/Buttons/RestartButton.h"
+#include "Objects/UI/Buttons/ResumeButton.h"
+#include "Objects/UI/Buttons/NextStageButton.h"
+#include "Objects/UI/Buttons/SelectStageButton.h"
+#include "Objects/UI/Panels/Panel.h"
+#include "Objects/UI/Panels/StageClearPanel.h"
+#include "Objects/UI/Panels/MenuPanel.h"
 
 #include "Scenes/Scene.h"
 #include "Framework/Manager/SceneManager.h"
