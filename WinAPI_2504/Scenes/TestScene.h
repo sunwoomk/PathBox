@@ -8,7 +8,7 @@ private:
 	static const int MAP_COLS = 10;
 	static const int MAP_ROWS = 10;
 public:
-	TestScene();
+	TestScene(string file);
 	~TestScene();
 
 	void Update() override;

@@ -7,10 +7,15 @@ GameManager::GameManager()
 {
 	Create();
 
-	//SCENE->AddScene("Game", new TestScene());
-	SCENE->AddScene("Game", new TileEditScene());
+	SCENE->AddScene("Stage1", new TestScene("Resources/StageData/Stage1.map"));
+	SCENE->AddScene("Stage2", new TestScene("Resources/StageData/Stage2.map"));
+	SCENE->AddScene("Stage3", new TestScene("Resources/StageData/Stage3.map"));
+	SCENE->AddScene("Stage4", new TestScene("Resources/StageData/Stage4.map"));
+	SCENE->AddScene("Stage5", new TestScene("Resources/StageData/Stage5.map"));
+	SCENE->AddScene("Stage6", new TestScene("Resources/StageData/Stage6.map"));
+	//SCENE->AddScene("Game", new TileEditScene());
 
-	SCENE->ChangeScene("Game");
+	SCENE->ChangeScene("Stage5");
 }
 
 GameManager::~GameManager()
@@ -20,6 +25,30 @@ GameManager::~GameManager()
 
 void GameManager::Update()
 {
+	if (Input::Get()->IsKeyDown(VK_F1)) 
+	{
+		SCENE->ChangeScene("Stage1");
+	}
+	if (Input::Get()->IsKeyDown(VK_F2))
+	{
+		SCENE->ChangeScene("Stage2");
+	}
+	if (Input::Get()->IsKeyDown(VK_F3))
+	{
+		SCENE->ChangeScene("Stage3");
+	}
+	if (Input::Get()->IsKeyDown(VK_F4))
+	{
+		SCENE->ChangeScene("Stage4");
+	}
+	if (Input::Get()->IsKeyDown(VK_F5))
+	{
+		SCENE->ChangeScene("Stage5");
+	}
+	if (Input::Get()->IsKeyDown(VK_F6))
+	{
+		SCENE->ChangeScene("Stage6");
+	}
 	Timer::Get()->Update();
 	Input::Get()->Update();
 	Audio::Get()->Update();

@@ -1,7 +1,7 @@
 #include "Framework.h"
 #include "TestScene.h"
 
-TestScene::TestScene()
+TestScene::TestScene(string file)
 {
     //TileManager::Get();
 	//tileMaps = new TileMaps("Resources/StageData/TestMap.map");
@@ -11,7 +11,8 @@ TestScene::TestScene()
 	//tileMaps = new TileMaps("Resources/StageData/Stage3.map");
 	//tileMaps = new TileMaps("Resources/StageData/Stage4.map");
 	//tileMaps = new TileMaps("Resources/StageData/Stage5.map");
-	tileMaps = new TileMaps("Resources/StageData/Stage6.map");
+	//tileMaps = new TileMaps("Resources/StageData/Stage6.map");
+	tileMaps = new TileMaps(file);
 }
 
 TestScene::~TestScene()
