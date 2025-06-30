@@ -13,7 +13,7 @@ GameManager::GameManager()
 	SCENE->AddScene("Stage4", new TestScene("Resources/StageData/Stage4.map"));
 	SCENE->AddScene("Stage5", new TestScene("Resources/StageData/Stage5.map"));
 	SCENE->AddScene("Stage6", new TestScene("Resources/StageData/Stage6.map"));
-	//SCENE->AddScene("Game", new TileEditScene());
+	SCENE->AddScene("EditScene", new TileEditScene());
 
 	SCENE->ChangeScene("Stage5");
 }
@@ -48,6 +48,10 @@ void GameManager::Update()
 	if (Input::Get()->IsKeyDown(VK_F6))
 	{
 		SCENE->ChangeScene("Stage6");
+	}
+	if (Input::Get()->IsKeyDown(VK_F7))
+	{
+		SCENE->ChangeScene("EditScene");
 	}
 	Timer::Get()->Update();
 	Input::Get()->Update();
