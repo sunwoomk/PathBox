@@ -25,4 +25,5 @@ void StageClearPanel::SetButtons()
 	Panel::CreateButton(ButtonType::SelectStage, Vector2(-50, -40));
 	//buttons.back()->SetOnClick([this]() { UIManager::Get()->SwitchMenuPanel(); });
 	Panel::CreateButton(ButtonType::NextStage, Vector2(50, -40));
+	buttons.back()->SetOnClick([this]() { SCENE->ChangeNextStageScene(); this->SetActive(false);});
 }

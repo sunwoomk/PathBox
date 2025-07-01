@@ -16,7 +16,11 @@ public:
 	void Render() override;
 	void PostRender() override;
 
+	void SetKey(const string& k) { key = k; }
+	string GetKey() const { return key; }
+
 private:
+	string key;
 	TileMaps* tileMaps;
 };
 

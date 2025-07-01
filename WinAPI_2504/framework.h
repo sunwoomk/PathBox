@@ -132,6 +132,9 @@ typedef function<void()> Event;
 #include "Objects/UI/Panels/MenuPanel.h"
 
 #include "Scenes/Scene.h"
+#include "Scenes/TestScene.h"
+#include "Scenes/TileEditScene.h"
+
 #include "Framework/Manager/SceneManager.h"
 #include "Framework/Manager/GameManager.h"
 #include "Framework/Manager/UIManager.h"

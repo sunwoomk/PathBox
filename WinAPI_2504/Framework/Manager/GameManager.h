@@ -13,6 +13,9 @@ private:
 	void Create();
 	void Release();
 
+	void CreateScene(string file, string key);
+	void SetScenes();
+
 private:
 	HDC hdc;	
 

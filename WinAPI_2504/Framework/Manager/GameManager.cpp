@@ -1,21 +1,14 @@
 #include "Framework.h"
 
-#include "Scenes/TestScene.h"
-#include "Scenes/TileEditScene.h"
-
 GameManager::GameManager()
 {
 	Create();
 
-	SCENE->AddScene("Stage1", new TestScene("Resources/StageData/Stage1.map"));
-	SCENE->AddScene("Stage2", new TestScene("Resources/StageData/Stage2.map"));
-	SCENE->AddScene("Stage3", new TestScene("Resources/StageData/Stage3.map"));
-	SCENE->AddScene("Stage4", new TestScene("Resources/StageData/Stage4.map"));
-	SCENE->AddScene("Stage5", new TestScene("Resources/StageData/Stage5.map"));
-	SCENE->AddScene("Stage6", new TestScene("Resources/StageData/Stage6.map"));
+	SetScenes();
+
 	SCENE->AddScene("EditScene", new TileEditScene());
 
-	SCENE->ChangeScene("Stage5");
+	SCENE->ChangeScene("Stage1");
 }
 
 GameManager::~GameManager()
@@ -128,4 +121,22 @@ void GameManager::Release()
 	ImGui_ImplWin32_Shutdown();
 
 	ImGui::DestroyContext();
+}
+
+void GameManager::CreateScene(string file, string key)
+{
+	TestScene* stageScene = new TestScene(file);
+	SCENE->AddScene(key, stageScene);
+	SCENE->AddStageScene(stageScene);
+	stageScene->SetKey(key);
+}
+
+void GameManager::SetScenes()
+{
+	CreateScene("Resources/StageData/Stage1.map", "Stage1");
+	CreateScene("Resources/StageData/Stage2.map", "Stage2");
+	CreateScene("Resources/StageData/Stage3.map", "Stage3");
+	CreateScene("Resources/StageData/Stage4.map", "Stage4");
+	CreateScene("Resources/StageData/Stage5.map", "Stage5");
+	CreateScene("Resources/StageData/Stage6.map", "Stage6");
 }

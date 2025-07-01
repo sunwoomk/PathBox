@@ -59,3 +59,26 @@ void SceneManager::ChangeScene(string key)
 	currentScene = scenes[key];
 	currentScene->Start();
 }
+
+void SceneManager::ChangeNextStageScene()
+{
+	for (size_t i = 0; i < stageScenes.size(); ++i)
+	{
+		if (stageScenes[i] == currentScene)
+		{
+			if (i + 1 < stageScenes.size())
+			{
+				for (const auto& pair : scenes)
+				{
+					if (pair.second == stageScenes[i + 1])
+					{
+						ChangeScene(pair.first);
+						return;
+					}
+				}
+			}
+			else
+				return;
+		}
+	}
+}
