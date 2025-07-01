@@ -10,8 +10,10 @@ NextStageButton::~NextStageButton()
 
 void NextStageButton::Update()
 {
+	Button::Update();
 }
 
 void NextStageButton::Render()
 {
+	Button::Render();
 }

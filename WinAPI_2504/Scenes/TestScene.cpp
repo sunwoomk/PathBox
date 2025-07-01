@@ -3,16 +3,8 @@
 
 TestScene::TestScene(string file)
 {
-    //TileManager::Get();
-	//tileMaps = new TileMaps("Resources/StageData/TestMap.map");
-	//tileMaps = new TileMaps("Resources/StageData/Test.map");
-	//tileMaps = new TileMaps("Resources/StageData/Stage1.map");
-	//tileMaps = new TileMaps("Resources/StageData/Stage2.map");
-	//tileMaps = new TileMaps("Resources/StageData/Stage3.map");
-	//tileMaps = new TileMaps("Resources/StageData/Stage4.map");
-	//tileMaps = new TileMaps("Resources/StageData/Stage5.map");
-	//tileMaps = new TileMaps("Resources/StageData/Stage6.map");
 	tileMaps = new TileMaps(file);
+	UIManager::Get();
 }
 
 TestScene::~TestScene()
@@ -22,8 +14,8 @@ TestScene::~TestScene()
 
 void TestScene::Update()
 {
-	//TileManager::Get()->Update();
 	tileMaps->Update();
+	UIManager::Get()->Update();
 }
 
 void TestScene::UpdateWorld()
@@ -33,7 +25,11 @@ void TestScene::UpdateWorld()
 
 void TestScene::Render()
 {
-	//TileManager::Get()->Render();
 	tileMaps->Render();
+}
+
+void TestScene::PostRender()
+{
+	UIManager::Get()->Render();
 }
 

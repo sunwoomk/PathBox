@@ -2,6 +2,7 @@
 
 StageClearPanel::StageClearPanel() : Panel(L"Resources/UI/Panel/ClearPanel.png")
 {
+	SetLocalPosition(Vector2(CENTER));
 	SetButtons();
 }
 
@@ -11,20 +12,17 @@ StageClearPanel::~StageClearPanel()
 
 void StageClearPanel::Update()
 {
+	Panel::Update();
 }
 
 void StageClearPanel::Render()
 {
+	Panel::Render();
 }
 
 void StageClearPanel::SetButtons()
 {
-	float panelWidth = GetLocalScale().x;
-	float panelHeight = GetLocalScale().y;
-	float buttonWidth = 64.0f;
-	float buttonHeight = 64.0f;
-
-	Panel::CreateButton(ButtonType::Restart, Vector2(buttonWidth, buttonHeight));
-	Panel::CreateButton(ButtonType::NextStage, Vector2(panelWidth * 0.5f, panelHeight * 0.5f));
-	Panel::CreateButton(ButtonType::SelectStage, Vector2(panelWidth - buttonWidth, panelHeight - buttonHeight));
+	Panel::CreateButton(ButtonType::SelectStage, Vector2(-50, -40));
+	//buttons.back()->SetOnClick([this]() { UIManager::Get()->SwitchMenuPanel(); });
+	Panel::CreateButton(ButtonType::NextStage, Vector2(50, -40));
 }

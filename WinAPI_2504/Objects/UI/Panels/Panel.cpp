@@ -3,6 +3,10 @@
 Panel::Panel(wstring file)
 {
 	panelTexture = new Quad(file);
+	panelTexture->SetParent(this);
+	panelTexture->SetLocalPosition(Vector2(0, 0));
+	panelTexture->UpdateWorld();
+	this->SetActive(false);
 	buttons.clear();
 }
 
@@ -13,11 +17,20 @@ Panel::~Panel()
 
 void Panel::Update()
 {
+	for (Button* button : buttons)
+	{
+		button->Update();
+	}
+	panelTexture->UpdateWorld();
 }
 
 void Panel::Render()
 {
 	panelTexture->Render();
+	for (Button* button : buttons)
+	{
+		button->Render();
+	}
 }
 
 void Panel::CreateButton(ButtonType type, Vector2 pos)

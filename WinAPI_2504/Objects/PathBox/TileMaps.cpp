@@ -226,6 +226,15 @@ void TileMaps::PlayerMove()
         isTeleporting = true;
         return;
     }
+
+    if (targetObject->GetType() == ObjectType::Goal) 
+    {
+        player->StartMove(newX, newY);
+        player->SetTilePos(newX, newY);
+        playerPos = { newX, newY };
+		UIManager::Get()->SetActiveStageClearPanel();
+		return;
+    }
 }
 
 void TileMaps::Teleport(ObjectTile* player)

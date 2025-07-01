@@ -10,8 +10,10 @@ ResumeButton::~ResumeButton()
 
 void ResumeButton::Update()
 {
+	Button::Update();
 }
 
 void ResumeButton::Render()
 {
+	Button::Render();
 }

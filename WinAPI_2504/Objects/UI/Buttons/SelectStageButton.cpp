@@ -10,8 +10,10 @@ SelectStageButton::~SelectStageButton()
 
 void SelectStageButton::Update()
 {
+	Button::Update();
 }
 
 void SelectStageButton::Render()
 {
+	Button::Render();
 }

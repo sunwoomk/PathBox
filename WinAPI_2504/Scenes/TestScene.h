@@ -14,6 +14,7 @@ public:
 	void Update() override;
 	void UpdateWorld();
 	void Render() override;
+	void PostRender() override;
 
 private:
 	TileMaps* tileMaps;

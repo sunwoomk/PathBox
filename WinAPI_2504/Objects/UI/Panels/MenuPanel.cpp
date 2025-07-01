@@ -2,6 +2,7 @@
 
 MenuPanel::MenuPanel() : Panel(L"Resources/UI/Panel/MenuPanel.png")
 {
+	SetLocalPosition(Vector2(CENTER));
 	SetButtons();
 }
 
@@ -11,20 +12,17 @@ MenuPanel::~MenuPanel()
 
 void MenuPanel::Update()
 {
+	Panel::Update();
 }
 
 void MenuPanel::Render()
 {
+	Panel::Render();
 }
 
 void MenuPanel::SetButtons()
 {
-	float panelWidth = GetLocalScale().x;
-	float panelHeight = GetLocalScale().y;
-	float buttonWidth = 64.0f;
-	float buttonHeight = 64.0f;
-
-	Panel::CreateButton(ButtonType::Restart, Vector2(buttonWidth, buttonHeight));
-	Panel::CreateButton(ButtonType::Resume, Vector2(panelWidth * 0.5f, panelHeight * 0.5f));
-	Panel::CreateButton(ButtonType::SelectStage, Vector2(panelWidth - buttonWidth, panelHeight - buttonHeight));
+	Panel::CreateButton(ButtonType::Restart, Vector2(-60, -40));
+	Panel::CreateButton(ButtonType::Resume, Vector2(-10, 10));
+	Panel::CreateButton(ButtonType::SelectStage, Vector2(40, -40));
 }

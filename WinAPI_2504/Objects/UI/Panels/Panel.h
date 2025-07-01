@@ -1,6 +1,6 @@
 #pragma once
 
-class Panel : public Transform
+class Panel : public Quad
 {
 public:
 	enum class ButtonType 

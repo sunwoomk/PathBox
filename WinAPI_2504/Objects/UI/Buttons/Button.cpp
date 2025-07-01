@@ -1,10 +1,9 @@
 #include "Framework.h"
 
-Button::Button(wstring file, Vector2 pos)
+Button::Button(wstring file)
 {
 	buttonTexture = new Quad(file);
 	buttonTexture->SetParent(this);
-	SetLocalPosition(pos);
 }
 
 Button::~Button()

@@ -10,4 +10,8 @@ public:
 	void Render() override;
 
 	void SetButtons() override;
+
+private:
+	SelectStageButton* selectStageButton;
+	NextStageButton* nextStageButton;
 };

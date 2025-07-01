@@ -10,8 +10,10 @@ RestartButton::~RestartButton()
 
 void RestartButton::Update()
 {
+	Button::Update();
 }
 
 void RestartButton::Render()
 {
+	Button::Render();
 }

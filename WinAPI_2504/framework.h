@@ -134,6 +134,7 @@ typedef function<void()> Event;
 #include "Scenes/Scene.h"
 #include "Framework/Manager/SceneManager.h"
 #include "Framework/Manager/GameManager.h"
+#include "Framework/Manager/UIManager.h"
 
 extern HWND hWnd;
 extern Vector2 mousePos;
