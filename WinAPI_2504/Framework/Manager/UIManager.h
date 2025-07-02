@@ -13,7 +13,7 @@ public:
 	void SetActiveStageClearPanel() { stageClearPanel->SetActive(true); }
 	bool GetIsMenuPanelActive() const { return isMenuPanelActive; }
 
-private:
+	void SetTileMaps(TileMaps* tileMaps) { this->tileMaps = tileMaps; }
 	void SetPanels();
 
 private:
@@ -22,4 +22,5 @@ private:
 	vector<Panel*> panels;
 	StageClearPanel* stageClearPanel;
 	MenuPanel* menuPanel;
+	TileMaps* tileMaps = nullptr;
 };

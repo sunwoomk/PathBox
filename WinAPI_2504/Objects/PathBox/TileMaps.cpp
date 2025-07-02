@@ -308,9 +308,44 @@ void TileMaps::CreateObjectTiles(BinaryReader* reader)
         objectTile->SetLocalPosition(pos.x, pos.y);
         objectTile->SetLocalScale(0.5f, 0.5f);
         objectTile->UpdateWorld();
+		objectTile->SetId(i);
         objectTiles.push_back(objectTile);
+
         if (type == (int)ObjectType::Player)
             playerPos = { x, y };
+
+		ObjectTileState objectTileState;
+		objectTileState.id = objectTile->GetId();
+		objectTileState.tilePos = { x, y };
+        SaveObjectTilePos(objectTileState);
     }
+	objectTiles.push_back(new ObjectTile(ObjectType::Portal_Start));
     sort(objectTiles.begin(), objectTiles.end(), ObjectTile::IsCompare);
+}
+
+void TileMaps::Restart() 
+{
+    for (int i = 0; i < objectTiles.size(); i++)
+    {
+		for (ObjectTileState& state : objectTileStates)
+		{
+			if (state.id == objectTiles[i]->GetId())
+			{
+				int x = state.tilePos.x;
+				int y = state.tilePos.y;
+				objectTiles[i]->SetTilePos(x, y);
+				objectTiles[i]->SetLocalPosition(Vector2(START_POS_X + x * TILE_SIZE_X, START_POS_Y - y * TILE_SIZE_Y));
+				objectTiles[i]->UpdateWorld();
+                break;
+			}
+		}
+    }
+    for (ObjectTile* objectTile : objectTiles) 
+    {
+        if (objectTile->GetType() == ObjectType::Player) 
+        {
+            playerPos = objectTile->GetTilePos();
+            break;
+        }
+    }
 }

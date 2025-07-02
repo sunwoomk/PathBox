@@ -4,7 +4,8 @@
 TestScene::TestScene(string file)
 {
 	tileMaps = new TileMaps(file);
-	UIManager::Get();
+	UIManager::Get()->SetTileMaps(tileMaps);
+	UIManager::Get()->SetPanels();
 }
 
 TestScene::~TestScene()

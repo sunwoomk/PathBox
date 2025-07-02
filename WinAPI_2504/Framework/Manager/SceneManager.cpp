@@ -57,6 +57,13 @@ void SceneManager::ChangeScene(string key)
 	}
 
 	currentScene = scenes[key];
+
+	TestScene* testScene = dynamic_cast<TestScene*>(currentScene);
+	if (testScene) 
+	{
+		UIManager::Get()->SetTileMaps(testScene->GetTileMaps());
+		UIManager::Get()->SetPanels();
+	}
 	currentScene->Start();
 }
 

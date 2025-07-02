@@ -2,7 +2,6 @@
 
 UIManager::UIManager()
 {
-	SetPanels();
 }
 
 UIManager::~UIManager()
@@ -43,7 +42,7 @@ void UIManager::SetPanels()
 	stageClearPanel->UpdateWorld();
 	panels.push_back(stageClearPanel);
 
-	menuPanel = new MenuPanel();
+	menuPanel = new MenuPanel(tileMaps);
 	menuPanel->UpdateWorld();
 	panels.push_back(menuPanel);
 }

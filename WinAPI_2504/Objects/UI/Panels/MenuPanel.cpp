@@ -1,7 +1,8 @@
 #include "Framework.h"
 
-MenuPanel::MenuPanel() : Panel(L"Resources/UI/Panel/MenuPanel.png")
+MenuPanel::MenuPanel(TileMaps* tileMaps) : Panel(L"Resources/UI/Panel/MenuPanel.png")
 {
+	this->tileMaps = tileMaps;
 	SetLocalPosition(Vector2(CENTER));
 	SetButtons();
 }
@@ -23,6 +24,7 @@ void MenuPanel::Render()
 void MenuPanel::SetButtons()
 {
 	Panel::CreateButton(ButtonType::Restart, Vector2(-60, -40));
+	buttons.back()->SetOnClick(bind(&TileMaps::Restart, tileMaps));
 	Panel::CreateButton(ButtonType::Resume, Vector2(-10, 10));
 	buttons.back()->SetOnClick([this]() { UIManager::Get()->SwitchMenuPanel(); });
 	Panel::CreateButton(ButtonType::SelectStage, Vector2(40, -40));

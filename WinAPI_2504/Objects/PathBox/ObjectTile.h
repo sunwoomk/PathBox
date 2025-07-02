@@ -25,6 +25,9 @@ public:
 	ObjectType GetType() { return objectType; }
 	void SetType(ObjectType objectType) { this->objectType = objectType; }
 
+	int GetId() const { return id; }
+	void SetId(int id) { this->id = id; }
+
 	static bool IsCompare(ObjectTile* a, ObjectTile* b)
 	{
 		return a->GetLocalPosition().y > b->GetLocalPosition().y;
@@ -37,4 +40,5 @@ private:
 	Vector2 targetPos;
 	bool isMoving = false;
 	float moveSpeed = 300.0f;
+	int id = -1;
 };

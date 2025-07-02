@@ -19,6 +19,8 @@ public:
 	void SetKey(const string& k) { key = k; }
 	string GetKey() const { return key; }
 
+	TileMaps* GetTileMaps() const { return tileMaps; }
+
 private:
 	string key;
 	TileMaps* tileMaps;
