@@ -19,6 +19,7 @@ void UIManager::Update()
 	if (Input::Get()->IsKeyDown(VK_ESCAPE)) 
 	{
 		menuPanel->SetActive(!menuPanel->IsActive());
+		isMenuPanelActive = menuPanel->IsActive();
 	}
 	for (Panel* panel : panels)
 	{

@@ -11,11 +11,14 @@ public:
 
 	void SwitchMenuPanel() { menuPanel->SetActive(!menuPanel->IsActive()); }
 	void SetActiveStageClearPanel() { stageClearPanel->SetActive(true); }
+	bool GetIsMenuPanelActive() const { return isMenuPanelActive; }
 
 private:
 	void SetPanels();
 
 private:
+	bool isMenuPanelActive = false;
+
 	vector<Panel*> panels;
 	StageClearPanel* stageClearPanel;
 	MenuPanel* menuPanel;
