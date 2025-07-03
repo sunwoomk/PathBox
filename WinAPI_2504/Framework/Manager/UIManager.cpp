@@ -38,7 +38,7 @@ void UIManager::Render()
 
 void UIManager::SetPanels()
 {
-	//panels.clear();
+	panels.clear();
 	stageClearPanel = new StageClearPanel();
 	panels.push_back(stageClearPanel);
 

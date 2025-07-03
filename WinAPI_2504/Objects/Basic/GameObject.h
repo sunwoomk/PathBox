@@ -17,7 +17,7 @@ public:
 	void SetColor(float r, float g, float b, float a = 1.0f);
 
 	void SetActive(bool isActive) { this->isActive = isActive; }
-	bool IsActive() { return isActive; }	
+	bool IsActive() { return isActive; }
 
 protected:
 	void Init();

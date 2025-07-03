@@ -61,7 +61,9 @@ void SceneManager::ChangeScene(string key)
 	TestScene* testScene = dynamic_cast<TestScene*>(currentScene);
 	if (testScene) 
 	{
-		UIManager::Get()->SetTileMaps(testScene->GetTileMaps());
+		TileMaps* tileMaps = testScene->GetTileMaps();
+		UIManager::Get()->SetTileMaps(tileMaps);
+		tileMaps->Restart();
 		UIManager::Get()->SetMenuPanel();
 	}
 	currentScene->Start();

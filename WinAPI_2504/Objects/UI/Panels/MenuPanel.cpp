@@ -37,7 +37,7 @@ void MenuPanel::SetButtons()
 
 void MenuPanel::SelectStageButtonClick()
 {
-	tileMaps->Restart();
+	//tileMaps->Restart();
 	SCENE->ChangeScene("SelectStageScene");
 	UIManager::Get()->GetSelectStagePanel()->SetActive(true);
 	this->SetActive(false);
