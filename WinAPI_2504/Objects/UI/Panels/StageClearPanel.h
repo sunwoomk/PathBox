@@ -9,9 +9,8 @@ public:
 	void Update() override;
 	void Render() override;
 
-	void SetButtons() override;
-
 private:
-	SelectStageButton* selectStageButton;
-	NextStageButton* nextStageButton;
+	void SetButtons() override;
+	void SelectStageButtonClick();
+	void NextStageButtonClick();
 };

@@ -4,11 +4,13 @@ GameManager::GameManager()
 {
 	Create();
 
-	SetScenes();
+	SetStageScenes();
 
 	SCENE->AddScene("EditScene", new TileEditScene());
+	SCENE->AddScene("SelectStageScene", new SelectStageScene());
 
 	SCENE->ChangeScene("Stage1");
+	//SCENE->ChangeScene("SelectStageScene");
 }
 
 GameManager::~GameManager()
@@ -123,7 +125,7 @@ void GameManager::Release()
 	ImGui::DestroyContext();
 }
 
-void GameManager::CreateScene(string file, string key)
+void GameManager::CreateStageScene(string file, string key)
 {
 	TestScene* stageScene = new TestScene(file);
 	SCENE->AddScene(key, stageScene);
@@ -131,12 +133,12 @@ void GameManager::CreateScene(string file, string key)
 	stageScene->SetKey(key);
 }
 
-void GameManager::SetScenes()
+void GameManager::SetStageScenes()
 {
-	CreateScene("Resources/StageData/Stage1.map", "Stage1");
-	CreateScene("Resources/StageData/Stage2.map", "Stage2");
-	CreateScene("Resources/StageData/Stage3.map", "Stage3");
-	CreateScene("Resources/StageData/Stage4.map", "Stage4");
-	CreateScene("Resources/StageData/Stage5.map", "Stage5");
-	CreateScene("Resources/StageData/Stage6.map", "Stage6");
+	CreateStageScene("Resources/StageData/Stage1.map", "Stage1");
+	CreateStageScene("Resources/StageData/Stage2.map", "Stage2");
+	CreateStageScene("Resources/StageData/Stage3.map", "Stage3");
+	CreateStageScene("Resources/StageData/Stage4.map", "Stage4");
+	CreateStageScene("Resources/StageData/Stage5.map", "Stage5");
+	CreateStageScene("Resources/StageData/Stage6.map", "Stage6");
 }

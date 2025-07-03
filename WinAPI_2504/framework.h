@@ -123,17 +123,15 @@ typedef function<void()> Event;
 #include "Objects/PathBox/TileMaps.h"
 
 #include "Objects/UI/Buttons/Button.h"
-#include "Objects/UI/Buttons/RestartButton.h"
-#include "Objects/UI/Buttons/ResumeButton.h"
-#include "Objects/UI/Buttons/NextStageButton.h"
-#include "Objects/UI/Buttons/SelectStageButton.h"
 #include "Objects/UI/Panels/Panel.h"
 #include "Objects/UI/Panels/StageClearPanel.h"
 #include "Objects/UI/Panels/MenuPanel.h"
+#include "Objects/UI/Panels/SelectStagePanel.h"
 
 #include "Scenes/Scene.h"
 #include "Scenes/TestScene.h"
 #include "Scenes/TileEditScene.h"
+#include "Scenes/SelectStageScene.h"
 
 #include "Framework/Manager/SceneManager.h"
 #include "Framework/Manager/GameManager.h"

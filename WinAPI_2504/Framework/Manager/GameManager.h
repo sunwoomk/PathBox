@@ -13,8 +13,8 @@ private:
 	void Create();
 	void Release();
 
-	void CreateScene(string file, string key);
-	void SetScenes();
+	void CreateStageScene(string file, string key);
+	void SetStageScenes();
 
 private:
 	HDC hdc;	

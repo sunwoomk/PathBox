@@ -18,6 +18,8 @@ public:
 	void AddStageScene(TestScene* scene) { stageScenes.push_back(scene); }
 	void ChangeNextStageScene();
 
+	int GetCurrentStageIndex();
+
 private:
 	Scene* currentScene;
 	

@@ -23,10 +23,13 @@ void MenuPanel::Render()
 
 void MenuPanel::SetButtons()
 {
-	Panel::CreateButton(ButtonType::Restart, Vector2(-60, -40));
+	Panel::CreateButton(L"Resources/UI/Button/Restart.png", Vector2(-60, -40));
 	//buttons.back()->SetOnClick(bind(&TileMaps::Restart, tileMaps));
 	buttons.back()->SetOnClick([this]() { tileMaps->Restart(); this->SetActive(false); });
-	Panel::CreateButton(ButtonType::Resume, Vector2(-10, 10));
-	buttons.back()->SetOnClick([this]() { UIManager::Get()->SwitchMenuPanel(); });
-	Panel::CreateButton(ButtonType::SelectStage, Vector2(40, -40));
+
+	Panel::CreateButton(L"Resources/UI/Button/Resume.png", Vector2(-10, 10));
+	buttons.back()->SetOnClick([this]() { this->SetActive(false); });
+
+	Panel::CreateButton(L"Resources/UI/Button/SelectStage.png", Vector2(40, -40));
+	buttons.back()->SetOnClick([this]() { SCENE->ChangeScene("SelectStageScene"); this->SetActive(false); });
 }

@@ -89,3 +89,13 @@ void SceneManager::ChangeNextStageScene()
 		}
 	}
 }
+
+int SceneManager::GetCurrentStageIndex()
+{
+	for (int i = 0; i < stageScenes.size(); i++)
+	{
+		if (stageScenes[i] == currentScene)
+			return static_cast<int>(i);
+	}
+	return -1;
+}
