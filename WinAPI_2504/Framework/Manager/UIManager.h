@@ -11,14 +11,12 @@ public:
 
 	void SwitchMenuPanel() { menuPanel->SetActive(!menuPanel->IsActive()); }
 	void SetActiveStageClearPanel() { stageClearPanel->SetActive(true); }
-	bool GetIsMenuPanelActive() const { return isMenuPanelActive; }
+	bool GetIsMenuPanelActive() const { return menuPanel->IsActive(); }
 
 	void SetTileMaps(TileMaps* tileMaps) { this->tileMaps = tileMaps; }
 	void SetPanels();
 
 private:
-	bool isMenuPanelActive = false;
-
 	vector<Panel*> panels;
 	StageClearPanel* stageClearPanel;
 	MenuPanel* menuPanel;

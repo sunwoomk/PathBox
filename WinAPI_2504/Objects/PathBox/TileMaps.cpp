@@ -106,7 +106,7 @@ void TileMaps::PlayerMove()
     sort(objectTiles.begin(), objectTiles.end(), ObjectTile::IsCompare);
 
     ObjectTile* player = FindObjectTile(playerPos.x, playerPos.y);
-    if (!player || player->IsMoving() || UIManager::Get()->GetIsMenuPanelActive() == true) return;
+    if (!player || player->IsMoving() || UIManager::Get()->GetIsMenuPanelActive()) return;
 
     int dx = 0, dy = 0;
     if (Input::Get()->IsKeyDown('W')) dy = -1;
