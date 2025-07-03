@@ -48,6 +48,7 @@ void SelectStagePanel::SetButtons()
 				if (unlockTextures[i]->IsActive() == false)
 				{
 					SCENE->ChangeScene("Stage" + to_string(i + 1));
+					this->SetActive(false);
 				}
 			});
 	}

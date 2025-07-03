@@ -10,12 +10,13 @@ public:
 	void Render();
 
 	void SetActiveStageClearPanel() { stageClearPanel->SetActive(true); }
-	bool GetIsMenuPanelActive() const { return menuPanel->IsActive(); }
+	bool GetIsMenuPanelActive() { return menuPanel->IsActive(); }
 
 	void SetTileMaps(TileMaps* tileMaps) { this->tileMaps = tileMaps; }
 	void SetPanels();
+	void SetMenuPanel();
 
-	SelectStagePanel* GetSelectStagePanel() const { return selectStagePanel; }
+	SelectStagePanel* GetSelectStagePanel() { return selectStagePanel; }
 
 private:
 	vector<Panel*> panels;

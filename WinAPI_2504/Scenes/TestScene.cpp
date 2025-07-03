@@ -5,7 +5,7 @@ TestScene::TestScene(string file)
 {
 	tileMaps = new TileMaps(file);
 	UIManager::Get()->SetTileMaps(tileMaps);
-	UIManager::Get()->SetPanels();
+	UIManager::Get()->SetMenuPanel();
 }
 
 TestScene::~TestScene()

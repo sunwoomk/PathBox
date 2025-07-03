@@ -32,5 +32,4 @@ protected:
 	Material* material;
 
 	MatrixBuffer* worldBuffer;
-	
 };

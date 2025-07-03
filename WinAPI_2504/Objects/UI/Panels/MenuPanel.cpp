@@ -4,6 +4,7 @@ MenuPanel::MenuPanel(TileMaps* tileMaps) : Panel(L"Resources/UI/Panel/MenuPanel.
 {
 	this->tileMaps = tileMaps;
 	SetLocalPosition(Vector2(CENTER));
+	UpdateWorld();
 	SetButtons();
 }
 
@@ -31,5 +32,13 @@ void MenuPanel::SetButtons()
 	buttons.back()->SetOnClick([this]() { this->SetActive(false); });
 
 	Panel::CreateButton(L"Resources/UI/Button/SelectStage.png", Vector2(40, -40));
-	buttons.back()->SetOnClick([this]() { SCENE->ChangeScene("SelectStageScene"); this->SetActive(false); });
+	buttons.back()->SetOnClick([this]() { SelectStageButtonClick(); });
+}
+
+void MenuPanel::SelectStageButtonClick()
+{
+	tileMaps->Restart();
+	SCENE->ChangeScene("SelectStageScene");
+	UIManager::Get()->GetSelectStagePanel()->SetActive(true);
+	this->SetActive(false);
 }

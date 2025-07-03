@@ -62,7 +62,7 @@ void SceneManager::ChangeScene(string key)
 	if (testScene) 
 	{
 		UIManager::Get()->SetTileMaps(testScene->GetTileMaps());
-		UIManager::Get()->SetPanels();
+		UIManager::Get()->SetMenuPanel();
 	}
 	currentScene->Start();
 }
@@ -75,10 +75,6 @@ void SceneManager::ChangeNextStageScene()
 		{
 			if (i + 1 < stageScenes.size())
 			{
-				SelectStagePanel* selectStagePanel = UIManager::Get()->GetSelectStagePanel();
-				if (selectStagePanel)
-					selectStagePanel->UnlockStage(static_cast<int>(i + 1));
-
 				for (const auto& pair : scenes)
 				{
 					if (pair.second == stageScenes[i + 1])

@@ -233,6 +233,10 @@ void TileMaps::PlayerMove()
         player->SetTilePos(newX, newY);
         playerPos = { newX, newY };
 		UIManager::Get()->SetActiveStageClearPanel();
+		int index = SceneManager::Get()->GetCurrentStageIndex();
+        SelectStagePanel* selectStagePanel = UIManager::Get()->GetSelectStagePanel();
+        if (selectStagePanel)
+            selectStagePanel->UnlockStage(static_cast<int>(index + 1));
 		return;
     }
 }

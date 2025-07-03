@@ -10,6 +10,7 @@ public:
 	void Render() override;
 
 	void SetButtons() override;
+	void SelectStageButtonClick();
 
 private:
 	TileMaps* tileMaps;

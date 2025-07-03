@@ -3,6 +3,7 @@
 StageClearPanel::StageClearPanel() : Panel(L"Resources/UI/Panel/ClearPanel.png")
 {
 	SetLocalPosition(Vector2(CENTER));
+	UpdateWorld();
 	SetButtons();
 }
 
@@ -32,11 +33,12 @@ void StageClearPanel::SetButtons()
 void StageClearPanel::SelectStageButtonClick()
 {
 	SCENE->ChangeScene("SelectStageScene"); 
+	UIManager::Get()->GetSelectStagePanel()->SetActive(true);
 	this->SetActive(false);
 }
 
 void StageClearPanel::NextStageButtonClick()
 {
-	SCENE->ChangeNextStageScene();
 	this->SetActive(false);
+	SCENE->ChangeNextStageScene();
 }
