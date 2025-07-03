@@ -37,14 +37,6 @@ void StageClearPanel::SelectStageButtonClick()
 
 void StageClearPanel::NextStageButtonClick()
 {
-	int currentIndex = SCENE->GetCurrentStageIndex();
-	int nextIndex = currentIndex + 1;
-
-	SelectStagePanel* selectStagePanel = UIManager::Get()->GetSelectStagePanel();
-	if (selectStagePanel && nextIndex < 10)
-	{
-		selectStagePanel->UnlockStage(nextIndex);
-	}
 	SCENE->ChangeNextStageScene();
 	this->SetActive(false);
 }

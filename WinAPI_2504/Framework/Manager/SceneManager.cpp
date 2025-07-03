@@ -75,6 +75,10 @@ void SceneManager::ChangeNextStageScene()
 		{
 			if (i + 1 < stageScenes.size())
 			{
+				SelectStagePanel* selectStagePanel = UIManager::Get()->GetSelectStagePanel();
+				if (selectStagePanel)
+					selectStagePanel->UnlockStage(static_cast<int>(i + 1));
+
 				for (const auto& pair : scenes)
 				{
 					if (pair.second == stageScenes[i + 1])
