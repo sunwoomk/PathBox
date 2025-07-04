@@ -9,8 +9,8 @@ GameManager::GameManager()
 	SCENE->AddScene("EditScene", new TileEditScene());
 	SCENE->AddScene("SelectStageScene", new SelectStageScene());
 
-	//SCENE->ChangeScene("Stage1");
-	SCENE->ChangeScene("EditScene");
+	SCENE->ChangeScene("Stage1");
+	//SCENE->ChangeScene("EditScene");
 	//SCENE->ChangeScene("SelectStageScene");
 }
 
@@ -50,6 +50,10 @@ void GameManager::Update()
 		SCENE->ChangeScene("Stage7");
 	}
 	if (Input::Get()->IsKeyDown(VK_F8))
+	{
+		SCENE->ChangeScene("Stage8");
+	}
+	if (Input::Get()->IsKeyDown(VK_F9))
 	{
 		SCENE->ChangeScene("EditScene");
 	}
@@ -147,4 +151,5 @@ void GameManager::SetStageScenes()
 	CreateStageScene("Resources/StageData/Stage5.map", L"Resources/Background/SnowyMountain2.png", "Stage5");
 	CreateStageScene("Resources/StageData/Stage6.map", L"Resources/Background/Meadow3.png", "Stage6");
 	CreateStageScene("Resources/StageData/Stage7.map", L"Resources/Background/Beach1.png", "Stage7");
+	CreateStageScene("Resources/StageData/Stage8.map", L"Resources/Background/SnowyMountain3.png", "Stage8");
 }
