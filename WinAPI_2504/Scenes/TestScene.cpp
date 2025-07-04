@@ -8,7 +8,7 @@ TestScene::TestScene(string file, wstring backgroundFile)
 	UIManager::Get()->SetMenuPanel();
 	background = new Quad(backgroundFile);
 	background->SetLocalPosition(Vector2(CENTER));
-	background->SetColor(1.0f, 1.0f, 1.0f, 0.85f);
+	background->SetColor(1.0f, 1.0f, 1.0f, 0.9f);
 	background->UpdateWorld();
 }
 
