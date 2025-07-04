@@ -125,9 +125,9 @@ void GameManager::Release()
 	ImGui::DestroyContext();
 }
 
-void GameManager::CreateStageScene(string file, string key)
+void GameManager::CreateStageScene(string file, wstring backgroundFile, string key)
 {
-	TestScene* stageScene = new TestScene(file);
+	TestScene* stageScene = new TestScene(file, backgroundFile);
 	SCENE->AddScene(key, stageScene);
 	SCENE->AddStageScene(stageScene);
 	stageScene->SetKey(key);
@@ -135,10 +135,10 @@ void GameManager::CreateStageScene(string file, string key)
 
 void GameManager::SetStageScenes()
 {
-	CreateStageScene("Resources/StageData/Stage1.map", "Stage1");
-	CreateStageScene("Resources/StageData/Stage2.map", "Stage2");
-	CreateStageScene("Resources/StageData/Stage3.map", "Stage3");
-	CreateStageScene("Resources/StageData/Stage4.map", "Stage4");
-	CreateStageScene("Resources/StageData/Stage5.map", "Stage5");
-	CreateStageScene("Resources/StageData/Stage6.map", "Stage6");
+	CreateStageScene("Resources/StageData/Stage1.map", L"Resources/Background/Meadow1.png", "Stage1");
+	CreateStageScene("Resources/StageData/Stage2.map", L"Resources/Background/Mountain1.png", "Stage2");
+	CreateStageScene("Resources/StageData/Stage3.map", L"Resources/Background/Meadow2.png", "Stage3");
+	CreateStageScene("Resources/StageData/Stage4.map", L"Resources/Background/SnowyMountain4.png", "Stage4");
+	CreateStageScene("Resources/StageData/Stage5.map", L"Resources/Background/SnowyMountain2.png", "Stage5");
+	CreateStageScene("Resources/StageData/Stage6.map", L"Resources/Background/Meadow3.png", "Stage6");
 }

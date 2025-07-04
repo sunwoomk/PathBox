@@ -8,7 +8,7 @@ private:
 	static const int MAP_COLS = 10;
 	static const int MAP_ROWS = 10;
 public:
-	TestScene(string file);
+	TestScene(string file, wstring backgroundFile);
 	~TestScene();
 
 	void Update() override;
@@ -24,5 +24,6 @@ public:
 private:
 	string key;
 	TileMaps* tileMaps;
+	Quad* background;
 };
 
