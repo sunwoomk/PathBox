@@ -47,12 +47,14 @@ Device::~Device()
     renderTargetView->Release();
 }
 
-void Device::Clear()
+void Device::Clear(const float* clearColor)
 {
-    deviceContext->OMSetRenderTargets(1, &renderTargetView, nullptr);
+    //static const float defaultColor[4] = { 0.67f, 1.0f, 0.93f, 1.0f };
+    static const float defaultColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
+    if (clearColor == nullptr)
+        clearColor = defaultColor;
 
-    //float clearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
-    float clearColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    deviceContext->OMSetRenderTargets(1, &renderTargetView, nullptr);
     deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
 }
 

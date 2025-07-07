@@ -1,21 +1,14 @@
 #include "Framework.h"
 #include "TestScene.h"
 
-TestScene::TestScene(string file, wstring backgroundFile)
+TestScene::TestScene(string file)
 {
-	tileMaps = new TileMaps(file);
-	UIManager::Get()->SetTileMaps(tileMaps);
-	UIManager::Get()->SetMenuPanel();
-	background = new Quad(backgroundFile);
-	background->SetLocalPosition(Vector2(CENTER));
-	background->SetColor(1.0f, 1.0f, 1.0f, 0.9f);
-	background->UpdateWorld();
+	SetTileMaps(file);
 }
 
 TestScene::~TestScene()
 {
 	delete tileMaps;
-	delete background;
 }
 
 void TestScene::Update()
@@ -31,7 +24,8 @@ void TestScene::UpdateWorld()
 
 void TestScene::Render()
 {
-	background->Render();
+	float blue[4] = { 0.0f, 0.5f, 1.0f, 1.0f };
+	Device::Get()->Clear(blue);
 	tileMaps->Render();
 }
 
@@ -40,3 +34,9 @@ void TestScene::PostRender()
 	UIManager::Get()->Render();
 }
 
+void TestScene::SetTileMaps(string file)
+{
+	tileMaps = new TileMaps(file);
+	UIManager::Get()->SetTileMaps(tileMaps);
+	UIManager::Get()->SetMenuPanel();
+}

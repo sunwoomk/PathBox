@@ -13,7 +13,8 @@ private:
 	void Create();
 	void Release();
 
-	void CreateStageScene(string file, wstring backgroundFile, string key);
+	void CreateStageScene(string file, string key);
+	void SetScenes();
 	void SetStageScenes();
 
 private:

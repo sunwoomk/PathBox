@@ -8,13 +8,16 @@ private:
 	static const int MAP_COLS = 10;
 	static const int MAP_ROWS = 10;
 public:
-	TestScene(string file, wstring backgroundFile);
+	TestScene(string file);
 	~TestScene();
 
 	void Update() override;
 	void UpdateWorld();
 	void Render() override;
 	void PostRender() override;
+
+	void SetTileMaps(string file);
+	//void SetBackground(wstring backgroundFile);
 
 	void SetKey(const string& k) { key = k; }
 	string GetKey() const { return key; }

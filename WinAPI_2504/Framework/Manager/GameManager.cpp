@@ -4,11 +4,10 @@ GameManager::GameManager()
 {
 	Create();
 
+	SetScenes();
 	SetStageScenes();
 
-	SCENE->AddScene("EditScene", new TileEditScene());
-	SCENE->AddScene("SelectStageScene", new SelectStageScene());
-
+	//SCENE->ChangeScene("StartScene");
 	SCENE->ChangeScene("Stage1");
 	//SCENE->ChangeScene("EditScene");
 	//SCENE->ChangeScene("SelectStageScene");
@@ -56,6 +55,10 @@ void GameManager::Update()
 	if (Input::Get()->IsKeyDown(VK_F9))
 	{
 		SCENE->ChangeScene("EditScene");
+	}
+	if (Input::Get()->IsKeyDown(VK_F10))
+	{
+		SCENE->ChangeScene("StartScene");
 	}
 	Timer::Get()->Update();
 	Input::Get()->Update();
@@ -134,22 +137,29 @@ void GameManager::Release()
 	ImGui::DestroyContext();
 }
 
-void GameManager::CreateStageScene(string file, wstring backgroundFile, string key)
+void GameManager::CreateStageScene(string file, string key)
 {
-	TestScene* stageScene = new TestScene(file, backgroundFile);
+	TestScene* stageScene = new TestScene(file);
 	SCENE->AddScene(key, stageScene);
 	SCENE->AddStageScene(stageScene);
 	stageScene->SetKey(key);
 }
 
+void GameManager::SetScenes()
+{
+	SCENE->AddScene("StartScene", new StartScene());
+	SCENE->AddScene("EditScene", new TileEditScene());
+	SCENE->AddScene("SelectStageScene", new SelectStageScene());
+}
+
 void GameManager::SetStageScenes()
 {
-	CreateStageScene("Resources/StageData/Stage1.map", L"Resources/Background/Meadow1.png", "Stage1");
-	CreateStageScene("Resources/StageData/Stage2.map", L"Resources/Background/Mountain1.png", "Stage2");
-	CreateStageScene("Resources/StageData/Stage3.map", L"Resources/Background/Meadow2.png", "Stage3");
-	CreateStageScene("Resources/StageData/Stage4.map", L"Resources/Background/SnowyMountain4.png", "Stage4");
-	CreateStageScene("Resources/StageData/Stage5.map", L"Resources/Background/SnowyMountain2.png", "Stage5");
-	CreateStageScene("Resources/StageData/Stage6.map", L"Resources/Background/Meadow3.png", "Stage6");
-	CreateStageScene("Resources/StageData/Stage7.map", L"Resources/Background/Beach1.png", "Stage7");
-	CreateStageScene("Resources/StageData/Stage8.map", L"Resources/Background/SnowyMountain3.png", "Stage8");
+	CreateStageScene("Resources/StageData/Stage1.map", "Stage1");
+	CreateStageScene("Resources/StageData/Stage2.map", "Stage2");
+	CreateStageScene("Resources/StageData/Stage3.map", "Stage3");
+	CreateStageScene("Resources/StageData/Stage4.map", "Stage4");
+	CreateStageScene("Resources/StageData/Stage5.map", "Stage5");
+	CreateStageScene("Resources/StageData/Stage6.map", "Stage6");
+	CreateStageScene("Resources/StageData/Stage7.map", "Stage7");
+	CreateStageScene("Resources/StageData/Stage8.map", "Stage8");
 }

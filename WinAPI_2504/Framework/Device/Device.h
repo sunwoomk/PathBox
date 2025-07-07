@@ -9,7 +9,7 @@ private:
 	~Device();
 
 public:
-	void Clear();
+	void Clear(const float* clearColor = nullptr);
 	void Present();
 
 

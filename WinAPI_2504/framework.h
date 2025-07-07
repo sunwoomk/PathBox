@@ -129,6 +129,7 @@ typedef function<void()> Event;
 #include "Objects/UI/Panels/SelectStagePanel.h"
 
 #include "Scenes/Scene.h"
+#include "Scenes/StartScene.h"
 #include "Scenes/TestScene.h"
 #include "Scenes/TileEditScene.h"
 #include "Scenes/SelectStageScene.h"
