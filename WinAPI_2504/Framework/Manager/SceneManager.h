@@ -19,6 +19,7 @@ public:
 	void ChangeNextStageScene();
 
 	int GetCurrentStageIndex();
+	bool IsCurrentStageScene();
 
 private:
 	Scene* currentScene;

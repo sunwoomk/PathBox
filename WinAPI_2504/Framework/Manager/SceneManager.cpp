@@ -101,3 +101,13 @@ int SceneManager::GetCurrentStageIndex()
 	}
 	return -1;
 }
+
+bool SceneManager::IsCurrentStageScene()
+{
+	for (TestScene* stageScene : stageScenes)
+	{
+		if (stageScene == currentScene)
+			return true;
+	}
+	return false;
+}
