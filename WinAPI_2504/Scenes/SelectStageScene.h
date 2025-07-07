@@ -8,7 +8,4 @@ public:
 
 	void Update() override;
 	void Render() override;
-
-private:
-	SelectStagePanel* selectStagePanel = nullptr;
 };

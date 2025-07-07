@@ -8,4 +8,7 @@ public:
 
 	void Update() override;
 	void Render() override;
+
+private:
+	Quad* pressToStartQuad;
 };
