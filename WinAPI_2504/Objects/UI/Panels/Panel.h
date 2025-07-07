@@ -11,6 +11,7 @@ class Panel : public Quad
 //		SelectStage
 //	};
 public:
+	Panel();
 	Panel(wstring file);
 	~Panel();
 
@@ -18,11 +19,11 @@ public:
 	virtual void Render();
 
 	virtual void SetButtons() = 0;
-	void CreateButton(wstring file, Vector2 pos);
+	void CreateButton(wstring file, Vector2 pos, Vector2 size = Vector2(50, 50));
 
 protected:
 	vector<Button*> buttons;
 
 private:
-	Quad* panelTexture;
+	Quad* panelTexture = nullptr;
 };

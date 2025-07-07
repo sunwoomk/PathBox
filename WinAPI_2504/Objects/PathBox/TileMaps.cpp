@@ -104,9 +104,8 @@ void TileMaps::UpdateWorld()
 void TileMaps::PlayerMove()
 {
     sort(objectTiles.begin(), objectTiles.end(), ObjectTile::IsCompare);
-
     ObjectTile* player = FindObjectTile(playerPos.x, playerPos.y);
-    if (!player || player->IsMoving() || UIManager::Get()->GetIsMenuPanelActive()) return;
+    if (!player || player->IsMoving() || UIManager::Get()->GetPanelActive("MenuPanel")) return;
 
     int dx = 0, dy = 0;
     if (Input::Get()->IsKeyDown('W')) dy = -1;
@@ -232,7 +231,7 @@ void TileMaps::PlayerMove()
         player->StartMove(newX, newY);
         player->SetTilePos(newX, newY);
         playerPos = { newX, newY };
-		UIManager::Get()->SetActiveStageClearPanel();
+        UIManager::Get()->SetPanelActive("StageClearPanel", true);
 		int index = SceneManager::Get()->GetCurrentStageIndex();
         SelectStagePanel* selectStagePanel = UIManager::Get()->GetSelectStagePanel();
         if (selectStagePanel)

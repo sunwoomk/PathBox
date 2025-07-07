@@ -1,6 +1,6 @@
 #include "Framework.h"
 
-Button::Button(wstring file)
+Button::Button(wstring file, Vector2 size) : RectCollider(size)
 {
 	buttonTexture = new Quad(file);
 	buttonTexture->SetParent(this);

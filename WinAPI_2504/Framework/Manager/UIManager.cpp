@@ -39,15 +39,59 @@ void UIManager::Render()
 	}
 }
 
+bool UIManager::GetPanelActive(string panel)
+{
+	if (panel == "StageClearPanel")
+	{
+		return stageClearPanel->IsActive();
+	}
+	else if (panel == "SelectStagePanel")
+	{
+		return selectStagePanel->IsActive();
+	}
+	else if (panel == "StartScenePanel")
+	{
+		return startScenePanel->IsActive();
+	}
+	else if (panel == "MenuPanel")
+	{
+		return menuPanel->IsActive();
+	}
+	return false;
+}
+
+void UIManager::SetPanelActive(string panel, bool active)
+{
+	if (panel == "StageClearPanel")
+	{
+		stageClearPanel->SetActive(active);
+	}
+	else if (panel == "SelectStagePanel")
+	{
+		selectStagePanel->SetActive(active);
+	}
+	else if (panel == "StartScenePanel")
+	{
+		startScenePanel->SetActive(active);
+	}
+	else if (panel == "MenuPanel")
+	{
+		menuPanel->SetActive(active);
+	}
+}
+
 void UIManager::SetPanels()
 {
 	panels.clear();
+
 	stageClearPanel = new StageClearPanel();
 	panels.push_back(stageClearPanel);
 
 	selectStagePanel = new SelectStagePanel();
-	selectStagePanel->UpdateWorld();
 	panels.push_back(selectStagePanel);
+
+	startScenePanel = new StartScenePanel();
+	panels.push_back(startScenePanel);
 }
 
 void UIManager::SetMenuPanel()

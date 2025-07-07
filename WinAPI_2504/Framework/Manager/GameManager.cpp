@@ -7,8 +7,8 @@ GameManager::GameManager()
 	SetScenes();
 	SetStageScenes();
 
-	//SCENE->ChangeScene("StartScene");
-	SCENE->ChangeScene("Stage1");
+	SCENE->ChangeScene("StartScene");
+	//SCENE->ChangeScene("Stage1");
 	//SCENE->ChangeScene("EditScene");
 	//SCENE->ChangeScene("SelectStageScene");
 }
@@ -22,7 +22,7 @@ void GameManager::Update()
 {
 	if (Input::Get()->IsKeyDown(VK_F1)) 
 	{
-		SCENE->ChangeScene("Stage1");
+		//SCENE->ChangeScene("Stage1");
 	}
 	if (Input::Get()->IsKeyDown(VK_F2))
 	{

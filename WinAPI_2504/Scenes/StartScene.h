@@ -9,6 +9,9 @@ public:
 	void Update() override;
 	void Render() override;
 
+	void SetQuads();
+
 private:
+	Quad* pathBoxQuad;
 	Quad* pressToStartQuad;
 };

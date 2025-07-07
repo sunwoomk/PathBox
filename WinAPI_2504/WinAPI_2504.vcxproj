@@ -193,6 +193,7 @@
     <ClInclude Include="Objects\PathBox\EditObjectTile.h" />
     <ClInclude Include="Objects\UI\Panels\SelectStagePanel.h" />
     <ClInclude Include="Objects\UI\Panels\StageClearPanel.h" />
+    <ClInclude Include="Objects\UI\Panels\StartScenePanel.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SelectStageScene.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="Objects\UI\Panels\Panel.cpp" />
     <ClCompile Include="Objects\UI\Panels\SelectStagePanel.cpp" />
     <ClCompile Include="Objects\UI\Panels\StageClearPanel.cpp" />
+    <ClCompile Include="Objects\UI\Panels\StartScenePanel.cpp" />
     <ClCompile Include="Scenes\SelectStageScene.cpp" />
     <ClCompile Include="Scenes\StartScene.cpp" />
     <ClCompile Include="Scenes\TestScene.cpp" />

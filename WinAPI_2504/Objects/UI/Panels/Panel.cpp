@@ -1,5 +1,11 @@
 #include "Framework.h"
 
+Panel::Panel()
+{
+	this->SetActive(false);
+	buttons.clear();
+}
+
 Panel::Panel(wstring file)
 {
 	panelTexture = new Quad(file);
@@ -12,7 +18,8 @@ Panel::Panel(wstring file)
 
 Panel::~Panel()
 {
-	delete panelTexture;
+	if (panelTexture != nullptr)
+		delete panelTexture;
 }
 
 void Panel::Update()
@@ -21,21 +28,23 @@ void Panel::Update()
 	{
 		button->Update();
 	}
-	panelTexture->UpdateWorld();
+	if (panelTexture != nullptr)
+		panelTexture->UpdateWorld();
 }
 
 void Panel::Render()
 {
-	panelTexture->Render();
+	if (panelTexture != nullptr)
+		panelTexture->Render();
 	for (Button* button : buttons)
 	{
 		button->Render();
 	}
 }
 
-void Panel::CreateButton(wstring file, Vector2 pos)
+void Panel::CreateButton(wstring file, Vector2 pos, Vector2 size)
 {
-	Button* button = new Button(file);
+	Button* button = new Button(file, size);
 	button->SetParent(this);
 	button->SetLocalPosition(pos);
 	button->UpdateWorld();

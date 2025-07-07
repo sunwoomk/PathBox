@@ -3,7 +3,7 @@
 class Button : public RectCollider 
 {
 public:
-	Button(wstring file);
+	Button(wstring file, Vector2 size);
 	~Button();
 
 	virtual void Update();

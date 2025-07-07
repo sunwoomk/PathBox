@@ -4,6 +4,7 @@ SelectStagePanel::SelectStagePanel() : Panel(L"Resources/UI/Panel/SelectStagePan
 {
 	SetLocalPosition(Vector2(CENTER));
 	SetButtons();
+	UpdateWorld();
 }
 
 SelectStagePanel::~SelectStagePanel()

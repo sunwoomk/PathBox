@@ -127,6 +127,7 @@ typedef function<void()> Event;
 #include "Objects/UI/Panels/StageClearPanel.h"
 #include "Objects/UI/Panels/MenuPanel.h"
 #include "Objects/UI/Panels/SelectStagePanel.h"
+#include "Objects/UI/Panels/StartScenePanel.h"
 
 #include "Scenes/Scene.h"
 #include "Scenes/StartScene.h"
