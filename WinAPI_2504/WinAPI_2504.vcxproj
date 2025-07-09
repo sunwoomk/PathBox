@@ -198,7 +198,7 @@
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SelectStageScene.h" />
     <ClInclude Include="Scenes\StartScene.h" />
-    <ClInclude Include="Scenes\TestScene.h" />
+    <ClInclude Include="Scenes\StageScene.h" />
     <ClInclude Include="Scenes\TileEditScene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WinAPI_2504.h" />
@@ -257,7 +257,7 @@
     <ClCompile Include="Objects\UI\Panels\StartScenePanel.cpp" />
     <ClCompile Include="Scenes\SelectStageScene.cpp" />
     <ClCompile Include="Scenes\StartScene.cpp" />
-    <ClCompile Include="Scenes\TestScene.cpp" />
+    <ClCompile Include="Scenes\StageScene.cpp" />
     <ClCompile Include="Scenes\TileEditScene.cpp" />
     <ClCompile Include="WinAPI_2504.cpp" />
   </ItemGroup>

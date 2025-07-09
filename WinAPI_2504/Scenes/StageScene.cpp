@@ -1,40 +1,40 @@
 #include "Framework.h"
-#include "TestScene.h"
+#include "StageScene.h"
 
-TestScene::TestScene(string file)
+StageScene::StageScene(string file)
 {
 	SetTileMaps(file);
 }
 
-TestScene::~TestScene()
+StageScene::~StageScene()
 {
 	delete tileMaps;
 }
 
-void TestScene::Update()
+void StageScene::Update()
 {
 	tileMaps->Update();
 	UIManager::Get()->Update();
 }
 
-void TestScene::UpdateWorld()
+void StageScene::UpdateWorld()
 {
 	tileMaps->UpdateWorld();
 }
 
-void TestScene::Render()
+void StageScene::Render()
 {
 	float blue[4] = { 0.0f, 0.5f, 1.0f, 1.0f };
 	Device::Get()->Clear(blue);
 	tileMaps->Render();
 }
 
-void TestScene::PostRender()
+void StageScene::PostRender()
 {
 	UIManager::Get()->Render();
 }
 
-void TestScene::SetTileMaps(string file)
+void StageScene::SetTileMaps(string file)
 {
 	tileMaps = new TileMaps(file);
 	UIManager::Get()->SetTileMaps(tileMaps);

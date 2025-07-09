@@ -1,6 +1,6 @@
 #pragma once
 
-class TestScene : public Scene
+class StageScene : public Scene
 {
 private:
 	static const int TILE_SIZE_X = 64;
@@ -8,8 +8,8 @@ private:
 	static const int MAP_COLS = 10;
 	static const int MAP_ROWS = 10;
 public:
-	TestScene(string file);
-	~TestScene();
+	StageScene(string file);
+	~StageScene();
 
 	void Update() override;
 	void UpdateWorld();

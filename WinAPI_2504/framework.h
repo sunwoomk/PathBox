@@ -131,7 +131,7 @@ typedef function<void()> Event;
 
 #include "Scenes/Scene.h"
 #include "Scenes/StartScene.h"
-#include "Scenes/TestScene.h"
+#include "Scenes/StageScene.h"
 #include "Scenes/TileEditScene.h"
 #include "Scenes/SelectStageScene.h"
 

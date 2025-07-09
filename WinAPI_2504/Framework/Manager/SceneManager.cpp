@@ -58,7 +58,7 @@ void SceneManager::ChangeScene(string key)
 
 	currentScene = scenes[key];
 
-	TestScene* testScene = dynamic_cast<TestScene*>(currentScene);
+	StageScene* testScene = dynamic_cast<StageScene*>(currentScene);
 	if (testScene) 
 	{
 		TileMaps* tileMaps = testScene->GetTileMaps();
@@ -104,7 +104,7 @@ int SceneManager::GetCurrentStageIndex()
 
 bool SceneManager::IsCurrentStageScene()
 {
-	for (TestScene* stageScene : stageScenes)
+	for (StageScene* stageScene : stageScenes)
 	{
 		if (stageScene == currentScene)
 			return true;

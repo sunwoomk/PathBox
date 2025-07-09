@@ -54,12 +54,17 @@ void GameManager::Update()
 	}
 	if (Input::Get()->IsKeyDown(VK_F9))
 	{
-		SCENE->ChangeScene("EditScene");
+		SCENE->ChangeScene("Stage9");
 	}
 	if (Input::Get()->IsKeyDown(VK_F10))
 	{
-		SCENE->ChangeScene("StartScene");
+		SCENE->ChangeScene("Stage10");
 	}
+	if (Input::Get()->IsKeyDown(VK_F11))
+	{
+		SCENE->ChangeScene("EditScene");
+	}
+
 	Timer::Get()->Update();
 	Input::Get()->Update();
 	Audio::Get()->Update();
@@ -139,7 +144,7 @@ void GameManager::Release()
 
 void GameManager::CreateStageScene(string file, string key)
 {
-	TestScene* stageScene = new TestScene(file);
+	StageScene* stageScene = new StageScene(file);
 	SCENE->AddScene(key, stageScene);
 	SCENE->AddStageScene(stageScene);
 	stageScene->SetKey(key);
@@ -162,4 +167,6 @@ void GameManager::SetStageScenes()
 	CreateStageScene("Resources/StageData/Stage6.map", "Stage6");
 	CreateStageScene("Resources/StageData/Stage7.map", "Stage7");
 	CreateStageScene("Resources/StageData/Stage8.map", "Stage8");
+	CreateStageScene("Resources/StageData/Stage9.map", "Stage9");
+	CreateStageScene("Resources/StageData/Stage10.map", "Stage10");
 }

@@ -15,7 +15,7 @@ public:
 	void AddScene(string key, Scene* scene);
 	void ChangeScene(string key);
 
-	void AddStageScene(TestScene* scene) { stageScenes.push_back(scene); }
+	void AddStageScene(StageScene* scene) { stageScenes.push_back(scene); }
 	void ChangeNextStageScene();
 
 	int GetCurrentStageIndex();
@@ -25,5 +25,5 @@ private:
 	Scene* currentScene;
 	
 	unordered_map<string, Scene*> scenes;
-	vector<TestScene*> stageScenes;
+	vector<StageScene*> stageScenes;
 };
