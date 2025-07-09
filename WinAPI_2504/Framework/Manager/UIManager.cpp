@@ -96,6 +96,13 @@ void UIManager::SetPanels()
 
 void UIManager::SetMenuPanel()
 {
-	menuPanel = new MenuPanel(tileMaps);
-	panels.push_back(menuPanel);
+	if (menuPanel == nullptr) 
+	{
+		menuPanel = new MenuPanel(tileMaps);
+		panels.push_back(menuPanel);
+	}
+	else 
+	{
+		menuPanel->SetTileMaps(tileMaps);
+	}
 }

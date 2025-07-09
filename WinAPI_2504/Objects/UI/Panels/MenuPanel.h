@@ -12,6 +12,8 @@ public:
 	void SetButtons() override;
 	void SelectStageButtonClick();
 
+	void SetTileMaps(TileMaps* tileMaps) { this->tileMaps = tileMaps; }
+
 private:
 	TileMaps* tileMaps;
 };
