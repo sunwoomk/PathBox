@@ -9,8 +9,7 @@ public:
 	void Update() override;
 	void Render() override;
 
-	void Start() override { Audio::Get()->Play("MenuBGM"); }
-	void End() override { Audio::Get()->Stop("MenuBGM"); }
+	void Start() override { Audio::Get()->PlayBGM("MenuBGM"); }
 
 	void SetQuads();
 

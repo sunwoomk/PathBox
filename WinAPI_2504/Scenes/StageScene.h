@@ -16,11 +16,9 @@ public:
 	void Render() override;
 	void PostRender() override;
 
-	void Start() override { Audio::Get()->Play("StageBGM"); }
-	void End() override { Audio::Get()->Stop("StageBGM"); }
+	void Start() override { Audio::Get()->PlayBGM("StageBGM"); }
 
 	void SetTileMaps(string file);
-	//void SetBackground(wstring backgroundFile);
 
 	void SetKey(const string& k) { key = k; }
 	string GetKey() const { return key; }

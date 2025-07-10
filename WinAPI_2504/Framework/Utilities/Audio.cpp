@@ -66,6 +66,34 @@ void Audio::Stop(string key)
     sounds[key]->channel->stop();
 }
 
+void Audio::PlayBGM(const string& key, float volume)
+{
+    if (currentBGMKey == key)
+    {
+        if (IsPlaySound(key))
+            return;
+        else
+            Resume(key);
+    }
+    else
+    {
+        if (!currentBGMKey.empty())
+            Stop(currentBGMKey);
+
+        currentBGMKey = key;
+        Play(key, volume);
+    }
+}
+
+void Audio::StopBGM()
+{
+    if (!currentBGMKey.empty())
+    {
+        Stop(currentBGMKey);
+        currentBGMKey.clear();
+    }
+}
+
 void Audio::Pause(string key)
 {
     if (sounds.count(key) == 0)

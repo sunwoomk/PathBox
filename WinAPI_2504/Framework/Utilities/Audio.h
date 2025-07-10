@@ -31,13 +31,16 @@ public:
 	void Play(string key, float volume = 1.0f);
 	void Stop(string key);
 
+	void PlayBGM(const string& key, float volume = 1.0f);
+	void StopBGM();
+
 	void Pause(string key);
 	void Resume(string key);
 
 	bool IsPlaySound(string key);
 
 private:
+	string currentBGMKey;
 	System* soundSystem;
-
 	unordered_map<string, SoundInfo*> sounds;
 };
