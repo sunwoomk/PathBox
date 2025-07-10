@@ -16,6 +16,9 @@ public:
 	void Render() override;
 	void PostRender() override;
 
+	void Start() override { Audio::Get()->Play("StageBGM"); }
+	void End() override { Audio::Get()->Stop("StageBGM"); }
+
 	void SetTileMaps(string file);
 	//void SetBackground(wstring backgroundFile);
 

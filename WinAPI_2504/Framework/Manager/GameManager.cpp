@@ -6,6 +6,7 @@ GameManager::GameManager()
 
 	SetScenes();
 	SetStageScenes();
+	SetBGM();
 
 	SCENE->ChangeScene("StartScene");
 	//SCENE->ChangeScene("Stage1");
@@ -22,7 +23,7 @@ void GameManager::Update()
 {
 	if (Input::Get()->IsKeyDown(VK_F1)) 
 	{
-		//SCENE->ChangeScene("Stage1");
+		SCENE->ChangeScene("Stage1");
 	}
 	if (Input::Get()->IsKeyDown(VK_F2))
 	{
@@ -169,4 +170,10 @@ void GameManager::SetStageScenes()
 	CreateStageScene("Resources/StageData/Stage8.map", "Stage8");
 	CreateStageScene("Resources/StageData/Stage9.map", "Stage9");
 	CreateStageScene("Resources/StageData/Stage10.map", "Stage10");
+}
+
+void GameManager::SetBGM()
+{
+	Audio::Get()->Add("MenuBGM", "Resources/Sounds/MenuBGM.mp3", true, true);
+	Audio::Get()->Add("StageBGM", "Resources/Sounds/StageBGM.mp3", true, true);
 }

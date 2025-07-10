@@ -50,7 +50,6 @@ void SceneManager::ChangeScene(string key)
 	if (scenes.count(key) == 0)
 		return;
 
-	//if (currentScene != nullptr)
 	if(currentScene)
 	{
 		currentScene->End();

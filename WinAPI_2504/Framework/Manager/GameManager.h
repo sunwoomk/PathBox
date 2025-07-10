@@ -16,6 +16,7 @@ private:
 	void CreateStageScene(string file, string key);
 	void SetScenes();
 	void SetStageScenes();
+	void SetBGM();
 
 private:
 	HDC hdc;	
