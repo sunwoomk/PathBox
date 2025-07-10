@@ -9,7 +9,7 @@ GameManager::GameManager()
 	SetBGM();
 
 	SCENE->ChangeScene("StartScene");
-	//SCENE->ChangeScene("Stage1");
+	//SCENE->ChangeScene("Stage10");
 	//SCENE->ChangeScene("EditScene");
 	//SCENE->ChangeScene("SelectStageScene");
 }
